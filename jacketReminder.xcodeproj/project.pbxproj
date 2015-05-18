@@ -14,6 +14,8 @@
 		838A8FD11B09AB8C005F69DF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 838A8FD01B09AB8C005F69DF /* Images.xcassets */; };
 		838A8FD41B09AB8C005F69DF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 838A8FD21B09AB8C005F69DF /* LaunchScreen.xib */; };
 		838A8FE01B09AB8C005F69DF /* jacketReminderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 838A8FDF1B09AB8C005F69DF /* jacketReminderTests.m */; };
+		838A8FEA1B09AB9D005F69DF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 838A8FE91B09AB9D005F69DF /* CoreLocation.framework */; };
+		838A8FED1B09AF18005F69DF /* weatherData.m in Sources */ = {isa = PBXBuildFile; fileRef = 838A8FEC1B09AF18005F69DF /* weatherData.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,9 @@
 		838A8FD91B09AB8C005F69DF /* jacketReminderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = jacketReminderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		838A8FDE1B09AB8C005F69DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		838A8FDF1B09AB8C005F69DF /* jacketReminderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = jacketReminderTests.m; sourceTree = "<group>"; };
+		838A8FE91B09AB9D005F69DF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		838A8FEB1B09AF18005F69DF /* weatherData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = weatherData.h; sourceTree = "<group>"; };
+		838A8FEC1B09AF18005F69DF /* weatherData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = weatherData.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				838A8FEA1B09AB9D005F69DF /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +69,7 @@
 		838A8FB71B09AB8C005F69DF = {
 			isa = PBXGroup;
 			children = (
+				838A8FE91B09AB9D005F69DF /* CoreLocation.framework */,
 				838A8FC21B09AB8C005F69DF /* jacketReminder */,
 				838A8FDC1B09AB8C005F69DF /* jacketReminderTests */,
 				838A8FC11B09AB8C005F69DF /* Products */,
@@ -85,6 +92,8 @@
 				838A8FC81B09AB8C005F69DF /* AppDelegate.m */,
 				838A8FCA1B09AB8C005F69DF /* ViewController.h */,
 				838A8FCB1B09AB8C005F69DF /* ViewController.m */,
+				838A8FEB1B09AF18005F69DF /* weatherData.h */,
+				838A8FEC1B09AF18005F69DF /* weatherData.m */,
 				838A8FCD1B09AB8C005F69DF /* Main.storyboard */,
 				838A8FD01B09AB8C005F69DF /* Images.xcassets */,
 				838A8FD21B09AB8C005F69DF /* LaunchScreen.xib */,
@@ -221,6 +230,7 @@
 			files = (
 				838A8FCC1B09AB8C005F69DF /* ViewController.m in Sources */,
 				838A8FC91B09AB8C005F69DF /* AppDelegate.m in Sources */,
+				838A8FED1B09AF18005F69DF /* weatherData.m in Sources */,
 				838A8FC61B09AB8C005F69DF /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

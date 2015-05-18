@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@import CoreLocation;
+#import "weatherData.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <CLLocationManagerDelegate>
 
+@property (nonatomic, strong) CLLocationManager *locationManager;
 
 @end
 
