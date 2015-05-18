@@ -15,8 +15,8 @@
 
 @property (nonatomic,weak) NSString *address;
 
-@property (nonatomic,weak)NSURLSession *session;
+@property (nonatomic,strong)NSURLSession *session;
 
--(void) getWeather: (CLLocation *) location;
+-(NSDictionary *) getWeather: (CLLocation *) location;
 
 @end

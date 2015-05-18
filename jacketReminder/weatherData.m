@@ -14,21 +14,24 @@
     NSDictionary *weatherDictionary;
 }
 
-- (void) getWeather:(CLLocation *)location
+- (NSDictionary *) getWeather:(CLLocation *)location
 {
     NSLog(@"NOW INSIDE WEATHER DATA OBJECT");
-    NSString *urlString = @"http://api.openweathermap.org/data/2.5/weather?q=London,uk";
+    NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%.8f&lon=%.8f", location.coordinate.latitude, location.coordinate.longitude];
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSURLSessionDataTask *datatask = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSLog(@"TEST");
+        weatherDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        //NSLog(@"%@",weatherDictionary);
+        NSLog(@"json string\n%@", weatherJSON);
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"TEST 2");
+            NSLog(@"TEST async");
         });
     }];
     [datatask resume];
-    NSLog(@"weatherDICT\n%@", weatherDictionary);
+    return weatherDictionary;
 }
 
 - (NSURLSession *) session
