@@ -45,6 +45,7 @@
 		838A8FE91B09AB9D005F69DF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		838A8FEB1B09AF18005F69DF /* weatherData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = weatherData.h; sourceTree = "<group>"; };
 		838A8FEC1B09AF18005F69DF /* weatherData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = weatherData.m; sourceTree = "<group>"; };
+		83A27FF61B10141600F10BEF /* NSLOG__SPACER.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSLOG__SPACER.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +98,7 @@
 				838A8FCD1B09AB8C005F69DF /* Main.storyboard */,
 				838A8FD01B09AB8C005F69DF /* Images.xcassets */,
 				838A8FD21B09AB8C005F69DF /* LaunchScreen.xib */,
+				83A27FF61B10141600F10BEF /* NSLOG__SPACER.h */,
 				838A8FC31B09AB8C005F69DF /* Supporting Files */,
 			);
 			path = jacketReminder;
@@ -426,6 +428,7 @@
 				838A8FE51B09AB8C005F69DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		838A8FE61B09AB8C005F69DF /* Build configuration list for PBXNativeTarget "jacketReminderTests" */ = {
 			isa = XCConfigurationList;
@@ -434,6 +437,7 @@
 				838A8FE81B09AB8C005F69DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

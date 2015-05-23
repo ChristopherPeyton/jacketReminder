@@ -8,11 +8,17 @@
 
 #import <UIKit/UIKit.h>
 @import CoreLocation;
-#import "weatherData.h"
+#import "NSLOG__SPACER.h"
+//#import "weatherData.h"
 
 @interface ViewController : UIViewController <CLLocationManagerDelegate>
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
+
+@property (nonatomic,strong) NSURLSession *session;
+
+
+-(NSDictionary *) getWeather;
 
 @end
 
