@@ -43,7 +43,9 @@
 //        NSLOG_SPACER
         dispatch_async(dispatch_get_main_queue(), ^{
             
-            self.temperatureLabel.text = [NSString stringWithFormat:@"%d",[self convertKelvinToFaranheit:[[[weatherDictionary objectForKey:@"main"] objectForKey:@"temp"]intValue]]];
+            //assign temperature to string
+            NSString *tempTempString = [NSString stringWithFormat:@"%d",[self convertKelvinToFaranheit:[[[weatherDictionary objectForKey:@"main"] objectForKey:@"temp"]intValue]]];
+            self.temperatureLabel.text = [NSString stringWithFormat:@"%@\u00B0", tempTempString];
         });
     }];
     [datatask resume];
@@ -52,29 +54,62 @@
 
 - (NSURLSession *) session
 {
-    if (!_session) {
+    if (!_session)
+    {
         _session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:nil delegateQueue:nil];
     }
     return _session;
 }
 
-- (IBAction)getWeatherButton:(id)sender {
+- (IBAction)getWeatherButton:(id)sender
+{
+    int temp1;
+    float newLatitude;
+    int temp2;
+    float newLongitude;
+    __block CLPlacemark *randomPlace;
+    NSMutableArray *tempArray = [[NSMutableArray alloc] init];
+    CLGeocoder *geocoder = [[CLGeocoder alloc]init];
+ 
+
+        temp1 = arc4random_uniform(9)+1;
+        newLatitude = location.coordinate.latitude + temp1;
+        
+        temp2 = arc4random_uniform(99999999);
+        NSString *temp = [NSString stringWithFormat:@"%.0f.%d", location.coordinate.longitude,temp2];
+        newLongitude = [temp floatValue];
+
+        CLLocation *randomLocation = [[CLLocation alloc]initWithLatitude:newLatitude longitude:newLongitude];
+    [geocoder reverseGeocodeLocation:randomLocation completionHandler:^(NSArray *placemarks, NSError *error) {
+        randomPlace = placemarks[0];
+        //[tempArray addObject:placemarks[0]];
+        NSLog(@"\nPLACEMARK1\n%@", randomPlace);
+    }];
+NSLog(@"\nPLACEMARK2\n%@", randomPlace);
+
+    NSString *tempTempString = self.temperatureLabel.text = [NSString stringWithFormat:@"%d",[self convertKelvinToFaranheit:[[[weatherDictionary objectForKey:@"main"] objectForKey:@"temp"]intValue]]];
+    self.temperatureLabel.text = [NSString stringWithFormat:@"%@\u00B0", tempTempString];
+    NSLog(@"\nADDED %d TO LATITUDATE\n\n%@", temp1,location);
     
-    self.temperatureLabel.text = self.temperatureLabel.text = [NSString stringWithFormat:@"%d",[self convertKelvinToFaranheit:[[[weatherDictionary objectForKey:@"main"] objectForKey:@"temp"]intValue]]];
+    NSArray *locArray = [NSArray arrayWithObject:randomLocation];
+    [self.locationManager.delegate locationManager:nil didUpdateLocations:locArray];
 
 }
 
 -(void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    //[self.locationManager stopUpdatingLocation];
+    [self.locationManager stopUpdatingLocation];
+        //testing random loc
+    //////location = testt;
     location = locations[0];
-    NSLOG_SPACER
-    NSLog(@"DID UPDATE LOCATION TO =======\n\n%@", locations);
-    NSLOG_SPACER
+//    NSLOG_SPACER
+//    NSLog(@"DID UPDATE LOCATION TO =======\n\n%@", locations);
+//    NSLOG_SPACER
     [self getWeather];
     
     CLGeocoder *geocoder = [[CLGeocoder alloc]init];
-    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error)
+    {
         
         NSMutableArray *tempArray = [[NSMutableArray alloc]init];
         for (CLPlacemark *placemark in placemarks)

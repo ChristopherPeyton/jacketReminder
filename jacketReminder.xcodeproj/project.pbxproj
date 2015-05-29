@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		830258FE1B18DFC200E4A199 /* storm-weather.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 830258FD1B18DFC200E4A199 /* storm-weather.jpg */; };
 		838A8FC61B09AB8C005F69DF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 838A8FC51B09AB8C005F69DF /* main.m */; };
 		838A8FC91B09AB8C005F69DF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 838A8FC81B09AB8C005F69DF /* AppDelegate.m */; };
 		838A8FCC1B09AB8C005F69DF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 838A8FCB1B09AB8C005F69DF /* ViewController.m */; };
@@ -29,6 +30,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		830258FD1B18DFC200E4A199 /* storm-weather.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "storm-weather.jpg"; sourceTree = "<group>"; };
 		838A8FC01B09AB8C005F69DF /* jacketReminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jacketReminder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		838A8FC41B09AB8C005F69DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		838A8FC51B09AB8C005F69DF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 				838A8FEB1B09AF18005F69DF /* weatherData.h */,
 				838A8FEC1B09AF18005F69DF /* weatherData.m */,
 				838A8FCD1B09AB8C005F69DF /* Main.storyboard */,
+				830258FD1B18DFC200E4A199 /* storm-weather.jpg */,
 				838A8FD01B09AB8C005F69DF /* Images.xcassets */,
 				838A8FD21B09AB8C005F69DF /* LaunchScreen.xib */,
 				83A27FF61B10141600F10BEF /* NSLOG__SPACER.h */,
@@ -212,6 +215,7 @@
 			files = (
 				838A8FCF1B09AB8C005F69DF /* Main.storyboard in Resources */,
 				838A8FD41B09AB8C005F69DF /* LaunchScreen.xib in Resources */,
+				830258FE1B18DFC200E4A199 /* storm-weather.jpg in Resources */,
 				838A8FD11B09AB8C005F69DF /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
