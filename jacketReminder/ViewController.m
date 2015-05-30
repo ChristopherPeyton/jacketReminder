@@ -71,7 +71,8 @@
     //GET GPS AT RANDOM
     //[self getRandomGPS];
     ////////////////////////
-    [self getWeather];
+    
+    self.temperatureLabel.text = self.temperatureLabel.text = [NSString stringWithFormat: @"%@\u00B0", [NSString stringWithFormat:@"%d",[self convertKelvinToFaranheit:[[[weatherDictionary objectForKey:@"main"] objectForKey:@"temp"]intValue]]]];
     
 }
 
