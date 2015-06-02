@@ -18,6 +18,7 @@
     int maxTimer;
     
 }
+@property (weak, nonatomic) IBOutlet UILabel *weatherDescriptionLabel;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsButton;
 
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
@@ -37,7 +38,12 @@ IB_DESIGNABLE
 
 - (NSDictionary *) getWeather
 {
+//    //FINAL STRING WITH API KEY
+//    NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%.8f&lon=%.8f&APPID=a96ff77043a749a97158ecbaaa30f249", location.coordinate.latitude, location.coordinate.longitude];
+    
+    //USING DURING TESTING
     NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%.8f&lon=%.8f", location.coordinate.latitude, location.coordinate.longitude];
+    
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSURLSessionDataTask *datatask = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -53,6 +59,13 @@ IB_DESIGNABLE
             //assign temperature to string
             NSString *tempTempString = [NSString stringWithFormat:@"%d",[self convertKelvinToFaranheit:[[[weatherDictionary objectForKey:@"main"] objectForKey:@"temp"]intValue]]];
             self.temperatureLabel.text = [NSString stringWithFormat:@"%@\u00B0", tempTempString];
+            
+            NSArray *aaa = [NSArray arrayWithArray:[weatherDictionary objectForKey:@"weather"]];
+            self.weatherDescriptionLabel.text = [aaa[0] objectForKey:@"description"];
+            
+            NSLog(@"\n\n\n\nRAIN = \n%@",aaa);
+            NSLog(@"\n\n\n\nRAIN = \n%@",urlString);
+
         });
     }];
     [datatask resume];
@@ -159,6 +172,7 @@ IB_DESIGNABLE
     }
     [self.locationManager startUpdatingLocation];
     //NSLog(@"%@", self.locationManager.location);
+
 }
 
 - (void) getRandomGPS

@@ -12,6 +12,8 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *temperatureLabel;
 
+@property (strong, nonatomic) IBOutlet UITableView *myTableView;
+
 @end
 
 @implementation TableViewController
@@ -24,7 +26,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-  
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -34,6 +35,15 @@
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     
     [self.view addGestureRecognizer:tapGesture];
+    
+    
+    UIImage *image = [UIImage imageNamed:@"storm-weather.JPG"];
+    
+    UIImageView *backimage = [[UIImageView alloc]initWithImage:image];
+    backimage.alpha = .55;
+    [backimage setFrame:self.tableView.frame];
+    
+    self.tableView.backgroundView = backimage;
 
 }
 
@@ -47,7 +57,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
