@@ -16,7 +16,9 @@
     NSArray *addressFromGEO;
     int timer;
     int maxTimer;
+    
 }
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsButton;
 
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *temperatureLabel;
@@ -25,6 +27,7 @@
 @end
 
 @implementation ViewController
+IB_DESIGNABLE
 
 -(int) convertKelvinToFaranheit: (int) temperatureInKelvin
 {
@@ -67,6 +70,18 @@
 
 - (IBAction)getWeatherButton:(id)sender
 {
+ 
+    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+    //localNotification.fireDate = dateTime;
+    //NSLog(@"Alert Fired at %@", [NSDate date]);
+    localNotification.alertTitle = @"WHATEVER";
+    localNotification.alertBody = [NSString stringWithFormat:@"Alert Fired at %@", [NSDate date]];
+    localNotification.soundName = UILocalNotificationDefaultSoundName;
+    localNotification.applicationIconBadgeNumber = 1;
+    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+    
+    
+    
     ////////////////////////
     //GET GPS AT RANDOM
     //[self getRandomGPS];
@@ -79,6 +94,15 @@
 -(void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     [self.locationManager stopUpdatingLocation];
+    
+    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+
+    //localNotification.fireDate = dateTime;
+    //NSLog(@"Alert Fired at %@", [NSDate date]);
+    localNotification.alertBody = [NSString stringWithFormat:@"Address:\n%@\nAlert Fired at %@ AFTER UPDATE LOC",self.addressLabel.text, [NSDate date]];
+    localNotification.soundName = UILocalNotificationDefaultSoundName;
+    localNotification.applicationIconBadgeNumber = 1;
+    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
 
     location = locations[0];
 
@@ -118,6 +142,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+
+    //change settings button to wheel icon
+//    self.settingsButton.title = @"\u2699";
+//    UIFont *customFont = [UIFont fontWithName:@"Helvetica" size:24];
+//    NSDictionary *fontDictionary = @{NSFontAttributeName : customFont};
+//    [self.settingsButton setTitleTextAttributes:fontDictionary forState:UIControlStateNormal];
+    
     self.locationManager = [[CLLocationManager alloc]init];
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     self.locationManager.distanceFilter = 1; //filter for x meters
