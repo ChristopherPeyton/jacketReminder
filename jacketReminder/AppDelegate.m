@@ -16,13 +16,7 @@
 
 - (void) application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-    NSLog(@"\n\n\nUI LOCAL NOTIF RECEIVED!\n\n\n");
-    if ([notification.alertTitle isEqualToString:@"WHATEVER"])
-    {
-        UIAlertView *alertWhatever = [[UIAlertView alloc]initWithTitle:notification.alertTitle message:notification.alertBody delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-        [alertWhatever show];
-        NSLog(@"\n\nIT SAID WHATEVER!");
-    }
+
     
 }
 
@@ -33,21 +27,7 @@
     {
         [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
     }
-    
-    NSLog(@"\n\n\napplication didFinishLaunchingWithOptions\n\n\n");
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"LAUNCH DELEGATE" message:@"DID LAUNCH, MAYBE FROM THE DEAD" delegate:self cancelButtonTitle:@"CANCEL" otherButtonTitles:nil];
-    alert.backgroundColor = [UIColor yellowColor];
-    [alert show];
-    
-    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    //localNotification.fireDate = dateTime;
-    //NSLog(@"Alert Fired at %@", [NSDate date]);
-    localNotification.alertBody = [NSString stringWithFormat:@"APP AWOKE at %@", [NSDate date]];
-    localNotification.soundName = UILocalNotificationDefaultSoundName;
-    localNotification.applicationIconBadgeNumber = 1;
-    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
 
-    
     return YES;
 }
 

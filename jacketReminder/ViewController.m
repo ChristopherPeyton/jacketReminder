@@ -107,15 +107,6 @@ IB_DESIGNABLE
 -(void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     [self.locationManager stopUpdatingLocation];
-    
-    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-
-    //localNotification.fireDate = dateTime;
-    //NSLog(@"Alert Fired at %@", [NSDate date]);
-    localNotification.alertBody = [NSString stringWithFormat:@"Address:\n%@\nAlert Fired at %@ AFTER UPDATE LOC",self.addressLabel.text, [NSDate date]];
-    localNotification.soundName = UILocalNotificationDefaultSoundName;
-    localNotification.applicationIconBadgeNumber = 1;
-    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
 
     location = locations[0];
 
@@ -161,6 +152,11 @@ IB_DESIGNABLE
 //    UIFont *customFont = [UIFont fontWithName:@"Helvetica" size:24];
 //    NSDictionary *fontDictionary = @{NSFontAttributeName : customFont};
 //    [self.settingsButton setTitleTextAttributes:fontDictionary forState:UIControlStateNormal];
+    
+    //set labels as empty strings until they update
+    self.addressLabel.text = @"Searching...";
+    self.weatherDescriptionLabel.text = @"";
+    self.temperatureLabel.text = @"";
     
     self.locationManager = [[CLLocationManager alloc]init];
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;

@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 @import CoreLocation;
 #import "NSLOG__SPACER.h"
-//#import "weatherData.h"
 
 @interface ViewController : UIViewController <CLLocationManagerDelegate>
 
