@@ -93,11 +93,8 @@
 			children = (
 				838A8FC71B09AB8C005F69DF /* AppDelegate.h */,
 				838A8FC81B09AB8C005F69DF /* AppDelegate.m */,
-				838A8FCA1B09AB8C005F69DF /* ViewController.h */,
-				838A8FCB1B09AB8C005F69DF /* ViewController.m */,
+				83CD4EBA1B1F7D64001A2058 /* View Controllers */,
 				838A8FCD1B09AB8C005F69DF /* Main.storyboard */,
-				83440CEE1B1D0F9E007D0C81 /* TableViewController.h */,
-				83440CEF1B1D0F9E007D0C81 /* TableViewController.m */,
 				830258FD1B18DFC200E4A199 /* storm-weather.jpg */,
 				838A8FD01B09AB8C005F69DF /* Images.xcassets */,
 				838A8FD21B09AB8C005F69DF /* LaunchScreen.xib */,
@@ -131,6 +128,17 @@
 				838A8FDE1B09AB8C005F69DF /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		83CD4EBA1B1F7D64001A2058 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				838A8FCA1B09AB8C005F69DF /* ViewController.h */,
+				838A8FCB1B09AB8C005F69DF /* ViewController.m */,
+				83440CEE1B1D0F9E007D0C81 /* TableViewController.h */,
+				83440CEF1B1D0F9E007D0C81 /* TableViewController.m */,
+			);
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
