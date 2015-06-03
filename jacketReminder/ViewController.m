@@ -62,9 +62,6 @@ IB_DESIGNABLE
             
             NSArray *aaa = [NSArray arrayWithArray:[weatherDictionary objectForKey:@"weather"]];
             self.weatherDescriptionLabel.text = [aaa[0] objectForKey:@"description"];
-            
-            NSLog(@"\n\n\n\nRAIN = \n%@",aaa);
-            NSLog(@"\n\n\n\nRAIN = \n%@",urlString);
 
         });
     }];
@@ -83,22 +80,12 @@ IB_DESIGNABLE
 
 - (IBAction)getWeatherButton:(id)sender
 {
- 
-    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    //localNotification.fireDate = dateTime;
-    //NSLog(@"Alert Fired at %@", [NSDate date]);
-    localNotification.alertTitle = @"WHATEVER";
-    localNotification.alertBody = [NSString stringWithFormat:@"Alert Fired at %@", [NSDate date]];
-    localNotification.soundName = UILocalNotificationDefaultSoundName;
-    localNotification.applicationIconBadgeNumber = 1;
-    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
-    
-    
-    
     ////////////////////////
     //GET GPS AT RANDOM
     //[self getRandomGPS];
     ////////////////////////
+    
+    [self.locationManager startUpdatingLocation];
     
     self.temperatureLabel.text = self.temperatureLabel.text = [NSString stringWithFormat: @"%@\u00B0", [NSString stringWithFormat:@"%d",[self convertKelvinToFaranheit:[[[weatherDictionary objectForKey:@"main"] objectForKey:@"temp"]intValue]]]];
     
