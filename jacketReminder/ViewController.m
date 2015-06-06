@@ -157,6 +157,25 @@ IB_DESIGNABLE
 
 }
 
+-(void) locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    NSLog(@"STATUS IS\n%d", status);
+    if (status!=3)
+    {
+        UILocalNotification *alert = [[UILocalNotification alloc]init];
+        alert.alertTitle = @"Location Service";
+        alert.alertBody = @"Location access is required, please enable GPS in settings";
+        alert.fireDate = [NSDate date];
+        [[UIApplication sharedApplication] scheduleLocalNotification:alert];
+        
+        if ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)])
+        {
+            [self.locationManager requestAlwaysAuthorization];
+        }
+        
+    }
+}
+
 - (void) getRandomGPS
 {
     int temp1;

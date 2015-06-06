@@ -16,7 +16,10 @@
 
 - (void) application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-
+    if ([notification.alertTitle isEqualToString:@"Location Service"]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Service" message:@"Location access is required" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alert show];
+    }
     
 }
 
