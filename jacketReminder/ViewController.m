@@ -52,7 +52,7 @@ IB_DESIGNABLE
 //        NSLOG_SPACER
 //        NSLog(@"%@",weatherDictionary);
 //        NSLOG_SPACER
-//        NSLog(@"json string\n%@", weatherJSON);
+        NSLog(@"json string\n%@", weatherJSON);
 //        NSLOG_SPACER
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -84,16 +84,15 @@ IB_DESIGNABLE
     //GET GPS AT RANDOM
     //[self getRandomGPS];
     ////////////////////////
-    
-    [self.locationManager startUpdatingLocation];
-    
     self.temperatureLabel.text = self.temperatureLabel.text = [NSString stringWithFormat: @"%@\u00B0", [NSString stringWithFormat:@"%d",[self convertKelvinToFaranheit:[[[weatherDictionary objectForKey:@"main"] objectForKey:@"temp"]intValue]]]];
     
 }
 
 -(void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    [self.locationManager stopUpdatingLocation];
+    NSLOG_SPACER
+    NSLog(@"\ndidUpdateLocations");
+    //[self.locationManager stopUpdatingLocation];
 
     location = locations[0];
 

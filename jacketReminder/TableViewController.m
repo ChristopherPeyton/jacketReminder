@@ -11,6 +11,9 @@
 @interface TableViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *temperatureLabel;
+@property (weak, nonatomic) IBOutlet UITextField *streetNumberLabel;
+@property (weak, nonatomic) IBOutlet UITextField *streetAddressLabel;
+@property (weak, nonatomic) IBOutlet UITextField *zipCodeLabel;
 
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
 
@@ -22,6 +25,9 @@
 -(void)tap: (UIGestureRecognizer *) tappedGesture
 {
     [self.temperatureLabel resignFirstResponder];
+    [self.streetNumberLabel resignFirstResponder];
+    [self.streetAddressLabel resignFirstResponder];
+    [self.zipCodeLabel resignFirstResponder];
 }
 
 - (void)viewDidLoad {
@@ -32,6 +38,9 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    self.streetAddressLabel.delegate = self;
+    
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     
     [self.view addGestureRecognizer:tapGesture];
@@ -47,6 +56,13 @@
 
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    
+    return YES;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -54,17 +70,17 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 2;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 1;
-}
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+//#warning Potentially incomplete method implementation.
+//    // Return the number of sections.
+//    return 4;
+//}
+//
+//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+//#warning Incomplete method implementation.
+//    // Return the number of rows in the section.
+//    return 3;
+//}
 
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
