@@ -12,10 +12,13 @@
 
 @interface ViewController : UIViewController <CLLocationManagerDelegate>
 
+{
+    int LocationEnabledStatus;
+}
+
 @property (nonatomic, strong) CLLocationManager *locationManager;
 
 @property (nonatomic,strong) NSURLSession *session;
-
 
 -(NSDictionary *) getWeather;
 

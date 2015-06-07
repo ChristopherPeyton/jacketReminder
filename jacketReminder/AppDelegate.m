@@ -16,10 +16,51 @@
 
 - (void) application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-    if ([notification.alertTitle isEqualToString:@"Location Service"]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Service" message:@"Location access is required" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-        [alert show];
+    //Error 1 - Location service denied
+    if ([notification.alertTitle isEqualToString:@" Location Service "])
+    {
+        //LOCALIZED VERSION
+//        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString( @"Location Service", @"" ) message:NSLocalizedString( @"Enter your message here.", @"" ) preferredStyle:UIAlertControllerStyleAlert];
+//        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"Cancel", @"" ) style:UIAlertActionStyleCancel handler:nil];
+//        UIAlertAction *settingsAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"Settings", @"" ) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+//            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:
+//                                                        UIApplicationOpenSettingsURLString]];
+//        }];
+
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Location access required" message:@"Phone cannot access location.\nOr\nApp was denied access to location." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *settingsAction = [UIAlertAction actionWithTitle:@"Settings" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+        {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:
+                                                        UIApplicationOpenSettingsURLString]];
+        }];
+        
+        [alertController addAction:cancelAction];
+        [alertController addAction:settingsAction];
+        
+        [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
     }
+    
+    else if ([notification.alertTitle isEqualToString:@"Location Service"])
+    {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Location access" message:notification.alertBody preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *OkAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:nil];
+        
+        UIAlertAction *settingsAction = [UIAlertAction actionWithTitle:@"Settings" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                                         {
+                                             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:
+                                                                                         UIApplicationOpenSettingsURLString]];
+                                         }];
+        
+        [alertController addAction:OkAction];
+        
+        //[alertController addAction:settingsAction];
+        
+        [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+    }
+    
     
 }
 

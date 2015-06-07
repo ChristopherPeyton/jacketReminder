@@ -159,21 +159,31 @@ IB_DESIGNABLE
 
 -(void) locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
-    NSLog(@"STATUS IS\n%d", status);
-    if (status!=3)
+    //assign status to public int, 3 is the good value
+    LocationEnabledStatus = status;
+    
+    NSLog(@"STATUS IS\n%d", LocationEnabledStatus);
+}
+
+- (void) locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    UILocalNotification *alert = [[UILocalNotification alloc]init];
+    NSLog(@"\n\n%ld", (long)error.code);
+    alert.fireDate = [NSDate date];
+    
+    if (error.code == 1)
     {
-        UILocalNotification *alert = [[UILocalNotification alloc]init];
-        alert.alertTitle = @"Location Service";
-        alert.alertBody = @"Location access is required, please enable GPS in settings";
-        alert.fireDate = [NSDate date];
-        [[UIApplication sharedApplication] scheduleLocalNotification:alert];
-        
-        if ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)])
-        {
-            [self.locationManager requestAlwaysAuthorization];
-        }
-        
+        alert.alertTitle = @" Location Service ";
+        alert.alertBody = @"Location access is required, please enable in settings.";
     }
+    
+    else if (error.code == 0)
+    {
+        alert.alertTitle = @"Location Service";
+        alert.alertBody = @"Unable to find your location.";
+    }
+    
+    [[UIApplication sharedApplication] scheduleLocalNotification:alert];
 }
 
 - (void) getRandomGPS
