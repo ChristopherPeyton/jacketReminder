@@ -57,11 +57,11 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSURLSessionDataTask *datatask = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         weatherDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-        NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+//        NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
 //        NSLOG_SPACER
 //        NSLog(@"%@",weatherDictionary);
 //        NSLOG_SPACER
-        //NSLog(@"json string\n%@", weatherJSON);
+//        NSLog(@"json string\n%@", weatherJSON);
 //        NSLOG_SPACER
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -119,6 +119,8 @@
 
 - (void) viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
     [[NSUserDefaults standardUserDefaults] synchronize];
 
 }

@@ -99,6 +99,8 @@
 
 - (void) viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     //retrieve home location string
     self.addressString = self.homeInformationFromRoot[1];
     NSLog(@"%@",self.addressString);
@@ -106,11 +108,7 @@
     self.addressLabel.text = self.addressString;
     
     NSLog(@"HOME ARRAY HAS %lu ojects, should only be 2", (unsigned long)[self.homeInformationFromRoot count]);
-    
-    
-    
-    
-    
+  
 }
 
 //PREVENT PASTING NON NUMERICAL VALUES AS TEMPERATURE VALUE
@@ -142,6 +140,7 @@
 
 - (void) viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
