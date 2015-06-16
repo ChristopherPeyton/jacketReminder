@@ -100,6 +100,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
      NSLog(@"\n\n\napplicationWillTerminate\n\n\n");
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 -(void)applicationDidReceiveMemoryWarning:(UIApplication *)application

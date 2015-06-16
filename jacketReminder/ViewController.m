@@ -12,7 +12,7 @@
 
 {
     NSDictionary *weatherDictionary;
-    CLLocation *location;
+    CLLocation *location; 
     NSArray *addressFromGEO;
     int timer;
     int maxTimer;
@@ -28,7 +28,16 @@
 @end
 
 @implementation ViewController
-IB_DESIGNABLE
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    TableViewController *vc = segue.destinationViewController;
+    
+    vc.homeInformationFromRoot = [self.homeInformation mutableCopy];
+    setHomeLocationTriggered = NO;
+    NSLog(@"COPIED ARRAY\nwith %lu objects",(unsigned long)[self.homeInformation count]);
+    
+}
 
 -(int) convertKelvinToFaranheit: (int) temperatureInKelvin
 {
@@ -52,7 +61,7 @@ IB_DESIGNABLE
 //        NSLOG_SPACER
 //        NSLog(@"%@",weatherDictionary);
 //        NSLOG_SPACER
-        NSLog(@"json string\n%@", weatherJSON);
+        //NSLog(@"json string\n%@", weatherJSON);
 //        NSLOG_SPACER
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -78,23 +87,57 @@ IB_DESIGNABLE
     return _session;
 }
 
-- (IBAction)getWeatherButton:(id)sender
+- (IBAction)setHomeLocation:(id)sender
 {
+    setHomeLocationTriggered = YES;
+    
     ////////////////////////
     //GET GPS AT RANDOM
     //[self getRandomGPS];
     ////////////////////////
-    self.temperatureLabel.text = self.temperatureLabel.text = [NSString stringWithFormat: @"%@\u00B0", [NSString stringWithFormat:@"%d",[self convertKelvinToFaranheit:[[[weatherDictionary objectForKey:@"main"] objectForKey:@"temp"]intValue]]]];
     
+    if (location && self.addressLabel.text.length>0)
+    {
+        self.homeInformation = [NSMutableArray array];
+        [self.homeInformation addObject:location];
+        [self.homeInformation addObject:self.addressLabel.text];
+        
+        //wrapped mutable array to store it in defaults
+        NSData *arrayWrapper = [NSKeyedArchiver archivedDataWithRootObject:self.homeInformation];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:arrayWrapper forKey:@"homeInformation"];
+        
+    }
+    
+    else if (!location || self.addressLabel<=0)
+    {
+        [[[UIAlertView alloc]initWithTitle:@"ADDR ISSUE" message:@"UNABLE TO DETECT LOC" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil]show];
+        [self.locationManager startUpdatingLocation];
+    }
+    
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
 }
 
 -(void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
+    
     NSLOG_SPACER
     NSLog(@"\ndidUpdateLocations");
     //[self.locationManager stopUpdatingLocation];
 
     location = locations[0];
+    
+    
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"])
+    {
+        [self setHomeLocation:self];
+        
+    }
 
     [self getWeather];
     
@@ -105,21 +148,23 @@ IB_DESIGNABLE
         NSMutableArray *tempArray = [[NSMutableArray alloc]init];
         for (CLPlacemark *placemark in placemarks)
         {
-            [tempArray addObject:[NSString stringWithFormat:@"%@ %@\n%@ %@ %@",
+            [tempArray addObject:[NSString stringWithFormat:@"%@ %@\n%@ %@ %@\n%@",
                                   placemark.subThoroughfare,
                                   placemark.thoroughfare,
                                   placemark.locality,
                                   placemark.administrativeArea,
-                                  placemark.postalCode]];
+                                  placemark.postalCode,
+                                  placemark.country]];
             
             //in case user is not in a static spot, possibly driving
             if (placemark.subThoroughfare == nil)
             {
-                [tempArray replaceObjectAtIndex:0 withObject:[NSString stringWithFormat:@"%@\n%@ %@ %@",
+                [tempArray replaceObjectAtIndex:0 withObject:[NSString stringWithFormat:@"%@\n%@ %@ %@\n%@",
                                                               placemark.thoroughfare,
                                                               placemark.locality,
                                                               placemark.administrativeArea,
-                                                              placemark.postalCode]];}
+                                                              placemark.postalCode,
+                                                              placemark.country]];}
         }
         
         
@@ -127,6 +172,8 @@ IB_DESIGNABLE
 
         self.addressLabel.text = addressFromGEO[0];
     }];
+    
+    
 }
 
 - (void)viewDidLoad {
@@ -154,6 +201,23 @@ IB_DESIGNABLE
     }
     [self.locationManager startUpdatingLocation];
     //NSLog(@"%@", self.locationManager.location);
+    
+    //if addr is saved, load it
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"])
+    {
+        NSMutableArray *temp = [NSMutableArray arrayWithObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"]];
+        
+        self.homeInformation = [NSKeyedUnarchiver unarchiveObjectWithData:temp[0]];
+        
+        NSLog(@"CREATED ARRAY\nwith %lu objects",(unsigned long)[temp count]);
+        NSLog(@" OBJECT TYPE = %@", [temp[0]class]);
+    }
+    
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"picker"])
+    {
+        NSLog(@"nope");
+        [[NSUserDefaults standardUserDefaults] setObject:@"23" forKey:@"picker"];
+    }
 
 }
 
@@ -237,7 +301,7 @@ IB_DESIGNABLE
              location = newLoc;
              NSLog(@"\nTIMER %d\nMAX TIMER %d", timer, maxTimer);
              NSLog(@"\nLAT%.8f\nLONG%.8f", location.coordinate.latitude,location.coordinate.longitude);
-             [self getWeatherButton:self];
+             //[self getWeatherButton:self];
              
          }
          

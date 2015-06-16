@@ -10,12 +10,15 @@
 
 @interface TableViewController ()
 
-@property (weak, nonatomic) IBOutlet UITextField *temperatureLabel;
-@property (weak, nonatomic) IBOutlet UITextField *streetNumberLabel;
-@property (weak, nonatomic) IBOutlet UITextField *streetAddressLabel;
-@property (weak, nonatomic) IBOutlet UITextField *zipCodeLabel;
+{
+    NSMutableArray *_pickerData;
+}
+
+@property (strong, nonatomic) IBOutlet UITextView *addressLabel;
 
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
+
+@property (strong, nonatomic) NSString *addressString;
 
 @end
 
@@ -24,10 +27,7 @@
 //detects tap to close number pad keyboard
 -(void)tap: (UIGestureRecognizer *) tappedGesture
 {
-    [self.temperatureLabel resignFirstResponder];
-    [self.streetNumberLabel resignFirstResponder];
-    [self.streetAddressLabel resignFirstResponder];
-    [self.zipCodeLabel resignFirstResponder];
+    
 }
 
 - (void)viewDidLoad {
@@ -39,33 +39,110 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    self.streetAddressLabel.delegate = self;
-    
+    self.navigationItem.title = @"Settings";
+        
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
     
     [self.view addGestureRecognizer:tapGesture];
+
+    _pickerData = [NSMutableArray array];
+    for (int x = 99; x > 0; x--)
+    {
+        NSString *temp = [NSString stringWithFormat:@"%d", x];
+        [_pickerData addObject:temp];
+    }
+
+    self.picker.delegate =self;
+    self.picker.dataSource =self;
     
-    
-    UIImage *image = [UIImage imageNamed:@"storm-weather.JPG"];
-    
-    UIImageView *backimage = [[UIImageView alloc]initWithImage:image];
-    backimage.alpha = .55;
-    [backimage setFrame:self.tableView.frame];
-    
-    self.tableView.backgroundView = backimage;
+    [self.picker selectRow:[[[NSUserDefaults standardUserDefaults] objectForKey:@"picker"] intValue] inComponent:0 animated:Nil];
+
+//    UIImage *image = [UIImage imageNamed:@"storm-weather.JPG"];
+//    
+//    UIImageView *backimage = [[UIImageView alloc]initWithImage:image];
+//    backimage.alpha = .55;
+//    [backimage setFrame:self.tableView.frame];
+//    
+//    self.tableView.backgroundView = backimage;
 
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
+- (void) pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    [textField resignFirstResponder];
-    
+    NSString *temp = [NSString stringWithFormat:@"%ld", (long)row];
+    [[NSUserDefaults standardUserDefaults] setObject:temp forKey:@"picker"];
+}
+
+// The number of columns of data
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+// The number of rows of data
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return _pickerData.count;
+}
+
+// The data to return for the row and component (column) that's being passed in
+- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return _pickerData[row];
+}
+
+- (BOOL) textFieldShouldEndEditing:(UITextField *)textField
+{
+    NSLog(@"\n\nDONE");
     return YES;
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    //retrieve home location string
+    self.addressString = self.homeInformationFromRoot[1];
+    NSLog(@"%@",self.addressString);
+
+    self.addressLabel.text = self.addressString;
+    
+    NSLog(@"HOME ARRAY HAS %lu ojects, should only be 2", (unsigned long)[self.homeInformationFromRoot count]);
+    
+    
+    
+    
+    
+}
+
+//PREVENT PASTING NON NUMERICAL VALUES AS TEMPERATURE VALUE
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSLog(@"CHANGING TEXT NOW");
+    /* for backspace */
+    if([string length]==0){
+        return YES;
+    }
+    
+    /*  limit to only numeric characters  */
+    
+    NSCharacterSet *myCharSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+    for (int i = 0; i < [string length]; i++) {
+        unichar c = [string characterAtIndex:i];
+        if ([myCharSet characterIsMember:c]) {
+            
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 #pragma mark - Table view data source

@@ -17,6 +17,8 @@
 		838A8FD41B09AB8C005F69DF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 838A8FD21B09AB8C005F69DF /* LaunchScreen.xib */; };
 		838A8FE01B09AB8C005F69DF /* jacketReminderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 838A8FDF1B09AB8C005F69DF /* jacketReminderTests.m */; };
 		838A8FEA1B09AB9D005F69DF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 838A8FE91B09AB9D005F69DF /* CoreLocation.framework */; };
+		839ADBDD1B2BF3A5000F8C48 /* ios-linen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 839ADBDC1B2BF3A5000F8C48 /* ios-linen.jpg */; };
+		839ADBDF1B2BF4C9000F8C48 /* papers.co-mf23-raining-windows-10-drops-nature-9-wallpaper.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 839ADBDE1B2BF4C9000F8C48 /* papers.co-mf23-raining-windows-10-drops-nature-9-wallpaper.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		838A8FDE1B09AB8C005F69DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		838A8FDF1B09AB8C005F69DF /* jacketReminderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = jacketReminderTests.m; sourceTree = "<group>"; };
 		838A8FE91B09AB9D005F69DF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		839ADBDC1B2BF3A5000F8C48 /* ios-linen.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "ios-linen.jpg"; sourceTree = "<group>"; };
+		839ADBDE1B2BF4C9000F8C48 /* papers.co-mf23-raining-windows-10-drops-nature-9-wallpaper.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "papers.co-mf23-raining-windows-10-drops-nature-9-wallpaper.jpg"; sourceTree = "<group>"; };
 		83A27FF61B10141600F10BEF /* NSLOG__SPACER.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSLOG__SPACER.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -96,6 +100,8 @@
 				83CD4EBA1B1F7D64001A2058 /* View Controllers */,
 				838A8FCD1B09AB8C005F69DF /* Main.storyboard */,
 				830258FD1B18DFC200E4A199 /* storm-weather.jpg */,
+				839ADBDE1B2BF4C9000F8C48 /* papers.co-mf23-raining-windows-10-drops-nature-9-wallpaper.jpg */,
+				839ADBDC1B2BF3A5000F8C48 /* ios-linen.jpg */,
 				838A8FD01B09AB8C005F69DF /* Images.xcassets */,
 				838A8FD21B09AB8C005F69DF /* LaunchScreen.xib */,
 				83A27FF61B10141600F10BEF /* NSLOG__SPACER.h */,
@@ -226,9 +232,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				839ADBDD1B2BF3A5000F8C48 /* ios-linen.jpg in Resources */,
 				838A8FCF1B09AB8C005F69DF /* Main.storyboard in Resources */,
 				838A8FD41B09AB8C005F69DF /* LaunchScreen.xib in Resources */,
 				830258FE1B18DFC200E4A199 /* storm-weather.jpg in Resources */,
+				839ADBDF1B2BF4C9000F8C48 /* papers.co-mf23-raining-windows-10-drops-nature-9-wallpaper.jpg in Resources */,
 				838A8FD11B09AB8C005F69DF /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
