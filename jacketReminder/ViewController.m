@@ -50,31 +50,38 @@
 //    //FINAL STRING WITH API KEY
 //    NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%.8f&lon=%.8f&APPID=a96ff77043a749a97158ecbaaa30f249", location.coordinate.latitude, location.coordinate.longitude];
     
-    //USING DURING TESTING
-    NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%.8f&lon=%.8f", location.coordinate.latitude, location.coordinate.longitude];
+    //USING DURING TESTING api.openweathermap.org/data/2.5/forecast?lat=32.986775&lon=-97.37743
+    //NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%.8f&lon=%.8f", location.coordinate.latitude, location.coordinate.longitude];
+    
+    NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast?lat=%.8f&lon=%.8f", location.coordinate.latitude, location.coordinate.longitude];
     
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSURLSessionDataTask *datatask = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         weatherDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-//        NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"weatherDictionary"];
+        NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
 //        NSLOG_SPACER
 //        NSLog(@"%@",weatherDictionary);
 //        NSLOG_SPACER
-//        NSLog(@"json string\n%@", weatherJSON);
+        //NSLog(@"json string\n%@", weatherJSON);
 //        NSLOG_SPACER
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             
             //assign temperature to string
-            NSString *tempTempString = [NSString stringWithFormat:@"%d",[self convertKelvinToFaranheit:[[[weatherDictionary objectForKey:@"main"] objectForKey:@"temp"]intValue]]];
+            NSString *tempTempString = [NSString stringWithFormat:@"%d",[self convertKelvinToFaranheit:[[[[weatherDictionary objectForKey:@"list"][0] objectForKey:@"main"] objectForKey:@"temp"]intValue]]];
+            
             self.temperatureLabel.text = [NSString stringWithFormat:@"%@\u00B0", tempTempString];
             
-            NSArray *aaa = [NSArray arrayWithArray:[weatherDictionary objectForKey:@"weather"]];
+            NSArray *aaa = [NSArray arrayWithArray:[[weatherDictionary objectForKey:@"list"][0] objectForKey:@"weather"]];
+            
             self.weatherDescriptionLabel.text = [aaa[0] objectForKey:@"description"];
 
         });
     }];
     [datatask resume];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     return weatherDictionary;
 }
 
@@ -130,7 +137,7 @@
     
     NSLOG_SPACER
     NSLog(@"\ndidUpdateLocations");
-    //[self.locationManager stopUpdatingLocation];
+    [self.locationManager stopUpdatingLocation];
 
     location = locations[0];
     
@@ -166,8 +173,21 @@
                                                               placemark.locality,
                                                               placemark.administrativeArea,
                                                               placemark.postalCode,
-                                                              placemark.country]];}
+                                                              placemark.country]];
+            }
+            
+            //in case user is not in a static spot, possibly driving AND only has region info
+            if (placemark.thoroughfare == nil)
+            {
+                [tempArray replaceObjectAtIndex:0 withObject:[NSString stringWithFormat:@"%@ %@ %@\n%@",
+                                                              placemark.locality,
+                                                              placemark.administrativeArea,
+                                                              placemark.postalCode,
+                                                              placemark.country]];
+            }
+            
         }
+        
         
         
         addressFromGEO = [[NSArray alloc]initWithArray:tempArray];
@@ -176,6 +196,60 @@
     }];
     
     
+}
+
+- (void) postWeatherToLabels
+{
+    //self.forecast_3_hr.text = weatherDictionary;
+    //NSLog(@"\n%@",weatherDictionary);
+ 
+    int temp = [[[[weatherDictionary objectForKey:@"list"][0] objectForKey:@"main"] objectForKey:@"temp"] intValue];
+    self.forecast_3_hr.text = [NSString stringWithFormat:@"%d\u00B0", [self convertKelvinToFaranheit:temp]];
+    
+    temp = [[[[weatherDictionary objectForKey:@"list"][1] objectForKey:@"main"] objectForKey:@"temp"] intValue];
+    self.forecast_6_hr.text = [NSString stringWithFormat:@"%d\u00B0", [self convertKelvinToFaranheit:temp]];
+    
+    temp = [[[[weatherDictionary objectForKey:@"list"][2] objectForKey:@"main"] objectForKey:@"temp"] intValue];
+    self.forecast_9_hr.text = [NSString stringWithFormat:@"%d\u00B0", [self convertKelvinToFaranheit:temp]];
+    
+ 
+    NSLog(@"\n\nnsdate\n\n%@",[NSDate date]);
+    NSString *aa = [[weatherDictionary objectForKey:@"list"][0] objectForKey:@"dt"];
+    
+    // Convert NSString to NSTimeInterval
+    NSTimeInterval seconds = [aa doubleValue];
+    
+    // (Step 1) Create NSDate object
+    NSDate *epochNSDate = [[NSDate alloc] initWithTimeIntervalSince1970:seconds];
+    NSLog (@"Epoch time %@ equates to UTC %@", aa, epochNSDate);
+    
+    // (Step 2) Use NSDateFormatter to display epochNSDate in local time zone
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss zzz"];
+    NSLog (@"Epoch time %@ equates to %@", aa, [dateFormatter stringFromDate:epochNSDate]);
+    
+    // (Just for interest) Display your current time zone
+    NSString *currentTimeZone = [[dateFormatter timeZone] abbreviation];
+    NSLog (@"(Your local time zone is: %@)", currentTimeZone);
+
+    self.forecast_3_time.text = [[weatherDictionary objectForKey:@"list"][0] objectForKey:@"dt_txt"];
+    self.forecast_6_time.text = [[weatherDictionary objectForKey:@"list"][1] objectForKey:@"dt_txt"];
+    self.forecast_9_time.text = [[weatherDictionary objectForKey:@"list"][2] objectForKey:@"dt_txt"];
+    
+    NSLOG_SPACER
+    NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
+    [DateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+    //NSLog(@"BLAH%@", [[NSDate date] timeIntervalSince1970]);
+
+    //CONVERT EPOCH TO UTC/GMT
+    NSDate* date = [NSDate dateWithTimeIntervalSince1970:1434505973];
+
+    //CONVERT TO EPOCH SUCH AS 1434505973
+    NSLog(@"\nBLAH\n%d\n\n",(int)[[NSDate date] timeIntervalSince1970]);
+    NSLog(@"\nBLAH\n%@\n\n", date);
+
+
+
 }
 
 - (void)viewDidLoad {
@@ -212,8 +286,18 @@
         self.homeInformation = [NSKeyedUnarchiver unarchiveObjectWithData:temp[0]];
         
         NSLog(@"CREATED ARRAY\nwith %lu objects",(unsigned long)[temp count]);
-        NSLog(@" OBJECT TYPE = %@", [temp[0]class]);
+        //NSLog(@" OBJECT TYPE = %@", [temp[0]class]);
     }
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"])
+    {
+        weatherDictionary = [[NSUserDefaults standardUserDefaults] objectForKey:@"weatherDictionary"];
+        
+        [self postWeatherToLabels];
+    }
+    
+    
+    
     
     if (![[NSUserDefaults standardUserDefaults] objectForKey:@"picker"])
     {

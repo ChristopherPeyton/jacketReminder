@@ -17,6 +17,13 @@
     int LocationEnabledStatus;
     BOOL setHomeLocationTriggered;
 }
+@property (weak, nonatomic) IBOutlet UILabel *forecast_3_hr;
+@property (weak, nonatomic) IBOutlet UILabel *forecast_6_hr;
+@property (weak, nonatomic) IBOutlet UILabel *forecast_9_hr;
+
+@property (weak, nonatomic) IBOutlet UILabel *forecast_3_time;
+@property (weak, nonatomic) IBOutlet UILabel *forecast_6_time;
+@property (weak, nonatomic) IBOutlet UILabel *forecast_9_time;
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
 
