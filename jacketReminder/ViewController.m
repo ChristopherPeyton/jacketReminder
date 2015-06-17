@@ -11,7 +11,7 @@
 @interface ViewController ()
 
 {
-    NSDictionary *weatherDictionary;
+    NSMutableDictionary *weatherDictionary;
     CLLocation *location; 
     NSArray *addressFromGEO;
     int timer;
@@ -59,15 +59,21 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSURLSessionDataTask *datatask = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         weatherDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-        [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"weatherDictionary"];
+        
+        //[weatherDictionary setObject: forKey:<#(id<NSCopying>)#>]
+            
         NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
 //        NSLOG_SPACER
 //        NSLog(@"%@",weatherDictionary);
 //        NSLOG_SPACER
-        //NSLog(@"json string\n%@", weatherJSON);
+        NSLog(@"json string\n%@", weatherJSON);
 //        NSLOG_SPACER
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"weatherDictionary"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [self postWeatherToLabels];
             
             //assign temperature to string
             NSString *tempTempString = [NSString stringWithFormat:@"%d",[self convertKelvinToFaranheit:[[[[weatherDictionary objectForKey:@"list"][0] objectForKey:@"main"] objectForKey:@"temp"]intValue]]];
@@ -81,7 +87,6 @@
         });
     }];
     [datatask resume];
-    [[NSUserDefaults standardUserDefaults] synchronize];
     return weatherDictionary;
 }
 
