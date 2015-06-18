@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		830258FE1B18DFC200E4A199 /* storm-weather.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 830258FD1B18DFC200E4A199 /* storm-weather.jpg */; };
 		83440CF01B1D0F9E007D0C81 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83440CEF1B1D0F9E007D0C81 /* TableViewController.m */; };
+		8389383C1B3283CB00D1B7FA /* papers.co-mf23-raining-windows-10-drops-nature-9-wallpaper.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 838938381B3283CB00D1B7FA /* papers.co-mf23-raining-windows-10-drops-nature-9-wallpaper.jpg */; };
+		8389383D1B3283CB00D1B7FA /* raindropsfal.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 838938391B3283CB00D1B7FA /* raindropsfal.jpg */; };
+		8389383E1B3283CB00D1B7FA /* waves18.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8389383A1B3283CB00D1B7FA /* waves18.jpg */; };
+		8389383F1B3283CB00D1B7FA /* 585-raindrops-and-clouds-1920x1080-photography-wallpaper.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8389383B1B3283CB00D1B7FA /* 585-raindrops-and-clouds-1920x1080-photography-wallpaper.jpg */; };
 		838A8FC61B09AB8C005F69DF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 838A8FC51B09AB8C005F69DF /* main.m */; };
 		838A8FC91B09AB8C005F69DF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 838A8FC81B09AB8C005F69DF /* AppDelegate.m */; };
 		838A8FCC1B09AB8C005F69DF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 838A8FCB1B09AB8C005F69DF /* ViewController.m */; };
@@ -18,7 +22,6 @@
 		838A8FE01B09AB8C005F69DF /* jacketReminderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 838A8FDF1B09AB8C005F69DF /* jacketReminderTests.m */; };
 		838A8FEA1B09AB9D005F69DF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 838A8FE91B09AB9D005F69DF /* CoreLocation.framework */; };
 		839ADBDD1B2BF3A5000F8C48 /* ios-linen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 839ADBDC1B2BF3A5000F8C48 /* ios-linen.jpg */; };
-		839ADBDF1B2BF4C9000F8C48 /* papers.co-mf23-raining-windows-10-drops-nature-9-wallpaper.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 839ADBDE1B2BF4C9000F8C48 /* papers.co-mf23-raining-windows-10-drops-nature-9-wallpaper.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +38,10 @@
 		830258FD1B18DFC200E4A199 /* storm-weather.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "storm-weather.jpg"; sourceTree = "<group>"; };
 		83440CEE1B1D0F9E007D0C81 /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
 		83440CEF1B1D0F9E007D0C81 /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
+		838938381B3283CB00D1B7FA /* papers.co-mf23-raining-windows-10-drops-nature-9-wallpaper.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "papers.co-mf23-raining-windows-10-drops-nature-9-wallpaper.jpg"; sourceTree = "<group>"; };
+		838938391B3283CB00D1B7FA /* raindropsfal.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = raindropsfal.jpg; sourceTree = "<group>"; };
+		8389383A1B3283CB00D1B7FA /* waves18.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = waves18.jpg; sourceTree = "<group>"; };
+		8389383B1B3283CB00D1B7FA /* 585-raindrops-and-clouds-1920x1080-photography-wallpaper.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "585-raindrops-and-clouds-1920x1080-photography-wallpaper.jpg"; sourceTree = "<group>"; };
 		838A8FC01B09AB8C005F69DF /* jacketReminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jacketReminder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		838A8FC41B09AB8C005F69DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		838A8FC51B09AB8C005F69DF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -50,7 +57,6 @@
 		838A8FDF1B09AB8C005F69DF /* jacketReminderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = jacketReminderTests.m; sourceTree = "<group>"; };
 		838A8FE91B09AB9D005F69DF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		839ADBDC1B2BF3A5000F8C48 /* ios-linen.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "ios-linen.jpg"; sourceTree = "<group>"; };
-		839ADBDE1B2BF4C9000F8C48 /* papers.co-mf23-raining-windows-10-drops-nature-9-wallpaper.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "papers.co-mf23-raining-windows-10-drops-nature-9-wallpaper.jpg"; sourceTree = "<group>"; };
 		83A27FF61B10141600F10BEF /* NSLOG__SPACER.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSLOG__SPACER.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -100,8 +106,11 @@
 				83CD4EBA1B1F7D64001A2058 /* View Controllers */,
 				838A8FCD1B09AB8C005F69DF /* Main.storyboard */,
 				830258FD1B18DFC200E4A199 /* storm-weather.jpg */,
-				839ADBDE1B2BF4C9000F8C48 /* papers.co-mf23-raining-windows-10-drops-nature-9-wallpaper.jpg */,
 				839ADBDC1B2BF3A5000F8C48 /* ios-linen.jpg */,
+				838938381B3283CB00D1B7FA /* papers.co-mf23-raining-windows-10-drops-nature-9-wallpaper.jpg */,
+				838938391B3283CB00D1B7FA /* raindropsfal.jpg */,
+				8389383A1B3283CB00D1B7FA /* waves18.jpg */,
+				8389383B1B3283CB00D1B7FA /* 585-raindrops-and-clouds-1920x1080-photography-wallpaper.jpg */,
 				838A8FD01B09AB8C005F69DF /* Images.xcassets */,
 				838A8FD21B09AB8C005F69DF /* LaunchScreen.xib */,
 				83A27FF61B10141600F10BEF /* NSLOG__SPACER.h */,
@@ -233,10 +242,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				839ADBDD1B2BF3A5000F8C48 /* ios-linen.jpg in Resources */,
+				8389383E1B3283CB00D1B7FA /* waves18.jpg in Resources */,
 				838A8FCF1B09AB8C005F69DF /* Main.storyboard in Resources */,
+				8389383D1B3283CB00D1B7FA /* raindropsfal.jpg in Resources */,
 				838A8FD41B09AB8C005F69DF /* LaunchScreen.xib in Resources */,
 				830258FE1B18DFC200E4A199 /* storm-weather.jpg in Resources */,
-				839ADBDF1B2BF4C9000F8C48 /* papers.co-mf23-raining-windows-10-drops-nature-9-wallpaper.jpg in Resources */,
+				8389383F1B3283CB00D1B7FA /* 585-raindrops-and-clouds-1920x1080-photography-wallpaper.jpg in Resources */,
+				8389383C1B3283CB00D1B7FA /* papers.co-mf23-raining-windows-10-drops-nature-9-wallpaper.jpg in Resources */,
 				838A8FD11B09AB8C005F69DF /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
