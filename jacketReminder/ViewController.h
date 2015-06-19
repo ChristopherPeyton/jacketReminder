@@ -10,13 +10,14 @@
 @import CoreLocation;
 #import "NSLOG__SPACER.h"
 #import "TableViewController.h"
-
+IB_DESIGNABLE
 @interface ViewController : UIViewController <CLLocationManagerDelegate>
 
 {
     int LocationEnabledStatus;
     BOOL setHomeLocationTriggered;
 }
+
 @property (weak, nonatomic) IBOutlet UILabel *forecast_3_hr;
 @property (weak, nonatomic) IBOutlet UILabel *forecast_6_hr;
 @property (weak, nonatomic) IBOutlet UILabel *forecast_9_hr;

@@ -20,6 +20,8 @@
 
 @property (strong, nonatomic) NSString *addressString;
 
+@property (nonatomic) IBInspectable UIColor *settingsTableBackgroundColor;
+
 @end
 
 @implementation TableViewController
@@ -57,15 +59,44 @@
     
     [self.picker selectRow:[[[NSUserDefaults standardUserDefaults] objectForKey:@"picker"] intValue] inComponent:0 animated:Nil];
 
-//    UIImage *image = [UIImage imageNamed:@"storm-weather.JPG"];
-//    
-//    UIImageView *backimage = [[UIImageView alloc]initWithImage:image];
-//    backimage.alpha = .55;
-//    [backimage setFrame:self.tableView.frame];
-//    
-//    self.tableView.backgroundView = backimage;
+    //self.view.backgroundColor = self.settingsTableBackgroundColor;
+    UIImage *image = [UIImage imageNamed:@"raindrops.jpg"];
+    
+    UIImageView *backimage = [[UIImageView alloc]initWithImage:image];
+    //backimage.alpha = .23;
+    [backimage setFrame:self.tableView.frame];
+    
+    self.tableView.backgroundView = backimage;
+    
+    // create effect
+    UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    
+    // add effect to an effect view
+    UIVisualEffectView *effectView = [[UIVisualEffectView alloc]initWithEffect:blur];
+    effectView.frame = self.view.frame;
+    
+    // add the effect view to the image view
+    [backimage addSubview:effectView];
 
+//    // create blur effect
+//    UIBlurEffect *blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+//    
+//    // create vibrancy effect
+//    UIVibrancyEffect *vibrancy = [UIVibrancyEffect effectForBlurEffect:blur];
+//    
+//    // add blur to an effect view
+//    UIVisualEffectView *effectView = [[UIVisualEffectView alloc]initWithEffect:blur];
+//    effectView.frame = self.view.frame;
+//    
+//    // add vibrancy to yet another effect view
+//    UIVisualEffectView *vibrantView = [[UIVisualEffectView alloc]initWithEffect:vibrancy];
+//    effectView.frame = self.view.frame;
+//    
+//    // add both effect views to the image view
+//    [backimage addSubview:effectView];
+//    [backimage addSubview:vibrantView];
 }
+
 
 - (void) pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {

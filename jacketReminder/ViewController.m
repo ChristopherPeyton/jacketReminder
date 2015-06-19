@@ -16,8 +16,11 @@
     NSArray *addressFromGEO;
     int timer;
     int maxTimer;
+    IBInspectable int xx;
     
 }
+@property (strong, nonatomic) IBOutlet UIVisualEffectView *midletop;
+@property (strong, nonatomic) IBOutlet UIView *img;
 @property (weak, nonatomic) IBOutlet UILabel *weatherDescriptionLabel;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsButton;
 
@@ -142,7 +145,7 @@
     
     NSLOG_SPACER
     NSLog(@"\ndidUpdateLocations");
-    [self.locationManager stopUpdatingLocation];
+    //[self.locationManager stopUpdatingLocation];
 
     location = locations[0];
     
@@ -309,7 +312,14 @@
         NSLog(@"nope");
         [[NSUserDefaults standardUserDefaults] setObject:@"23" forKey:@"picker"];
     }
-
+    
+    //self.img = [[UIImageView alloc] initWithFrame:CGRectMake(150, 194, 100, 100)];
+    
+    self.midletop.bounds = self.img.bounds;
+    self.midletop.layer.cornerRadius = self.img.frame.size.width/2;
+    [self.midletop setClipsToBounds:YES];
+    
+    self.img.layer.cornerRadius = self.img.frame.size.width/2;   
 }
 
 -(void) locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
