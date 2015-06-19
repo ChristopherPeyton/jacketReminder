@@ -16,6 +16,9 @@
     NSArray *addressFromGEO;
     int timer;
     int maxTimer;
+    int forecast_3_time_epoch;
+    int forecast_6_time_epoch;
+    int forecast_9_time_epoch;
     IBInspectable int xx;
     
 }
@@ -239,25 +242,42 @@
     // (Just for interest) Display your current time zone
     NSString *currentTimeZone = [[dateFormatter timeZone] abbreviation];
     NSLog (@"(Your local time zone is: %@)", currentTimeZone);
-
-    self.forecast_3_time.text = [[weatherDictionary objectForKey:@"list"][0] objectForKey:@"dt_txt"];
-    self.forecast_6_time.text = [[weatherDictionary objectForKey:@"list"][1] objectForKey:@"dt_txt"];
-    self.forecast_9_time.text = [[weatherDictionary objectForKey:@"list"][2] objectForKey:@"dt_txt"];
+    
+    forecast_3_time_epoch = [[[weatherDictionary objectForKey:@"list"] [0] objectForKey:@"dt"] intValue];
+    forecast_6_time_epoch = [[[weatherDictionary objectForKey:@"list"] [1] objectForKey:@"dt"] intValue];
+    forecast_9_time_epoch = [[[weatherDictionary objectForKey:@"list"] [2] objectForKey:@"dt"] intValue];
     
     NSLOG_SPACER
-    NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
-    [DateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+
     //NSLog(@"BLAH%@", [[NSDate date] timeIntervalSince1970]);
 
     //CONVERT EPOCH TO UTC/GMT
-    NSDate* date = [NSDate dateWithTimeIntervalSince1970:1434505973];
-
+    NSDate *date3 = [NSDate dateWithTimeIntervalSince1970:forecast_3_time_epoch];
+    NSDate *date6 = [NSDate dateWithTimeIntervalSince1970:forecast_6_time_epoch];
+    NSDate *date9 = [NSDate dateWithTimeIntervalSince1970:forecast_9_time_epoch];
+    
+    self.forecast_3_time.text = [self getStringFromDate:date3];
+    self.forecast_6_time.text = [self getStringFromDate:date6];
+    self.forecast_9_time.text = [self getStringFromDate:date9];
+    
     //CONVERT TO EPOCH SUCH AS 1434505973
     NSLog(@"\nBLAH\n%d\n\n",(int)[[NSDate date] timeIntervalSince1970]);
-    NSLog(@"\nBLAH\n%@\n\n", date);
+    
+    self.forecast_3_description.text = [[[weatherDictionary objectForKey:@"list"][0] objectForKey:@"weather"][0]objectForKey:@"description"];
+    
+    self.forecast_6_description.text = [[[weatherDictionary objectForKey:@"list"][1] objectForKey:@"weather"][0]objectForKey:@"description"];
+    
+    self.forecast_9_description.text = [[[weatherDictionary objectForKey:@"list"][2] objectForKey:@"weather"][0]objectForKey:@"description"];
 
+}
 
-
+-(NSString *)getStringFromDate:(NSDate *) myDate
+{
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"EEE, h a"];
+    NSString *dateString = [dateFormat stringFromDate:myDate];
+    
+    return dateString;
 }
 
 - (void)viewDidLoad {
@@ -277,7 +297,7 @@
     
     self.locationManager = [[CLLocationManager alloc]init];
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    self.locationManager.distanceFilter = 1; //filter for x meters
+    self.locationManager.distanceFilter = 55; //filter for x meters
     self.locationManager.delegate = self;
     if ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)])
     {

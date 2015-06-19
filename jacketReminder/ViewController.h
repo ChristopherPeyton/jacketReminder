@@ -26,6 +26,10 @@ IB_DESIGNABLE
 @property (weak, nonatomic) IBOutlet UILabel *forecast_6_time;
 @property (weak, nonatomic) IBOutlet UILabel *forecast_9_time;
 
+@property (weak, nonatomic) IBOutlet UILabel *forecast_3_description;
+@property (weak, nonatomic) IBOutlet UILabel *forecast_6_description;
+@property (weak, nonatomic) IBOutlet UILabel *forecast_9_description;
+
 @property (nonatomic, strong) CLLocationManager *locationManager;
 
 @property (nonatomic,strong) NSURLSession *session;
