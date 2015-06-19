@@ -22,6 +22,10 @@
     IBInspectable int xx;
     
 }
+@property (weak, nonatomic) IBOutlet UIImageView *forecast_3_icon_view;
+@property (weak, nonatomic) IBOutlet UIImageView *forecast_6_icon_view;
+@property (weak, nonatomic) IBOutlet UIImageView *forecast_9_icon_view;
+
 @property (strong, nonatomic) IBOutlet UIVisualEffectView *midletop;
 @property (strong, nonatomic) IBOutlet UIView *img;
 @property (weak, nonatomic) IBOutlet UILabel *weatherDescriptionLabel;
@@ -263,11 +267,13 @@
     //CONVERT TO EPOCH SUCH AS 1434505973
     NSLog(@"\nBLAH\n%d\n\n",(int)[[NSDate date] timeIntervalSince1970]);
     
-    self.forecast_3_description.text = [[[weatherDictionary objectForKey:@"list"][0] objectForKey:@"weather"][0]objectForKey:@"description"];
-    
-    self.forecast_6_description.text = [[[weatherDictionary objectForKey:@"list"][1] objectForKey:@"weather"][0]objectForKey:@"description"];
-    
-    self.forecast_9_description.text = [[[weatherDictionary objectForKey:@"list"][2] objectForKey:@"weather"][0]objectForKey:@"description"];
+    NSString *test = @"10d";
+    NSURL * imageURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://openweathermap.org/img/w/%@.png",test]];
+    NSData * imageData = [NSData dataWithContentsOfURL:imageURL];
+    UIImage * image = [UIImage imageWithData:imageData];
+    self.forecast_3_icon_view.image = image;
+    self.forecast_6_icon_view.image = image;
+    self.forecast_9_icon_view.image = image;
 
 }
 
