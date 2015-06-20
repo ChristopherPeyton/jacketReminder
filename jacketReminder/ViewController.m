@@ -13,7 +13,7 @@
 {
     NSMutableDictionary *weatherDictionary;
     CLLocation *location; 
-    NSArray *addressFromGEO;
+    NSArray *addressFromGEO;//[0]=string address,[1]=city string
     int timer;
     int maxTimer;
     int forecast_3_time_epoch;
@@ -200,14 +200,15 @@
                                                               placemark.postalCode,
                                                               placemark.country]];
             }
-            
+            //added city to compare from home loc to current loc
+            [tempArray addObject:placemark.locality];
         }
-        
-        
         
         addressFromGEO = [[NSArray alloc]initWithArray:tempArray];
 
         self.addressLabel.text = addressFromGEO[0];
+        
+        NSLog(@"PLACE SHOULD BE\n\n%@", addressFromGEO[1]);
     }];
     
     
@@ -217,6 +218,9 @@
 {
     //self.forecast_3_hr.text = weatherDictionary;
     //NSLog(@"\n%@",weatherDictionary);
+    
+    NSLOG_SPACER
+    NSLog(@"\n\nPOST WEATHER CALLED");
  
     int temp = [[[[weatherDictionary objectForKey:@"list"][0] objectForKey:@"main"] objectForKey:@"temp"] intValue];
     self.forecast_3_hr.text = [NSString stringWithFormat:@"%d\u00B0", [self convertKelvinToFaranheit:temp]];
@@ -266,15 +270,20 @@
     
     //CONVERT TO EPOCH SUCH AS 1434505973
     NSLog(@"\nBLAH\n%d\n\n",(int)[[NSDate date] timeIntervalSince1970]);
-    
-    NSString *test = @"10d";
-    NSURL * imageURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://openweathermap.org/img/w/%@.png",test]];
-    NSData * imageData = [NSData dataWithContentsOfURL:imageURL];
-    UIImage * image = [UIImage imageWithData:imageData];
-    self.forecast_3_icon_view.image = image;
-    self.forecast_6_icon_view.image = image;
-    self.forecast_9_icon_view.image = image;
 
+    self.forecast_3_icon_view.image = [self getIconImage:[[[weatherDictionary objectForKey:@"list"][0] objectForKey:@"weather"][0] objectForKey:@"icon"]];
+    self.forecast_6_icon_view.image = [self getIconImage:[[[weatherDictionary objectForKey:@"list"][1] objectForKey:@"weather"][0] objectForKey:@"icon"]];
+    self.forecast_9_icon_view.image = [self getIconImage:[[[weatherDictionary objectForKey:@"list"][2] objectForKey:@"weather"][0] objectForKey:@"icon"]];
+
+}
+
+-(UIImage *)getIconImage: (NSString *) iconString
+{
+    NSURL *imageURL = [NSURL URLWithString:[NSString stringWithFormat:@"http://openweathermap.org/img/w/%@.png",iconString]];
+    NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+    UIImage *image = [UIImage imageWithData:imageData];
+    
+    return image;
 }
 
 -(NSString *)getStringFromDate:(NSDate *) myDate
