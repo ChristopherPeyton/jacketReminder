@@ -26,13 +26,22 @@ IB_DESIGNABLE
 @property (weak, nonatomic) IBOutlet UILabel *forecast_6_time;
 @property (weak, nonatomic) IBOutlet UILabel *forecast_9_time;
 
+//HOME LOCATION SET
+@property (weak, nonatomic) IBOutlet UILabel *forecast_3_hrHOME;
+@property (weak, nonatomic) IBOutlet UILabel *forecast_6_hrHOME;
+@property (weak, nonatomic) IBOutlet UILabel *forecast_9_hrHOME;
+
+@property (weak, nonatomic) IBOutlet UILabel *forecast_3_timeHOME;
+@property (weak, nonatomic) IBOutlet UILabel *forecast_6_timeHOME;
+@property (weak, nonatomic) IBOutlet UILabel *forecast_9_timeHOME;
+
 @property (nonatomic, strong) CLLocationManager *locationManager;
 
 @property (nonatomic,strong) NSURLSession *session;
 
 @property (strong, nonatomic) NSMutableArray *homeInformation;//will contain 2 items: cllocation and address string
 
--(NSDictionary *) getWeather;
+-(void) getWeather;
 
 @end
 

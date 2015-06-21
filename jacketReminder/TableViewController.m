@@ -124,7 +124,6 @@
 
 - (BOOL) textFieldShouldEndEditing:(UITextField *)textField
 {
-    NSLog(@"\n\nDONE");
     return YES;
 }
 
@@ -134,17 +133,15 @@
     
     //retrieve home location string
     self.addressString = self.homeInformationFromRoot[1];
-    NSLog(@"%@",self.addressString);
 
     self.addressLabel.text = self.addressString;
-    
-    NSLog(@"HOME ARRAY HAS %lu ojects, should only be 2", (unsigned long)[self.homeInformationFromRoot count]);
+
   
 }
 
 //PREVENT PASTING NON NUMERICAL VALUES AS TEMPERATURE VALUE
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    NSLog(@"CHANGING TEXT NOW");
+
     /* for backspace */
     if([string length]==0){
         return YES;
