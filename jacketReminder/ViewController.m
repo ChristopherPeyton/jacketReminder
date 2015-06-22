@@ -64,8 +64,9 @@
     return temperatureInFaranheit;
 }
 
-- (void) getWeather
+- (void) getHomeWeather
 {
+    NSLog(@"\nHOME CITY = %@\nCURRENT CITY = %@",self.homeInformation[2],addressFromGEO[1]);
     //RUNNING WEATHER UPDATE FOR HOME IF HOME IS DIFF FROM CURRENT LOC
     if ([self.homeInformation count]>=3 && [self.homeInformation[2] isEqualToString:addressFromGEO[1]] == NO)
     {
@@ -100,8 +101,10 @@
         }];
         [datatask resume];
     }
-    
+}
 
+- (void) getWeather
+{
 //    //FINAL STRING WITH API KEY
 //    NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%.8f&lon=%.8f&APPID=a96ff77043a749a97158ecbaaa30f249", location.coordinate.latitude, location.coordinate.longitude];
     
@@ -237,7 +240,8 @@
             //added city to compare from home loc to current loc
             [tempArray addObject:placemark.locality];
         }
-        
+        [[[UIAlertView alloc]initWithTitle:@"ADDR FROM GEO" message:addressFromGEO[0] delegate:nil cancelButtonTitle:@"kk" otherButtonTitles: nil]show];
+        NSLog(@"COUNT IS %lu",(unsigned long)[addressFromGEO count]);
         addressFromGEO = [[NSArray alloc]initWithArray:tempArray];
 
         self.addressLabel.text = addressFromGEO[0];
@@ -374,6 +378,9 @@
 //    NSDictionary *fontDictionary = @{NSFontAttributeName : customFont};
 //    [self.settingsButton setTitleTextAttributes:fontDictionary forState:UIControlStateNormal];
     
+    addressFromGEO = [NSArray arrayWithObjects:@"",@"", nil];
+    NSLog(@"COUNT:%lu",(unsigned long)[addressFromGEO count]);
+    
     //set labels as empty strings until they update
     self.addressLabel.text = @"Searching...";
     self.weatherDescriptionLabel.text = @"";
@@ -383,6 +390,7 @@
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     self.locationManager.distanceFilter = 55; //filter for x meters
     self.locationManager.delegate = self;
+    
     if ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)])
     {
         [self.locationManager requestAlwaysAuthorization];
@@ -391,7 +399,7 @@
     //NSLog(@"%@", self.locationManager.location);
     
     //if addr is saved, load it
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"] && [[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"])
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"] != nil && [[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"] != nil)
     {
         NSMutableArray *temp = [NSMutableArray arrayWithObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"]];
         
@@ -413,7 +421,7 @@
     }
     
     
-    else if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"])
+    else if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"] != nil)
     {
         NSMutableArray *temp = [NSMutableArray arrayWithObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"]];
         
@@ -428,7 +436,7 @@
     
     
     
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"picker"])
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"picker"] == nil)
     {
         [[NSUserDefaults standardUserDefaults] setObject:@"23" forKey:@"picker"];
     }
