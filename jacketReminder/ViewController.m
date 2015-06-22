@@ -14,7 +14,7 @@
     NSMutableDictionary *weatherDictionary;
     NSMutableDictionary *homeWeatherDictionary;
     CLLocation *location;
-    NSArray *addressFromGEO;//[0]=string address,[1]=city string
+    NSMutableArray *addressFromGEO;//[0]=string address,[1]=city string
     int timer;
     int maxTimer;
     int forecast_3_time_epoch;
@@ -206,10 +206,10 @@
     [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error)
     {
         
-        NSMutableArray *tempArray = [[NSMutableArray alloc]init];
+        //NSMutableArray *tempArray = [[NSMutableArray alloc]init];
         for (CLPlacemark *placemark in placemarks)
         {
-            [tempArray addObject:[NSString stringWithFormat:@"%@ %@\n%@ %@ %@\n%@",
+            [addressFromGEO replaceObjectAtIndex:0 withObject:[NSString stringWithFormat:@"%@ %@\n%@ %@ %@\n%@",
                                   placemark.subThoroughfare,
                                   placemark.thoroughfare,
                                   placemark.locality,
@@ -220,7 +220,7 @@
             //in case user is not in a static spot, possibly driving
             if (placemark.subThoroughfare == nil)
             {
-                [tempArray replaceObjectAtIndex:0 withObject:[NSString stringWithFormat:@"%@\n%@ %@ %@\n%@",
+                [addressFromGEO replaceObjectAtIndex:0 withObject:[NSString stringWithFormat:@"%@\n%@ %@ %@\n%@",
                                                               placemark.thoroughfare,
                                                               placemark.locality,
                                                               placemark.administrativeArea,
@@ -231,18 +231,20 @@
             //in case user is not in a static spot, possibly driving AND only has region info
             if (placemark.thoroughfare == nil)
             {
-                [tempArray replaceObjectAtIndex:0 withObject:[NSString stringWithFormat:@"%@ %@ %@\n%@",
+                [addressFromGEO replaceObjectAtIndex:0 withObject:[NSString stringWithFormat:@"%@ %@ %@\n%@",
                                                               placemark.locality,
                                                               placemark.administrativeArea,
                                                               placemark.postalCode,
                                                               placemark.country]];
             }
             //added city to compare from home loc to current loc
-            [tempArray addObject:placemark.locality];
+            [addressFromGEO replaceObjectAtIndex:1 withObject:placemark.locality];
         }
-        [[[UIAlertView alloc]initWithTitle:@"ADDR FROM GEO" message:addressFromGEO[0] delegate:nil cancelButtonTitle:@"kk" otherButtonTitles: nil]show];
+        
         NSLog(@"COUNT IS %lu",(unsigned long)[addressFromGEO count]);
-        addressFromGEO = [[NSArray alloc]initWithArray:tempArray];
+        for (id runner in addressFromGEO) {
+            NSLog(@"\nARRAY:%@",runner);
+        }
 
         self.addressLabel.text = addressFromGEO[0];
         
@@ -378,8 +380,7 @@
 //    NSDictionary *fontDictionary = @{NSFontAttributeName : customFont};
 //    [self.settingsButton setTitleTextAttributes:fontDictionary forState:UIControlStateNormal];
     
-    addressFromGEO = [NSArray arrayWithObjects:@"",@"", nil];
-    NSLog(@"COUNT:%lu",(unsigned long)[addressFromGEO count]);
+    addressFromGEO = [NSMutableArray arrayWithObjects:@"",@"", nil];
     
     //set labels as empty strings until they update
     self.addressLabel.text = @"Searching...";
@@ -412,10 +413,6 @@
         homeWeatherDictionary = [[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"];
         
         [self postWeatherToLabels];
-        
-        NSLog(@"CURRENT LOC INFO\n%@",weatherDictionary);
-        NSLOG_SPACER
-        NSLog(@"HOME LOC INFO\n%@",homeWeatherDictionary);
 
         
     }
