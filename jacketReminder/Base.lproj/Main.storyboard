@@ -77,7 +77,7 @@
                                 </view>
                                 <blurEffect style="light"/>
                             </visualEffectView>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cKA-f9-qA6">
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cKA-f9-qA6" userLabel="CURRENT Visual Effect View">
                                 <rect key="frame" x="0.0" y="374" width="375" height="86"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="1zg-Hx-t49">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="86"/>
@@ -141,39 +141,8 @@
                                 </view>
                                 <blurEffect style="light"/>
                             </visualEffectView>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tFp-kB-1S5">
-                                <rect key="frame" x="89" y="562" width="208" height="85"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gT7-0m-1Mr">
-                                    <rect key="frame" x="0.0" y="0.0" width="208" height="85"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d3p-cK-E5h">
-                                            <rect key="frame" x="0.0" y="0.0" width="208" height="85"/>
-                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="kw7-Gj-Dfm">
-                                                <rect key="frame" x="0.0" y="0.0" width="208" height="85"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            </view>
-                                            <vibrancyEffect>
-                                                <blurEffect style="light"/>
-                                            </vibrancyEffect>
-                                        </visualEffectView>
-                                    </subviews>
-                                </view>
-                                <blurEffect style="extraLight"/>
-                            </visualEffectView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UDZ-0V-C3N">
-                                <rect key="frame" x="89" y="562" width="208" height="85"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="21"/>
-                                <state key="normal" title="Set Home Address"/>
-                                <state key="selected">
-                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="setHomeLocation:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="84A-iA-WtN"/>
-                                </connections>
-                            </button>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oFo-6v-90j">
-                                <rect key="frame" x="97" y="190" width="180" height="180"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oFo-6v-90j" userLabel="CIRCLE View">
+                                <rect key="frame" x="210" y="168" width="180" height="180"/>
                                 <subviews>
                                     <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bvj-EA-evP">
                                         <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
@@ -309,24 +278,91 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xnQ-ix-rJ4" userLabel="BUTTON container">
+                                <rect key="frame" x="207" y="540" width="187" height="60"/>
+                                <subviews>
+                                    <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tFp-kB-1S5" userLabel="BUTTON Visual Effect View">
+                                        <rect key="frame" x="0.0" y="0.0" width="187" height="60"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gT7-0m-1Mr">
+                                            <rect key="frame" x="0.0" y="0.0" width="187" height="60"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d3p-cK-E5h">
+                                                    <rect key="frame" x="0.0" y="0.0" width="187" height="60"/>
+                                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="kw7-Gj-Dfm">
+                                                        <rect key="frame" x="0.0" y="0.0" width="187" height="60"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    </view>
+                                                    <vibrancyEffect>
+                                                        <blurEffect style="light"/>
+                                                    </vibrancyEffect>
+                                                </visualEffectView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="d3p-cK-E5h" secondAttribute="trailing" id="A9a-FD-tvp"/>
+                                                <constraint firstItem="d3p-cK-E5h" firstAttribute="top" secondItem="gT7-0m-1Mr" secondAttribute="top" id="SqG-h7-YkH"/>
+                                                <constraint firstItem="d3p-cK-E5h" firstAttribute="leading" secondItem="gT7-0m-1Mr" secondAttribute="leading" id="iFn-c9-P6O"/>
+                                                <constraint firstAttribute="bottom" secondItem="d3p-cK-E5h" secondAttribute="bottom" id="qzT-3s-sTL"/>
+                                            </constraints>
+                                        </view>
+                                        <blurEffect style="extraLight"/>
+                                    </visualEffectView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UDZ-0V-C3N">
+                                        <rect key="frame" x="0.0" y="0.0" width="187" height="60"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="21"/>
+                                        <state key="normal" title="Set Home Address"/>
+                                        <state key="selected">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="setHomeLocation:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="84A-iA-WtN"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="tFp-kB-1S5" firstAttribute="leading" secondItem="xnQ-ix-rJ4" secondAttribute="leading" id="8F7-fd-fRD"/>
+                                    <constraint firstItem="UDZ-0V-C3N" firstAttribute="top" secondItem="xnQ-ix-rJ4" secondAttribute="top" id="8b0-Lo-LaO"/>
+                                    <constraint firstAttribute="width" constant="187" id="Ab9-8r-KIY"/>
+                                    <constraint firstAttribute="trailing" secondItem="tFp-kB-1S5" secondAttribute="trailing" id="HpG-sH-bmW"/>
+                                    <constraint firstItem="tFp-kB-1S5" firstAttribute="top" secondItem="xnQ-ix-rJ4" secondAttribute="top" id="SVK-Ec-w5i"/>
+                                    <constraint firstAttribute="trailing" secondItem="UDZ-0V-C3N" secondAttribute="trailing" id="TGz-9y-kah"/>
+                                    <constraint firstAttribute="width" secondItem="xnQ-ix-rJ4" secondAttribute="height" multiplier="187:60" id="aaE-Pt-r2L"/>
+                                    <constraint firstItem="UDZ-0V-C3N" firstAttribute="leading" secondItem="xnQ-ix-rJ4" secondAttribute="leading" id="kW9-m1-VWE"/>
+                                    <constraint firstAttribute="bottom" secondItem="UDZ-0V-C3N" secondAttribute="bottom" id="l6h-Pv-uz9"/>
+                                    <constraint firstAttribute="bottom" secondItem="tFp-kB-1S5" secondAttribute="bottom" id="vNv-GX-fnn"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Ab9-8r-KIY"/>
+                                    </mask>
+                                </variation>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="IUB-XP-jO1" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="4aD-iC-Dzn"/>
+                            <constraint firstItem="xnQ-ix-rJ4" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" multiplier="0.004" constant="190" id="8KU-YL-Y7r"/>
                             <constraint firstItem="IUB-XP-jO1" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="CyG-m2-mqK"/>
                             <constraint firstItem="Ev2-Qo-hPc" firstAttribute="bottom" secondItem="gMs-2R-S6X" secondAttribute="bottom" id="Hgb-09-qsB"/>
                             <constraint firstItem="IUB-XP-jO1" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="height" multiplier="5:8" id="LTR-7L-dh9"/>
+                            <constraint firstAttribute="centerX" secondItem="xnQ-ix-rJ4" secondAttribute="centerX" id="LoU-lh-Nlh"/>
+                            <constraint firstItem="xnQ-ix-rJ4" firstAttribute="height" secondItem="kh9-bI-dsS" secondAttribute="height" multiplier="0.004" constant="58" id="OnS-NV-hdA"/>
                             <constraint firstAttribute="bottom" secondItem="ILw-ab-fwW" secondAttribute="bottom" id="P7J-ed-wRv"/>
                             <constraint firstItem="ILw-ab-fwW" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="Pvc-BM-JPf"/>
+                            <constraint firstAttribute="bottom" secondItem="xnQ-ix-rJ4" secondAttribute="bottom" id="QdT-qg-udc"/>
                             <constraint firstAttribute="trailing" secondItem="IUB-XP-jO1" secondAttribute="trailing" id="de4-yK-une"/>
                             <constraint firstItem="ILw-ab-fwW" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="itB-Xg-uOg"/>
                             <constraint firstAttribute="centerX" secondItem="Ev2-Qo-hPc" secondAttribute="centerX" id="qGG-Db-NZJ"/>
                             <constraint firstAttribute="trailing" secondItem="ILw-ab-fwW" secondAttribute="trailing" id="vxx-WS-QAU"/>
                             <constraint firstItem="IUB-XP-jO1" firstAttribute="height" secondItem="kh9-bI-dsS" secondAttribute="height" multiplier="0.006" constant="156" id="xIX-sL-WCj"/>
+                            <constraint firstItem="oOS-PS-YsH" firstAttribute="top" secondItem="xnQ-ix-rJ4" secondAttribute="bottom" id="y4p-mg-X23"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="LTR-7L-dh9"/>
+                                <exclude reference="8KU-YL-Y7r"/>
+                                <exclude reference="y4p-mg-X23"/>
                             </mask>
                         </variation>
                     </view>
