@@ -351,6 +351,7 @@
                             <constraint firstAttribute="bottom" secondItem="ILw-ab-fwW" secondAttribute="bottom" id="P7J-ed-wRv"/>
                             <constraint firstItem="ILw-ab-fwW" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="Pvc-BM-JPf"/>
                             <constraint firstAttribute="bottom" secondItem="xnQ-ix-rJ4" secondAttribute="bottom" id="QdT-qg-udc"/>
+                            <constraint firstItem="xnQ-ix-rJ4" firstAttribute="height" relation="greaterThanOrEqual" secondItem="kh9-bI-dsS" secondAttribute="height" multiplier="0.6" constant="-350" id="U2p-0m-SHT"/>
                             <constraint firstAttribute="trailing" secondItem="IUB-XP-jO1" secondAttribute="trailing" id="de4-yK-une"/>
                             <constraint firstItem="ILw-ab-fwW" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="itB-Xg-uOg"/>
                             <constraint firstAttribute="centerX" secondItem="Ev2-Qo-hPc" secondAttribute="centerX" id="qGG-Db-NZJ"/>
@@ -362,6 +363,7 @@
                             <mask key="constraints">
                                 <exclude reference="LTR-7L-dh9"/>
                                 <exclude reference="8KU-YL-Y7r"/>
+                                <exclude reference="OnS-NV-hdA"/>
                                 <exclude reference="y4p-mg-X23"/>
                             </mask>
                         </variation>
