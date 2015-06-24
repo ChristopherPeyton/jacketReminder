@@ -38,28 +38,29 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IUB-XP-jO1" userLabel="TOP Visual Effect View">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="174"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="160"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="RNE-hy-VxC">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="174"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="160"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gMs-2R-S6X">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="174"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="160"/>
                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="TKb-uu-sf5">
-                                                <rect key="frame" x="0.0" y="0.0" width="600" height="174"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="160"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="address" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DqO-dA-CFP">
-                                                        <rect key="frame" x="265" y="64" width="71" height="74"/>
+                                                        <rect key="frame" x="0.0" y="48" width="600" height="112"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="centerX" secondItem="DqO-dA-CFP" secondAttribute="centerX" id="A0d-6z-s49"/>
-                                                    <constraint firstItem="DqO-dA-CFP" firstAttribute="top" secondItem="TKb-uu-sf5" secondAttribute="top" constant="64" id="VKg-iZ-QKJ"/>
-                                                    <constraint firstAttribute="centerY" secondItem="DqO-dA-CFP" secondAttribute="centerY" constant="-14" id="wkR-9U-fbJ"/>
+                                                    <constraint firstItem="DqO-dA-CFP" firstAttribute="leading" secondItem="TKb-uu-sf5" secondAttribute="leading" id="AlD-cp-LcL"/>
+                                                    <constraint firstItem="DqO-dA-CFP" firstAttribute="top" secondItem="TKb-uu-sf5" secondAttribute="top" constant="48" id="INc-2i-vSK"/>
+                                                    <constraint firstAttribute="bottom" secondItem="DqO-dA-CFP" secondAttribute="bottom" id="Mw7-Ei-YV3"/>
+                                                    <constraint firstAttribute="trailing" secondItem="DqO-dA-CFP" secondAttribute="trailing" id="m5E-T2-Wj3"/>
                                                 </constraints>
                                             </view>
                                             <vibrancyEffect>
@@ -303,7 +304,7 @@
                                 <rect key="frame" x="292" y="483" width="50" height="50"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Location" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ev2-Qo-hPc">
-                                <rect key="frame" x="250" y="158" width="101" height="16"/>
+                                <rect key="frame" x="250" y="144" width="101" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -321,7 +322,7 @@
                             <constraint firstItem="ILw-ab-fwW" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="itB-Xg-uOg"/>
                             <constraint firstAttribute="centerX" secondItem="Ev2-Qo-hPc" secondAttribute="centerX" id="qGG-Db-NZJ"/>
                             <constraint firstAttribute="trailing" secondItem="ILw-ab-fwW" secondAttribute="trailing" id="vxx-WS-QAU"/>
-                            <constraint firstItem="IUB-XP-jO1" firstAttribute="height" secondItem="kh9-bI-dsS" secondAttribute="height" multiplier="0.006" constant="170" id="xIX-sL-WCj"/>
+                            <constraint firstItem="IUB-XP-jO1" firstAttribute="height" secondItem="kh9-bI-dsS" secondAttribute="height" multiplier="0.006" constant="156" id="xIX-sL-WCj"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
