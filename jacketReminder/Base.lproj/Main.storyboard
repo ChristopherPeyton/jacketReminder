@@ -55,8 +55,8 @@
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Current Location" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ev2-Qo-hPc">
-                                                        <rect key="frame" x="86" y="154" width="202" height="21"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Location" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ev2-Qo-hPc">
+                                                        <rect key="frame" x="250" y="158" width="101" height="16"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
@@ -64,6 +64,8 @@
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstAttribute="centerX" secondItem="DqO-dA-CFP" secondAttribute="centerX" id="A0d-6z-s49"/>
+                                                    <constraint firstItem="Ev2-Qo-hPc" firstAttribute="centerX" secondItem="DqO-dA-CFP" secondAttribute="centerX" id="Gxp-gS-N37"/>
+                                                    <constraint firstAttribute="bottom" secondItem="Ev2-Qo-hPc" secondAttribute="bottom" id="Ha2-Gc-hvz"/>
                                                     <constraint firstItem="DqO-dA-CFP" firstAttribute="top" secondItem="TKb-uu-sf5" secondAttribute="top" constant="64" id="VKg-iZ-QKJ"/>
                                                     <constraint firstAttribute="centerY" secondItem="DqO-dA-CFP" secondAttribute="centerY" constant="-14" id="wkR-9U-fbJ"/>
                                                 </constraints>
