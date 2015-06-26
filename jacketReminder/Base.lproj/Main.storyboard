@@ -353,32 +353,32 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oFo-6v-90j" userLabel="CIRCLE View">
                                 <rect key="frame" x="249" y="168" width="103" height="103"/>
                                 <subviews>
-                                    <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bvj-EA-evP">
-                                        <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
+                                    <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bvj-EA-evP">
+                                        <rect key="frame" x="0.0" y="0.0" width="103" height="103"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="mcO-bL-h7g">
-                                            <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="103" height="103"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vdG-NT-4Vx">
-                                                    <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
+                                                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vdG-NT-4Vx">
+                                                    <rect key="frame" x="0.0" y="0.0" width="103" height="103"/>
                                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="SSr-1y-kj5">
-                                                        <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="103" height="103"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Current Location" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="piR-L3-Kkf">
-                                                                <rect key="frame" x="0.0" y="55" width="180" height="21"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                                <color key="textColor" red="0.39567550509999999" green="0.39567550509999999" blue="0.39567550509999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="weather description" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Nq-w9-rrP">
-                                                                <rect key="frame" x="0.0" y="0.0" width="180" height="65"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="103" height="22"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                 <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Fri, 10 PM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fID-bl-uEp">
                                                                 <rect key="frame" x="0.0" y="40" width="180" height="21"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                                <color key="textColor" red="0.39567550509999999" green="0.39567550509999999" blue="0.39567550509999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Current Location" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="piR-L3-Kkf">
+                                                                <rect key="frame" x="0.0" y="55" width="180" height="21"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                 <color key="textColor" red="0.39567550509999999" green="0.39567550509999999" blue="0.39567550509999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
@@ -394,6 +394,12 @@
                                                     <blurEffect style="light"/>
                                                 </visualEffectView>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="vdG-NT-4Vx" firstAttribute="top" secondItem="mcO-bL-h7g" secondAttribute="top" id="F7f-MA-OmT"/>
+                                                <constraint firstAttribute="bottom" secondItem="vdG-NT-4Vx" secondAttribute="bottom" id="SuD-C7-pTJ"/>
+                                                <constraint firstItem="vdG-NT-4Vx" firstAttribute="leading" secondItem="mcO-bL-h7g" secondAttribute="leading" id="UdG-p6-55f"/>
+                                                <constraint firstAttribute="trailing" secondItem="vdG-NT-4Vx" secondAttribute="trailing" id="o5Y-3T-bc8"/>
+                                            </constraints>
                                         </view>
                                         <blurEffect style="extraLight"/>
                                     </visualEffectView>
@@ -401,6 +407,10 @@
                                 <color key="backgroundColor" red="0.0" green="1" blue="0.012900601689999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="oFo-6v-90j" secondAttribute="height" multiplier="1:1" id="8Yn-aO-blq"/>
+                                    <constraint firstAttribute="trailing" secondItem="Bvj-EA-evP" secondAttribute="trailing" id="JYs-4b-KKd"/>
+                                    <constraint firstItem="Bvj-EA-evP" firstAttribute="top" secondItem="oFo-6v-90j" secondAttribute="top" id="RId-Vv-NXP"/>
+                                    <constraint firstItem="Bvj-EA-evP" firstAttribute="leading" secondItem="oFo-6v-90j" secondAttribute="leading" id="ZwS-h6-cM5"/>
+                                    <constraint firstAttribute="bottom" secondItem="Bvj-EA-evP" secondAttribute="bottom" id="aj8-Na-RqB"/>
                                 </constraints>
                             </view>
                         </subviews>
