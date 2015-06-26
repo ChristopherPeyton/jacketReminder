@@ -26,6 +26,7 @@
     IBInspectable int xx;
     
 }
+@property (weak, nonatomic) IBOutlet UILabel *tempSymbol;
 @property (weak, nonatomic) IBOutlet UILabel *currentLocationWeatherTime;
 @property (weak, nonatomic) IBOutlet UIImageView *forecast_3_icon_view;
 @property (weak, nonatomic) IBOutlet UIImageView *forecast_6_icon_view;
@@ -261,7 +262,7 @@
     //assign temperature to string
     NSString *tempTempString = [NSString stringWithFormat:@"%d",[self convertKelvinToFaranheit:[[[[weatherDictionary objectForKey:@"list"][0] objectForKey:@"main"] objectForKey:@"temp"]intValue]]];
     
-    self.temperatureLabel.text = [NSString stringWithFormat:@"%@\u00B0", tempTempString];
+    self.temperatureLabel.text = [NSString stringWithFormat:@"%@", tempTempString];
     
     NSArray *aaa = [NSArray arrayWithArray:[[weatherDictionary objectForKey:@"list"][0] objectForKey:@"weather"]];
     
@@ -271,13 +272,13 @@
 
  
     int temp = [[[[weatherDictionary objectForKey:@"list"][0] objectForKey:@"main"] objectForKey:@"temp"] intValue];
-    self.forecast_3_hr.text = [NSString stringWithFormat:@"%d\u00B0", [self convertKelvinToFaranheit:temp]];
+    self.forecast_3_hr.text = [NSString stringWithFormat:@"%d", [self convertKelvinToFaranheit:temp]];
     
     temp = [[[[weatherDictionary objectForKey:@"list"][1] objectForKey:@"main"] objectForKey:@"temp"] intValue];
-    self.forecast_6_hr.text = [NSString stringWithFormat:@"%d\u00B0", [self convertKelvinToFaranheit:temp]];
+    self.forecast_6_hr.text = [NSString stringWithFormat:@"%d", [self convertKelvinToFaranheit:temp]];
     
     temp = [[[[weatherDictionary objectForKey:@"list"][2] objectForKey:@"main"] objectForKey:@"temp"] intValue];
-    self.forecast_9_hr.text = [NSString stringWithFormat:@"%d\u00B0", [self convertKelvinToFaranheit:temp]];
+    self.forecast_9_hr.text = [NSString stringWithFormat:@"%d", [self convertKelvinToFaranheit:temp]];
     
  
     NSString *aa = [[weatherDictionary objectForKey:@"list"][0] objectForKey:@"dt"];
@@ -324,13 +325,13 @@
     self.forecast_9_icon_viewHOME.image = [self getIconImage:[[[homeWeatherDictionary objectForKey:@"list"][2] objectForKey:@"weather"][0] objectForKey:@"icon"]];
     
     temp = [[[[homeWeatherDictionary objectForKey:@"list"][0] objectForKey:@"main"] objectForKey:@"temp"] intValue];
-    self.forecast_3_hrHOME.text = [NSString stringWithFormat:@"%d\u00B0", [self convertKelvinToFaranheit:temp]];
+    self.forecast_3_hrHOME.text = [NSString stringWithFormat:@"%d", [self convertKelvinToFaranheit:temp]];
     
     temp = [[[[homeWeatherDictionary objectForKey:@"list"][1] objectForKey:@"main"] objectForKey:@"temp"] intValue];
-    self.forecast_6_hrHOME.text = [NSString stringWithFormat:@"%d\u00B0", [self convertKelvinToFaranheit:temp]];
+    self.forecast_6_hrHOME.text = [NSString stringWithFormat:@"%d", [self convertKelvinToFaranheit:temp]];
     
     temp = [[[[homeWeatherDictionary objectForKey:@"list"][2] objectForKey:@"main"] objectForKey:@"temp"] intValue];
-    self.forecast_9_hrHOME.text = [NSString stringWithFormat:@"%d\u00B0", [self convertKelvinToFaranheit:temp]];
+    self.forecast_9_hrHOME.text = [NSString stringWithFormat:@"%d", [self convertKelvinToFaranheit:temp]];
     
     //SET HOME LOC TIME STAMPS
     forecast_3_time_epochHOME = [[[homeWeatherDictionary objectForKey:@"list"] [0] objectForKey:@"dt"] intValue];
@@ -379,6 +380,8 @@
 //    UIFont *customFont = [UIFont fontWithName:@"Helvetica" size:24];
 //    NSDictionary *fontDictionary = @{NSFontAttributeName : customFont};
 //    [self.settingsButton setTitleTextAttributes:fontDictionary forState:UIControlStateNormal];
+    
+    self.tempSymbol.text = @"\u00B0";
     
     addressFromGEO = [NSMutableArray arrayWithObjects:@"",@"", nil];
     
@@ -441,10 +444,10 @@
     //self.img = [[UIImageView alloc] initWithFrame:CGRectMake(150, 194, 100, 100)];
     
     self.midletop.bounds = self.img.bounds;
-    self.midletop.layer.cornerRadius = self.img.frame.size.width/2;
+    self.midletop.layer.cornerRadius = 6;
     [self.midletop setClipsToBounds:YES];
     
-    self.img.layer.cornerRadius = self.img.frame.size.width/2;   
+    self.img.layer.cornerRadius = self.midletop.layer.cornerRadius;
 }
 
 -(void) locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
@@ -532,7 +535,7 @@
              timer=0;
              maxTimer=0;
              NSString *tempTempString = self.temperatureLabel.text = [NSString stringWithFormat:@"%d",[self convertKelvinToFaranheit:[[[weatherDictionary objectForKey:@"main"] objectForKey:@"temp"]intValue]]];
-             self.temperatureLabel.text = [NSString stringWithFormat:@"%@\u00B0", tempTempString];
+             self.temperatureLabel.text = [NSString stringWithFormat:@"%@", tempTempString];
              
              NSArray *locArray = [NSArray arrayWithObject:randomLocation];
              [self.locationManager.delegate locationManager:nil didUpdateLocations:locArray];
