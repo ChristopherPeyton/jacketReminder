@@ -57,7 +57,7 @@
     self.picker.delegate =self;
     self.picker.dataSource =self;
     
-    [self.picker selectRow:[[[NSUserDefaults standardUserDefaults] objectForKey:@"picker"] intValue] inComponent:0 animated:Nil];
+    [self.picker selectRow:[[[NSUserDefaults standardUserDefaults] objectForKey:@"picker"] intValue] inComponent:0 animated:YES];
 
     //self.view.backgroundColor = self.settingsTableBackgroundColor;
     UIImage *image = [UIImage imageNamed:@"raindrops.jpg"];
