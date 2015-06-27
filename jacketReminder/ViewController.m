@@ -26,6 +26,8 @@
     IBInspectable int xx;
     
 }
+@property (weak, nonatomic) IBOutlet UIVisualEffectView *buttonMainViewEffect;
+@property (weak, nonatomic) IBOutlet UIView *buttonContainer;
 @property (weak, nonatomic) IBOutlet UILabel *tempSymbol;
 @property (weak, nonatomic) IBOutlet UILabel *currentLocationWeatherTime;
 @property (weak, nonatomic) IBOutlet UIImageView *forecast_3_icon_view;
@@ -443,11 +445,19 @@
     
     //self.img = [[UIImageView alloc] initWithFrame:CGRectMake(150, 194, 100, 100)];
     
+    //current info object
     self.midletop.bounds = self.img.bounds;
     self.midletop.layer.cornerRadius = 6;
     [self.midletop setClipsToBounds:YES];
     
     self.img.layer.cornerRadius = self.midletop.layer.cornerRadius;
+    
+    //home button
+    self.buttonMainViewEffect.bounds = self.buttonContainer.bounds;
+    self.buttonMainViewEffect.layer.cornerRadius = self.midletop.layer.cornerRadius;
+    [self.buttonMainViewEffect setClipsToBounds:YES];
+    
+    self.buttonContainer.layer.cornerRadius = self.buttonMainViewEffect.layer.cornerRadius;
 }
 
 -(void) locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
