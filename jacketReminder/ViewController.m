@@ -26,6 +26,7 @@
     IBInspectable int xx;
     
 }
+@property (weak, nonatomic) IBOutlet UIImageView *currentIcon;
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *buttonMainViewEffect;
 @property (weak, nonatomic) IBOutlet UIView *buttonContainer;
 @property (weak, nonatomic) IBOutlet UILabel *tempSymbol;
@@ -263,6 +264,7 @@
     
     //assign temperature to string
     NSString *tempTempString = [NSString stringWithFormat:@"%d",[self convertKelvinToFaranheit:[[[[weatherDictionary objectForKey:@"list"][0] objectForKey:@"main"] objectForKey:@"temp"]intValue]]];
+    NSLog(@"%@",weatherDictionary);
     
     self.temperatureLabel.text = [NSString stringWithFormat:@"%@", tempTempString];
     
@@ -271,6 +273,8 @@
     self.currentLocationWeatherTime.text = [self getStringFromDate:[NSDate date]];
     
     self.weatherDescriptionLabel.text = [aaa[0] objectForKey:@"description"];
+    
+    self.currentIcon.image = [self getIconImage:[aaa[0]  objectForKey:@"icon"]];
 
  
     int temp = [[[[weatherDictionary objectForKey:@"list"][0] objectForKey:@"main"] objectForKey:@"temp"] intValue];
