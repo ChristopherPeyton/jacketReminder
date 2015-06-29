@@ -95,38 +95,40 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="89"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.39999999999999963" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Current Location" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lDL-eA-7af">
-                                                            <rect key="frame" x="0.0" y="-317" width="101" height="16"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                            <color key="textColor" red="0.39567550509999999" green="0.39567550509999999" blue="0.39567550509999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
                                                         <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="agJ-gz-iLO">
                                                             <rect key="frame" x="0.0" y="0.0" width="600" height="89"/>
                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Lp3-9p-t1U">
                                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="89"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Fri at 13:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5od-vE-is3">
-                                                                        <rect key="frame" x="0.0" y="-317" width="69" height="16"/>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Location" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lDL-eA-7af">
+                                                                        <rect key="frame" x="249" y="0.0" width="101" height="16"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="height" constant="36" id="uph-ZL-Hg9"/>
+                                                                        </constraints>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                                        <color key="textColor" red="0.39567550509999999" green="0.39567550509999999" blue="0.39567550509999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                        <variation key="default">
+                                                                            <mask key="constraints">
+                                                                                <exclude reference="uph-ZL-Hg9"/>
+                                                                            </mask>
+                                                                        </variation>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fri at 13:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5od-vE-is3">
+                                                                        <rect key="frame" x="8" y="17" width="69" height="16"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="6 hr" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RV8-40-hfh">
-                                                                        <rect key="frame" x="0.0" y="-317" width="24" height="16"/>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="6 hr" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RV8-40-hfh">
+                                                                        <rect key="frame" x="266" y="16" width="69" height="16"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="9 hr" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cVu-li-dyO">
-                                                                        <rect key="frame" x="0.0" y="-317" width="24" height="16"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="109&amp;" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bZH-2k-c1G">
-                                                                        <rect key="frame" x="0.0" y="-317" width="46" height="24"/>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="109&amp;" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bZH-2k-c1G">
+                                                                        <rect key="frame" x="20" y="65" width="46" height="24"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -143,7 +145,29 @@
                                                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9 hr" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cVu-li-dyO">
+                                                                        <rect key="frame" x="523" y="17" width="69" height="16"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
                                                                 </subviews>
+                                                                <constraints>
+                                                                    <constraint firstItem="5od-vE-is3" firstAttribute="centerY" secondItem="RV8-40-hfh" secondAttribute="centerY" constant="1" id="Coh-ci-jDv"/>
+                                                                    <constraint firstItem="cVu-li-dyO" firstAttribute="centerY" secondItem="RV8-40-hfh" secondAttribute="centerY" constant="1" id="GJ3-nf-Fi9"/>
+                                                                    <constraint firstItem="lDL-eA-7af" firstAttribute="top" secondItem="Lp3-9p-t1U" secondAttribute="top" id="HMf-nJ-hfw"/>
+                                                                    <constraint firstItem="cVu-li-dyO" firstAttribute="width" secondItem="RV8-40-hfh" secondAttribute="width" id="Su0-La-4g9"/>
+                                                                    <constraint firstAttribute="centerX" secondItem="RV8-40-hfh" secondAttribute="centerX" id="WGk-gA-Q7d"/>
+                                                                    <constraint firstItem="bZH-2k-c1G" firstAttribute="centerX" secondItem="5od-vE-is3" secondAttribute="centerX" id="f9v-0n-jWg"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="cVu-li-dyO" secondAttribute="trailing" constant="8" id="j48-a0-1Sd"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="bZH-2k-c1G" secondAttribute="bottom" id="kUc-mY-LZg"/>
+                                                                    <constraint firstAttribute="centerX" secondItem="lDL-eA-7af" secondAttribute="centerX" id="lXa-ED-3Uw"/>
+                                                                    <constraint firstItem="RV8-40-hfh" firstAttribute="height" secondItem="5od-vE-is3" secondAttribute="height" id="pnw-hf-U53"/>
+                                                                    <constraint firstItem="RV8-40-hfh" firstAttribute="top" secondItem="lDL-eA-7af" secondAttribute="bottom" id="qeX-T4-yGu"/>
+                                                                    <constraint firstItem="5od-vE-is3" firstAttribute="leading" secondItem="Lp3-9p-t1U" secondAttribute="leading" constant="8" id="vfi-NU-g9y"/>
+                                                                    <constraint firstItem="RV8-40-hfh" firstAttribute="width" secondItem="5od-vE-is3" secondAttribute="width" id="wi8-wx-ich"/>
+                                                                    <constraint firstItem="cVu-li-dyO" firstAttribute="height" secondItem="RV8-40-hfh" secondAttribute="height" id="yTo-lL-npW"/>
+                                                                </constraints>
                                                             </view>
                                                             <vibrancyEffect>
                                                                 <blurEffect style="extraLight"/>
@@ -159,14 +183,17 @@
                                                 </view>
                                                 <blurEffect style="light"/>
                                             </visualEffectView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lk6-uj-dme">
-                                                <rect key="frame" x="-12" y="-61" width="79" height="59"/>
-                                            </imageView>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pHL-4P-hgR">
-                                                <rect key="frame" x="-5" y="47" width="76" height="81"/>
+                                                <rect key="frame" x="300" y="47" width="76" height="81"/>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lk6-uj-dme">
+                                                <rect key="frame" x="284" y="29" width="32" height="32"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="lk6-uj-dme" secondAttribute="height" multiplier="1:1" id="wfB-IE-KDj"/>
+                                                </constraints>
                                             </imageView>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bSW-8r-vmN">
-                                                <rect key="frame" x="-30" y="-35" width="29" height="32"/>
+                                                <rect key="frame" x="300" y="-35" width="29" height="32"/>
                                             </imageView>
                                         </subviews>
                                         <constraints>
