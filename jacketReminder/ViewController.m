@@ -31,6 +31,12 @@
 @property (weak, nonatomic) IBOutlet UIView *buttonContainer;
 @property (weak, nonatomic) IBOutlet UILabel *tempSymbol;
 @property (weak, nonatomic) IBOutlet UILabel *currentLocationWeatherTime;
+@property (weak, nonatomic) IBOutlet UILabel *tempSymbolCurrent1;
+@property (weak, nonatomic) IBOutlet UILabel *tempSymbolCurrent2;
+@property (weak, nonatomic) IBOutlet UILabel *tempSymbolCurrent3;
+@property (weak, nonatomic) IBOutlet UILabel *tempSymbolHome1;
+@property (weak, nonatomic) IBOutlet UILabel *tempSymbolHome2;
+@property (weak, nonatomic) IBOutlet UILabel *tempSymbolHome3;
 @property (weak, nonatomic) IBOutlet UIImageView *forecast_3_icon_view;
 @property (weak, nonatomic) IBOutlet UIImageView *forecast_6_icon_view;
 @property (weak, nonatomic) IBOutlet UIImageView *forecast_9_icon_view;
@@ -70,7 +76,7 @@
 
 - (void) getHomeWeather
 {
-    NSLog(@"\nHOME CITY = %@\nCURRENT CITY = %@",self.homeInformation[2],addressFromGEO[1]);
+    
     //RUNNING WEATHER UPDATE FOR HOME IF HOME IS DIFF FROM CURRENT LOC
     if ([self.homeInformation count]>=3 && [self.homeInformation[2] isEqualToString:addressFromGEO[1]] == NO)
     {
@@ -92,6 +98,7 @@
             homeWeatherDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             
             [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"homeWeatherDictionary"];
+            [[NSUserDefaults standardUserDefaults] setObject:homeWeatherDictionary forKey:@"homeWeatherDictionary"];
             
             //[weatherDictionary setObject: forKey:<#(id<NSCopying>)#>]
             
@@ -134,6 +141,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             
             [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"weatherDictionary"];
+
             [[NSUserDefaults standardUserDefaults] synchronize];
             [self postWeatherToLabels];
 
@@ -244,11 +252,6 @@
             //added city to compare from home loc to current loc
             [addressFromGEO replaceObjectAtIndex:1 withObject:placemark.locality];
         }
-        
-        NSLog(@"COUNT IS %lu",(unsigned long)[addressFromGEO count]);
-        for (id runner in addressFromGEO) {
-            NSLog(@"\nARRAY:%@",runner);
-        }
 
         self.addressLabel.text = addressFromGEO[0];
         
@@ -259,12 +262,19 @@
 
 - (void) postWeatherToLabels
 {
+    //assign symbols
+    self.tempSymbolCurrent1.text = @"\u00B0";
+    self.tempSymbolCurrent2.text = @"\u00B0";
+    self.tempSymbolCurrent3.text = @"\u00B0";
+    self.tempSymbolHome1.text = @"\u00B0";
+    self.tempSymbolHome2.text = @"\u00B0";
+    self.tempSymbolHome3.text = @"\u00B0";
+
     //self.forecast_3_hr.text = weatherDictionary;
     //NSLog(@"\n%@",weatherDictionary);
     
     //assign temperature to string
     NSString *tempTempString = [NSString stringWithFormat:@"%d",[self convertKelvinToFaranheit:[[[[weatherDictionary objectForKey:@"list"][0] objectForKey:@"main"] objectForKey:@"temp"]intValue]]];
-    NSLog(@"%@",weatherDictionary);
     
     self.temperatureLabel.text = [NSString stringWithFormat:@"%@", tempTempString];
     
@@ -329,6 +339,8 @@
     self.forecast_3_icon_viewHOME.image = [self getIconImage:[[[homeWeatherDictionary objectForKey:@"list"][0] objectForKey:@"weather"][0] objectForKey:@"icon"]];
     self.forecast_6_icon_viewHOME.image = [self getIconImage:[[[homeWeatherDictionary objectForKey:@"list"][1] objectForKey:@"weather"][0] objectForKey:@"icon"]];
     self.forecast_9_icon_viewHOME.image = [self getIconImage:[[[homeWeatherDictionary objectForKey:@"list"][2] objectForKey:@"weather"][0] objectForKey:@"icon"]];
+    
+    NSLog(@"HOME\n%@",homeWeatherDictionary);
     
     temp = [[[[homeWeatherDictionary objectForKey:@"list"][0] objectForKey:@"main"] objectForKey:@"temp"] intValue];
     self.forecast_3_hrHOME.text = [NSString stringWithFormat:@"%d", [self convertKelvinToFaranheit:temp]];
@@ -411,6 +423,8 @@
     //if addr is saved, load it
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"] != nil && [[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"] != nil)
     {
+        NSLog(@"HOMEINFO AND HOMEWEATHERDICT ARE NIL");
+        
         NSMutableArray *temp = [NSMutableArray arrayWithObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"]];
         
         self.homeInformation = [NSKeyedUnarchiver unarchiveObjectWithData:temp[0]];
@@ -429,12 +443,15 @@
     
     else if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"] != nil)
     {
+        NSLog(@"HOMEINFO IS NIL, HOMEWEATHERDICT IS NOT");
+
         NSMutableArray *temp = [NSMutableArray arrayWithObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"]];
         
         self.homeInformation = [NSKeyedUnarchiver unarchiveObjectWithData:temp[0]];
 
         weatherDictionary = [[NSUserDefaults standardUserDefaults] objectForKey:@"weatherDictionary"];
         
+        homeWeatherDictionary = [[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"];
         
         [self postWeatherToLabels];
     }
