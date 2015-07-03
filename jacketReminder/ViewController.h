@@ -16,8 +16,10 @@ IB_DESIGNABLE
 {
     int LocationEnabledStatus;
     BOOL setHomeLocationTriggered;
+    BOOL atHome;
 }
 
+@property (weak, nonatomic) NSString *userName;
 @property (weak, nonatomic) IBOutlet UILabel *forecast_3_hr;
 @property (weak, nonatomic) IBOutlet UILabel *forecast_6_hr;
 @property (weak, nonatomic) IBOutlet UILabel *forecast_9_hr;
@@ -39,9 +41,11 @@ IB_DESIGNABLE
 
 @property (nonatomic,strong) NSURLSession *session;
 
-@property (strong, nonatomic) NSMutableArray *homeInformation;//will contain 2 items: cllocation and address string
+@property (strong, nonatomic) NSMutableArray *homeInformation;//will contain 3 items: cllocation, address string and city name
 
--(void) getWeather;
+-(NSMutableDictionary *) getWeather;
+-(NSMutableDictionary *) getHomeWeather;
+-(NSMutableDictionary *) getBothWeather;
 
 @end
 

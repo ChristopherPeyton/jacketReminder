@@ -74,7 +74,7 @@
     return temperatureInFaranheit;
 }
 
-- (void) getHomeWeather
+- (NSMutableDictionary *) getHomeWeather
 {
     
     //RUNNING WEATHER UPDATE FOR HOME IF HOME IS DIFF FROM CURRENT LOC
@@ -115,6 +115,7 @@
             
             //NOW GET CURRENT WEATHER DATA
             [self getWeather];
+            
         }
         else if ([self.homeInformation[2] isEqualToString:addressFromGEO[1]] == YES)
         {
@@ -126,9 +127,11 @@
     {
         [self getWeather];
     }
+    
+    return homeWeatherDictionary;
 }
 
-- (void) getWeather
+- (NSMutableDictionary *) getWeather
 {
 //    //FINAL STRING WITH API KEY
 //    NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%.8f&lon=%.8f&APPID=a96ff77043a749a97158ecbaaa30f249", location.coordinate.latitude, location.coordinate.longitude];
@@ -162,9 +165,11 @@
         });
     }];
     [datatask resume];
+    
+    return weatherDictionary;
 }
 
-- (void) getBothWeather
+- (NSMutableDictionary *) getBothWeather
 {
     //    //FINAL STRING WITH API KEY
     //    NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%.8f&lon=%.8f&APPID=a96ff77043a749a97158ecbaaa30f249", location.coordinate.latitude, location.coordinate.longitude];
@@ -199,6 +204,8 @@
         });
     }];
     [datatask resume];
+    
+    return weatherDictionary;
 }
 
 
@@ -232,6 +239,11 @@
         
         [[NSUserDefaults standardUserDefaults] setObject:arrayWrapper forKey:@"homeInformation"];
         
+        homeWeatherDictionary = weatherDictionary;
+        
+        
+        //EVENTUALLY I WILL NEED TO MOVE THIS CALL SO IT DOES NOT SLOW DOWN THE BUTTON ANIMATION
+        //POSSIBLY WITH A DELEGATE
         [self postWeatherToLabels];
         
     }
@@ -258,6 +270,64 @@
     //[self.locationManager stopUpdatingLocation];
 
     location = locations[0];
+
+    //DISTANCE FROM HOUSE TO NEXT DOOR = 16.606390
+    CLLocationDistance distance = [location distanceFromLocation: self.homeInformation[0]];
+    
+    NSLog(@"\natHome BOOL = %d",atHome);
+    
+    if (location && [self.homeInformation count] >= 3 && distance <=18)
+    {
+        if (atHome == YES)
+        {
+            NSLog(@"ALREADY AT HOME");
+        }
+        
+        else//just got home
+        {
+            atHome = YES;
+            
+            NSLog(@"JUST GOT HOME");
+            NSLog(@"\n\nDISTANCE =%f",distance);
+        }
+    }
+    
+    else if (location && [self.homeInformation count] >= 3 && distance >18)
+    {
+        if (atHome == YES)
+        {
+            atHome = NO;
+            NSLog(@"JUST LEFT HOME");
+            
+            int wxTEMP = [self convertKelvinToFaranheit:[[[[homeWeatherDictionary objectForKey:@"list"][0] objectForKey:@"main"] objectForKey:@"temp"] intValue]];
+            int watchertemp =[[NSUserDefaults standardUserDefaults] integerForKey:@"monitoredTemp"];
+            NSLog(@"\nwxtemp=%d\nwatchertemp=%d",wxTEMP,watchertemp);
+
+            if (wxTEMP < watchertemp)
+            {
+                UILocalNotification *alert = [[UILocalNotification alloc]init];
+                
+                alert.fireDate = [NSDate date];
+                
+                alert.alertTitle = [NSString stringWithFormat:(@"Yo %@", self.userName)];
+                alert.alertBody = @"Do not forget to set your home address";
+                
+                [[UIApplication sharedApplication] scheduleLocalNotification:alert];
+            }
+            
+        }
+        
+        else//BEEN OUT AND ABOUT
+        {
+            NSLog(@"STILL OUT AND ABOUT");
+            NSLog(@"\n\nDISTANCE =%f",distance);
+        }
+    }
+    
+    //SAVE atHome BOOL
+    [[NSUserDefaults standardUserDefaults] setBool:atHome forKey:@"atHome"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    NSLog(@"AT HOME NOW = %d",[[NSUserDefaults standardUserDefaults] boolForKey:@"atHome"]);
     
     
 //    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"])
@@ -396,11 +466,11 @@
         self.forecast_6_icon_viewHOME.image = [self getIconImage:[[[homeWeatherDictionary objectForKey:@"list"][1] objectForKey:@"weather"][0] objectForKey:@"icon"]];
         self.forecast_9_icon_viewHOME.image = [self getIconImage:[[[homeWeatherDictionary objectForKey:@"list"][2] objectForKey:@"weather"][0] objectForKey:@"icon"]];
         
-        NSLog(@"HOME\n%@",homeWeatherDictionary);
+        //NSLog(@"HOME\n%@",homeWeatherDictionary);
         
         temp = [[[[homeWeatherDictionary objectForKey:@"list"][0] objectForKey:@"main"] objectForKey:@"temp"] intValue];
         self.forecast_3_hrHOME.text = [NSString stringWithFormat:@"%d", [self convertKelvinToFaranheit:temp]];
-        NSLog(@"temp: %d\ntext: %@",temp,self.forecast_3_hrHOME.text);
+        //NSLog(@"temp: %d\ntext: %@",temp,self.forecast_3_hrHOME.text);
         
         temp = [[[[homeWeatherDictionary objectForKey:@"list"][1] objectForKey:@"main"] objectForKey:@"temp"] intValue];
         self.forecast_6_hrHOME.text = [NSString stringWithFormat:@"%d", [self convertKelvinToFaranheit:temp]];
@@ -441,10 +511,26 @@
 -(NSString *)getStringFromDate:(NSDate *) myDate
 {
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"EEE, h a"];
+    [dateFormat setDateFormat:@"EEE, h:mm a"];
     NSString *dateString = [dateFormat stringFromDate:myDate];
     
     return dateString;
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    //alert user if no home loc is assigned
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"] == nil)
+    {
+        UILocalNotification *alert = [[UILocalNotification alloc]init];
+        
+        alert.fireDate = [NSDate date];
+        
+        alert.alertTitle = @"No Home Location Detected";
+        alert.alertBody = @"Do not forget to set your home address";
+        
+        [[UIApplication sharedApplication] scheduleLocalNotification:alert];
+    }
 }
 
 - (void)viewDidLoad {
@@ -457,7 +543,31 @@
 //    NSDictionary *fontDictionary = @{NSFontAttributeName : customFont};
 //    [self.settingsButton setTitleTextAttributes:fontDictionary forState:UIControlStateNormal];
     
-    NSLog(@"\nhomeinfo dflt:\n%@\n\nhomeweathdic dflt:\n%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"], [[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"]);
+    
+    //NSLog(@"\nhomeinfo dflt:\n%@\n\nhomeweathdic dflt:\n%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"], [[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"]);
+    
+    atHome = [[NSUserDefaults standardUserDefaults] boolForKey:@"atHome"];
+    
+    //load username or prompt user if missing
+    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == nil)
+    {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Please enter your first name" message:@"Your name will be used to provide a personal experience." preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            NSLog(@"OK I'M DONE NOW: %@",[alertController.textFields[0] class]);
+        }];
+        
+        [alertController addAction:okAction];
+        
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            textField.placeholder = @"Username";
+        }];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+
+    }
+    
+    NSLog(@"DEFAULT AT HOME =%d",atHome);
     
     self.tempSymbol.text = @"\u00B0";
     

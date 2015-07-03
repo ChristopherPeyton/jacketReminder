@@ -34,7 +34,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -101,7 +101,11 @@
 - (void) pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     NSString *temp = [NSString stringWithFormat:@"%ld", (long)row];
+    
+    //save array index
     [[NSUserDefaults standardUserDefaults] setObject:temp forKey:@"picker"];
+    //save temperature from array index
+    [[NSUserDefaults standardUserDefaults] setInteger:[_pickerData[row] integerValue] forKey:@"monitoredTemp"];
 }
 
 // The number of columns of data

@@ -61,6 +61,20 @@
         [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
     }
     
+    else if ([notification.alertTitle isEqualToString:@"No Home Location Detected"])
+    {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Home Location Detected" message:notification.alertBody preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            ;
+        }];
+        
+        [alertController addAction:okAction];
+        
+        [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+        
+    }
+    
     
 }
 
@@ -85,6 +99,7 @@
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     NSLog(@"\n\n\nDID ENTER BACKGROUND\n\n\n");
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -94,7 +109,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-     NSLog(@"\n\n\napplicationDidBecomeActive\n\n\n");
+     //NSLog(@"\n\n\napplicationDidBecomeActive\n\n\n");
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
