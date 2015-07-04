@@ -880,7 +880,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Temperature in Fahrenheit" footerTitle="Notify me if below this degree" id="frR-Cu-uQO">
+                            <tableViewSection footerTitle="Notify me if below this degree" id="frR-Cu-uQO">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="157" id="yus-yN-btA">
                                         <rect key="frame" x="0.0" y="266" width="375" height="157"/>
