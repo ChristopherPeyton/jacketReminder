@@ -563,7 +563,7 @@
         [alertController addAction:okAction];
         
         [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-            textField.placeholder = @"Username";
+            textField.placeholder = @"First Name";
         }];
         
         [self presentViewController:alertController animated:YES completion:nil];
