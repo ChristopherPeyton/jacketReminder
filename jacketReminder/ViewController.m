@@ -241,10 +241,12 @@
         
         homeWeatherDictionary = weatherDictionary;
         
+        atHome = YES;
         
         //EVENTUALLY I WILL NEED TO MOVE THIS CALL SO IT DOES NOT SLOW DOWN THE BUTTON ANIMATION
         //POSSIBLY WITH A DELEGATE
         [self postWeatherToLabels];
+        
         
     }
     
@@ -549,32 +551,6 @@
     
     atHome = [[NSUserDefaults standardUserDefaults] boolForKey:@"atHome"];
     
-    //load username or prompt user if missing
-    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == nil || [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == NULL)
-    {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Please enter your first name" message:@"Your name will be used to provide a personal experience." preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            self.userName = ((UITextField *) alertController.textFields[0]).text;
-            [[NSUserDefaults standardUserDefaults] setObject:self.userName forKey:@"userName"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-        }];
-        
-        [alertController addAction:okAction];
-        
-        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-            textField.placeholder = @"First Name";
-        }];
-        
-        [self presentViewController:alertController animated:YES completion:nil];
-
-    }
-    
-    else
-    {
-        self.userName = [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"];
-    }
-    
     NSLog(@"DEFAULT AT HOME =%d",atHome);
     
     self.tempSymbol.text = @"\u00B0";
@@ -657,6 +633,33 @@
     [self.buttonMainViewEffect setClipsToBounds:YES];
     
     self.buttonContainer.layer.cornerRadius = self.buttonMainViewEffect.layer.cornerRadius;
+    
+    //load username or prompt user if missing
+    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == nil || [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == NULL)
+    {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Please enter your first name" message:@"Your name will be used to provide a personal experience." preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            self.userName = ((UITextField *) alertController.textFields[0]).text;
+            [[NSUserDefaults standardUserDefaults] setObject:self.userName forKey:@"userName"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            NSLog(@"JUST SAVED USER: %@",self.userName);
+        }];
+        
+        [alertController addAction:okAction];
+        
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            textField.placeholder = @"First Name";
+        }];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+    }
+    
+    else
+    {
+        self.userName = [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"];
+    }
 }
 
 -(void) locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
