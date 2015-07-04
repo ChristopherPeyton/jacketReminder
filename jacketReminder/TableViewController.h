@@ -14,4 +14,5 @@ IB_DESIGNABLE
 @property (strong, nonatomic) NSMutableArray *homeInformationFromRoot;//will contain 2 items: cllocation and address string
 @property (strong, nonatomic) IBOutlet UIPickerView *picker;
 
+@property (weak, nonatomic) IBOutlet UITextField *userNameFromSettings;
 @end

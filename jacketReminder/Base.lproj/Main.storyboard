@@ -3,6 +3,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
@@ -820,6 +821,63 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="" footerTitle="Monitored Home Address" id="69K-am-VT6">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="100" id="tt5-hu-LSw">
+                                        <rect key="frame" x="0.0" y="99" width="375" height="100"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tt5-hu-LSw" id="t6Y-L0-hd6">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="yQi-h7-lXv">
+                                                    <rect key="frame" x="8" y="0.0" width="119" height="99"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PaR-60-UI4">
+                                                    <rect key="frame" x="231" y="35" width="136" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="97" id="zOM-Nf-bch"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="zOM-Nf-bch"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <connections>
+                                                        <action selector="closeKeyboard:" destination="X2a-Eg-Hug" eventType="editingDidEndOnExit" id="E0j-9k-0dl"/>
+                                                        <action selector="saveChangesToName:" destination="X2a-Eg-Hug" eventType="editingDidEnd" id="rN8-gu-5pO"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="PaR-60-UI4" secondAttribute="bottom" constant="34" id="2ay-uy-VOb"/>
+                                                <constraint firstItem="PaR-60-UI4" firstAttribute="top" secondItem="t6Y-L0-hd6" secondAttribute="topMargin" constant="27" id="5DV-ts-3nE"/>
+                                                <constraint firstItem="PaR-60-UI4" firstAttribute="centerY" secondItem="yQi-h7-lXv" secondAttribute="centerY" constant="0.5" id="5ep-Ot-x1b"/>
+                                                <constraint firstAttribute="centerY" secondItem="yQi-h7-lXv" secondAttribute="centerY" id="5k0-I3-vy0"/>
+                                                <constraint firstItem="PaR-60-UI4" firstAttribute="leading" secondItem="yQi-h7-lXv" secondAttribute="trailing" constant="104" id="QoE-Pd-Vpp"/>
+                                                <constraint firstItem="PaR-60-UI4" firstAttribute="top" secondItem="t6Y-L0-hd6" secondAttribute="top" constant="35" id="Vou-ad-ezR"/>
+                                                <constraint firstAttribute="trailing" secondItem="PaR-60-UI4" secondAttribute="trailing" constant="8" id="WQ5-G0-QRN"/>
+                                                <constraint firstAttribute="trailing" secondItem="yQi-h7-lXv" secondAttribute="trailing" constant="248" id="WhD-tC-Yp4"/>
+                                                <constraint firstItem="yQi-h7-lXv" firstAttribute="leading" secondItem="t6Y-L0-hd6" secondAttribute="leading" constant="8" id="aqG-mZ-BFd"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="PaR-60-UI4" secondAttribute="trailing" id="o6J-gL-Vub"/>
+                                                <constraint firstItem="yQi-h7-lXv" firstAttribute="top" secondItem="t6Y-L0-hd6" secondAttribute="top" id="sow-lJ-okd"/>
+                                                <constraint firstAttribute="bottom" secondItem="yQi-h7-lXv" secondAttribute="bottom" id="uqH-hk-Ajw"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="5DV-ts-3nE"/>
+                                                    <exclude reference="o6J-gL-Vub"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection footerTitle="Notify me if below this degree" id="frR-Cu-uQO">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="157" id="yus-yN-btA">
@@ -875,6 +933,7 @@
                         <outlet property="addressLabel" destination="Hmk-sa-d0d" id="CuV-7f-OMK"/>
                         <outlet property="myTableView" destination="fU2-cH-Pcy" id="SDu-eD-dxc"/>
                         <outlet property="picker" destination="qhI-Ii-u5p" id="3mV-x2-3Ah"/>
+                        <outlet property="userNameFromSettings" destination="PaR-60-UI4" id="fv7-n9-1xr"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MoJ-cF-j4Q" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -29,7 +29,17 @@
 //detects tap to close number pad keyboard
 -(void)tap: (UIGestureRecognizer *) tappedGesture
 {
-    
+    [self.userNameFromSettings resignFirstResponder];
+}
+- (IBAction)saveChangesToName:(id)sender
+{
+    [[NSUserDefaults standardUserDefaults] setObject:self.userNameFromSettings.text forKey:@"userName"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    NSLog(@"saving changes to name");
+}
+- (IBAction)closeKeyboard:(id)sender
+{
+    [sender resignFirstResponder];
 }
 
 - (void)viewDidLoad {
@@ -40,6 +50,10 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    //self.userNameFromSettings.delegate = self;
+    
+    self.userNameFromSettings.text = [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"];
     
     self.navigationItem.title = @"Settings";
         
@@ -128,6 +142,10 @@
 
 - (BOOL) textFieldShouldEndEditing:(UITextField *)textField
 {
+    [[NSUserDefaults standardUserDefaults] setObject:textField.text forKey:@"userName"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    NSLog(@"saving changes to name");
+    
     return YES;
 }
 
