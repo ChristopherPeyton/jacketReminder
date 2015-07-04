@@ -75,6 +75,31 @@
         
     }
     
+    else if ([notification.alertTitle isEqualToString:[NSString stringWithFormat:@"Yo %@,", [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"]]])
+    {
+        UIAlertController *alertControllerTemp = [UIAlertController alertControllerWithTitle:notification.alertTitle message:notification.alertBody preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            ;
+        }];
+        
+        [alertControllerTemp addAction:okAction];
+
+        if ([self.window.rootViewController presentedViewController] != nil)
+        {
+            //use alertview
+            [[[UIAlertView alloc]initWithTitle:notification.alertTitle message:notification.alertBody delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil]show ];
+        }
+        
+        else
+        {
+          [self.window.rootViewController presentViewController:alertControllerTemp animated:YES completion:nil];
+
+        }
+        
+
+        
+    }
     
 }
 

@@ -309,8 +309,9 @@
                 
                 alert.fireDate = [NSDate date];
                 
-                alert.alertTitle = [NSString stringWithFormat:(@"Yo %@", self.userName)];
-                alert.alertBody = @"Do not forget to set your home address";
+                alert.alertTitle = [NSString stringWithFormat:@"Yo %@,", self.userName];
+                NSLog(@"username to call is=%@",self.userName);
+                alert.alertBody = [NSString stringWithFormat:@"Don't forget your jacket!"];
                 
                 [[UIApplication sharedApplication] scheduleLocalNotification:alert];
             }
@@ -554,7 +555,9 @@
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Please enter your first name" message:@"Your name will be used to provide a personal experience." preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            NSLog(@"OK I'M DONE NOW: %@",[alertController.textFields[0] class]);
+            self.userName = ((UITextField *) alertController.textFields[0]).text;
+            [[NSUserDefaults standardUserDefaults] setObject:self.userName forKey:@"userName"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
         }];
         
         [alertController addAction:okAction];
@@ -565,6 +568,11 @@
         
         [self presentViewController:alertController animated:YES completion:nil];
 
+    }
+    
+    else
+    {
+        self.userName = [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"];
     }
     
     NSLog(@"DEFAULT AT HOME =%d",atHome);
