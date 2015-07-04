@@ -549,6 +549,12 @@
     
     //NSLog(@"\nhomeinfo dflt:\n%@\n\nhomeweathdic dflt:\n%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"], [[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"]);
     
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"monitoredTemp"] == nil)
+    {
+        //assign default of 76
+        
+    }
+    
     atHome = [[NSUserDefaults standardUserDefaults] boolForKey:@"atHome"];
     
     NSLog(@"DEFAULT AT HOME =%d",atHome);
