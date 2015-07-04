@@ -242,6 +242,7 @@
         homeWeatherDictionary = weatherDictionary;
         
         atHome = YES;
+        NSLog(@"JUST SET HOME, athome = %d",atHome);
         
         //EVENTUALLY I WILL NEED TO MOVE THIS CALL SO IT DOES NOT SLOW DOWN THE BUTTON ANIMATION
         //POSSIBLY WITH A DELEGATE
@@ -530,7 +531,7 @@
         alert.fireDate = [NSDate date];
         
         alert.alertTitle = @"No Home Location Detected";
-        alert.alertBody = @"Do not forget to set your home address";
+        alert.alertBody = @"Do not forget to set your home address.";
         
         [[UIApplication sharedApplication] scheduleLocalNotification:alert];
     }
