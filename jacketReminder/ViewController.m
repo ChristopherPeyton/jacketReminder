@@ -552,7 +552,9 @@
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"monitoredTemp"] == nil)
     {
         //assign default of 76
+        [[NSUserDefaults standardUserDefaults] setInteger:76 forKey:@"monitoredTemp"];
         
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
     atHome = [[NSUserDefaults standardUserDefaults] boolForKey:@"atHome"];
