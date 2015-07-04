@@ -550,7 +550,7 @@
     atHome = [[NSUserDefaults standardUserDefaults] boolForKey:@"atHome"];
     
     //load username or prompt user if missing
-    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == nil)
+    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == nil || [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == NULL)
     {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Please enter your first name" message:@"Your name will be used to provide a personal experience." preferredStyle:UIAlertControllerStyleAlert];
         
