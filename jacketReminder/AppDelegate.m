@@ -110,6 +110,8 @@
         {
             //use alertview
             [[[UIAlertView alloc]initWithTitle:notification.alertTitle message:notification.alertBody delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil]show ];
+            [self playAlertSound];
+
         }
         
         else

@@ -315,6 +315,7 @@
                 alert.alertTitle = [NSString stringWithFormat:@"Yo %@,", self.userName];
                 NSLog(@"username to call is=%@",self.userName);
                 alert.alertBody = [NSString stringWithFormat:@"Don't forget your jacket!"];
+                alert.soundName = UILocalNotificationDefaultSoundName;
                 
                 [[UIApplication sharedApplication] scheduleLocalNotification:alert];
             }
