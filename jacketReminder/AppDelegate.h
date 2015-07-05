@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "ViewController.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+
+- (void) playAlertSound;
 
 
 @end

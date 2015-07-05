@@ -25,6 +25,7 @@
 		83B3574A1B337A710010C119 /* test.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B357491B337A710010C119 /* test.m */; };
 		83B3574D1B33BF2E0010C119 /* image.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B3574C1B33BF2E0010C119 /* image.m */; };
 		83B3574F1B33C7A30010C119 /* snow.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 83B3574E1B33C7A20010C119 /* snow.jpg */; };
+		83E622591B488C7300C71FEA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E622581B488C7300C71FEA /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,7 @@
 		83B3574B1B33BF2E0010C119 /* image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = image.h; sourceTree = "<group>"; };
 		83B3574C1B33BF2E0010C119 /* image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = image.m; sourceTree = "<group>"; };
 		83B3574E1B33C7A20010C119 /* snow.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = snow.jpg; sourceTree = "<group>"; };
+		83E622581B488C7300C71FEA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83E622591B488C7300C71FEA /* AVFoundation.framework in Frameworks */,
 				838A8FEA1B09AB9D005F69DF /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -90,6 +93,7 @@
 		838A8FB71B09AB8C005F69DF = {
 			isa = PBXGroup;
 			children = (
+				83E622581B488C7300C71FEA /* AVFoundation.framework */,
 				838A8FE91B09AB9D005F69DF /* CoreLocation.framework */,
 				838A8FC21B09AB8C005F69DF /* jacketReminder */,
 				838A8FDC1B09AB8C005F69DF /* jacketReminderTests */,

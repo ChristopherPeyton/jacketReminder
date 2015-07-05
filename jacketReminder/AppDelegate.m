@@ -14,6 +14,18 @@
 
 @implementation AppDelegate
 
+- (void) playAlertSound
+{
+    // Construct URL to sound file
+    SystemSoundID soundID;
+    
+    NSURL *fileURL = [NSURL URLWithString:@"/System/Library/Audio/UISounds/Modern/sms_alert_note.caf"];
+    
+    AudioServicesCreateSystemSoundID((__bridge_retained CFURLRef)fileURL , &soundID);
+    
+    AudioServicesPlayAlertSound (soundID);
+}
+
 - (void) application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
     //Error 1 - Location service denied
@@ -40,6 +52,8 @@
         [alertController addAction:settingsAction];
         
         [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+        
+        [self playAlertSound];
     }
     
     else if ([notification.alertTitle isEqualToString:@"Location Service"])
@@ -59,11 +73,14 @@
         //[alertController addAction:settingsAction];
         
         [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+        
+        [self playAlertSound];
     }
     
     else if ([notification.alertTitle isEqualToString:@"No Home Location Detected"])
     {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Home Location Detected" message:notification.alertBody preferredStyle:UIAlertControllerStyleAlert];
+
         
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             ;
@@ -73,11 +90,15 @@
         
         [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
         
+        [self playAlertSound];
+        
     }
     
     else if ([notification.alertTitle isEqualToString:[NSString stringWithFormat:@"Yo %@,", [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"]]])
     {
         UIAlertController *alertControllerTemp = [UIAlertController alertControllerWithTitle:notification.alertTitle message:notification.alertBody preferredStyle:UIAlertControllerStyleAlert];
+        
+        
         
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             ;
@@ -94,6 +115,8 @@
         else
         {
           [self.window.rootViewController presentViewController:alertControllerTemp animated:YES completion:nil];
+            
+            [self playAlertSound];
 
         }
         
