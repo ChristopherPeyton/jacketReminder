@@ -220,6 +220,8 @@
 
 - (IBAction)setHomeLocation:(id)sender
 {
+    self.loadingActivityView.hidden = NO;
+
     setHomeLocationTriggered = YES;
     
     ////////////////////////
@@ -243,10 +245,12 @@
         
         atHome = YES;
         NSLog(@"JUST SET HOME, athome = %d",atHome);
-        
-        //EVENTUALLY I WILL NEED TO MOVE THIS CALL SO IT DOES NOT SLOW DOWN THE BUTTON ANIMATION
-        //POSSIBLY WITH A DELEGATE
-        [self postWeatherToLabels];
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self postWeatherToLabels];
+            
+        });
         
         
     }
@@ -269,6 +273,7 @@
 
 -(void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
+    self.loadingActivityView.hidden = NO;
 
     //[self.locationManager stopUpdatingLocation];
 
@@ -386,7 +391,6 @@
         
     }];
     
-    
 }
 
 - (void) postWeatherToLabels
@@ -501,7 +505,8 @@
         self.forecast_6_timeHOME.text = [self getStringFromDate:date6];
         self.forecast_9_timeHOME.text = [self getStringFromDate:date9];
     }
-
+    
+    self.loadingActivityView.hidden = YES;
 }
 
 -(UIImage *)getIconImage: (NSString *) iconString

@@ -19,6 +19,7 @@ IB_DESIGNABLE
     BOOL atHome;
 }
 
+@property (weak, nonatomic) IBOutlet UIView *loadingActivityView;
 @property (strong, nonatomic) NSString *userName;
 @property (weak, nonatomic) IBOutlet UILabel *forecast_3_hr;
 @property (weak, nonatomic) IBOutlet UILabel *forecast_6_hr;
