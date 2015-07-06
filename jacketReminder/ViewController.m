@@ -26,6 +26,7 @@
     IBInspectable int xx;
     
 }
+@property (weak, nonatomic) IBOutlet UIView *loadingDarkView;
 @property (weak, nonatomic) IBOutlet UIImageView *currentIcon;
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *buttonMainViewEffect;
 @property (weak, nonatomic) IBOutlet UIView *buttonContainer;
@@ -555,6 +556,8 @@
     
     
     //NSLog(@"\nhomeinfo dflt:\n%@\n\nhomeweathdic dflt:\n%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"], [[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"]);
+    
+    self.loadingDarkView.layer.cornerRadius = 6;
     
     self.loadingActivityView.layer.cornerRadius = 6;
     

@@ -635,7 +635,7 @@
                                     <constraint firstAttribute="bottom" secondItem="Bvj-EA-evP" secondAttribute="bottom" id="aj8-Na-RqB"/>
                                 </constraints>
                             </view>
-                            <view alpha="0.80000000000000016" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BH3-Hw-6HG">
+                            <view hidden="YES" alpha="0.80000000000000016" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BH3-Hw-6HG">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
                                     <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lxd-v7-ro2">
@@ -861,6 +861,7 @@
                         <outlet property="forecast_9_timeHOME" destination="JTZ-gv-BA1" id="d44-eg-e1F"/>
                         <outlet property="img" destination="oFo-6v-90j" id="OEX-eD-zbr"/>
                         <outlet property="loadingActivityView" destination="BH3-Hw-6HG" id="Zzl-bd-waP"/>
+                        <outlet property="loadingDarkView" destination="NPa-l8-bzE" id="HUo-sB-2li"/>
                         <outlet property="midletop" destination="Bvj-EA-evP" id="c07-TN-643"/>
                         <outlet property="settingsButton" destination="6eG-7P-Ngt" id="fL3-dQ-cxI"/>
                         <outlet property="tempSymbol" destination="bRJ-ak-mEZ" id="nyo-hz-Jk4"/>
