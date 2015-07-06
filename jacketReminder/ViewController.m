@@ -247,12 +247,8 @@
         atHome = YES;
         NSLog(@"JUST SET HOME, athome = %d",atHome);
 
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [self postWeatherToLabels];
-            
-        });
-        
+        //call on background to improve button performance and allow action to unhide loading view
+        [self performSelectorInBackground:@selector(postWeatherToLabels) withObject:nil];
         
     }
     

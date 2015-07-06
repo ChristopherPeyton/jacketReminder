@@ -635,7 +635,7 @@
                                     <constraint firstAttribute="bottom" secondItem="Bvj-EA-evP" secondAttribute="bottom" id="aj8-Na-RqB"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" alpha="0.80000000000000016" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BH3-Hw-6HG" userLabel="LoadingActivity container">
+                            <view hidden="YES" alpha="0.79999999999999982" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BH3-Hw-6HG" userLabel="LoadingActivity container">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
                                     <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lxd-v7-ro2">
@@ -664,14 +664,14 @@
                                         </view>
                                         <blurEffect style="light"/>
                                     </visualEffectView>
-                                    <view alpha="0.69999999999999973" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NPa-l8-bzE" userLabel="LoadingActivityView">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NPa-l8-bzE" userLabel="LoadingActivityView">
                                         <rect key="frame" x="231" y="184" width="140" height="140"/>
                                         <subviews>
-                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="oeD-ti-c8t">
-                                                <rect key="frame" x="132" y="102" width="37" height="37"/>
+                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="oeD-ti-c8t">
+                                                <rect key="frame" x="52" y="22" width="37" height="37"/>
                                             </activityIndicatorView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Loading..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3bO-YI-8xX">
-                                                <rect key="frame" x="76" y="141" width="150" height="21"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3bO-YI-8xX">
+                                                <rect key="frame" x="-4" y="61" width="150" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="3bO-YI-8xX" secondAttribute="height" multiplier="50:7" id="quz-rh-44r"/>
                                                 </constraints>
