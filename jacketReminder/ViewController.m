@@ -506,7 +506,7 @@
         self.forecast_9_timeHOME.text = [self getStringFromDate:date9];
     }
     
-    self.loadingActivityView.hidden = YES;
+    //self.loadingActivityView.hidden = YES;
 }
 
 -(UIImage *)getIconImage: (NSString *) iconString
@@ -555,6 +555,8 @@
     
     
     //NSLog(@"\nhomeinfo dflt:\n%@\n\nhomeweathdic dflt:\n%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"], [[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"]);
+    
+    self.loadingActivityView.layer.cornerRadius = 6;
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"monitoredTemp"] == nil)
     {
