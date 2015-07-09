@@ -10,6 +10,10 @@
 
 @interface AppDelegate ()
 
+{
+    int counter;
+}
+
 @end
 
 @implementation AppDelegate
@@ -135,9 +139,41 @@
     {
         [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
     }
+    
+    //[[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+    
+    //fetch every 30 mins
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:1800];
 
     return YES;
 }
+
+-(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    counter++;
+    
+    NSLog(@"########### Received Background Fetch #%d ###########",counter);
+    //Download  the Content .
+    ViewController *view = [[ViewController alloc]init];
+    [view getHomeWeather];
+    
+    // Set up Local Notifications
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+    NSDate *now = [NSDate date];
+    localNotification.fireDate = now;
+    localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background",counter];
+    localNotification.soundName = UILocalNotificationDefaultSoundName;
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+    
+    //Cleanup
+    completionHandler(UIBackgroundFetchResultNewData);
+    NSLog(@"Fetch completed");
+    
+}
+
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

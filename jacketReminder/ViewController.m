@@ -108,7 +108,7 @@
                 //        NSLOG_SPACER
                 //        NSLog(@"%@",weatherDictionary);
                 //        NSLOG_SPACER
-                //NSLog(@"json string\n%@", weatherJSON);
+                NSLog(@"json string\n%@", weatherJSON);
                 //        NSLOG_SPACER
                 
             }];
@@ -219,11 +219,96 @@
     return _session;
 }
 
+-(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
+    NSLog(@"Welcome to %@", region.identifier);
+    [[[UIAlertView alloc]initWithTitle:@"ENTERED REGION" message:@"WELCOME HOME" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil]show];
+}
+
+
+-(void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
+    NSLog(@"Bye bye");
+    [[[UIAlertView alloc]initWithTitle:@"didExitRegion" message:@"Bye bye" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil]show];
+    
+    int wxTEMP0 = [self convertKelvinToFaranheit:[[[[homeWeatherDictionary objectForKey:@"list"][0] objectForKey:@"main"] objectForKey:@"temp"] intValue]];
+    int wxTEMP1 = [self convertKelvinToFaranheit:[[[[homeWeatherDictionary objectForKey:@"list"][1] objectForKey:@"main"] objectForKey:@"temp"] intValue]];
+    int wxTEMP2 = [self convertKelvinToFaranheit:[[[[homeWeatherDictionary objectForKey:@"list"][2] objectForKey:@"main"] objectForKey:@"temp"] intValue]];
+    
+    NSString *wxTEMP0Rain = [[[homeWeatherDictionary objectForKey:@"list"][0] objectForKey:@"weather"][0] objectForKey:@"description"];
+    NSString *city = [[homeWeatherDictionary objectForKey:@"city"] objectForKey:@"name"];
+
+    NSString *wxTEMP1Rain = [[[homeWeatherDictionary objectForKey:@"list"][0] objectForKey:@"weather"][0] objectForKey:@"description"];
+    NSLog(@"TESTING: %@",wxTEMP0Rain);
+    NSString *wxTEMP2Rain = [[[homeWeatherDictionary objectForKey:@"list"][0] objectForKey:@"weather"][0] objectForKey:@"description"];
+    
+    int watchertemp =[[NSUserDefaults standardUserDefaults] integerForKey:@"monitoredTemp"];
+    
+    if (wxTEMP0 < watchertemp || wxTEMP1 < watchertemp || wxTEMP2 < watchertemp)
+    
+    {
+        if ([wxTEMP0Rain containsString:@"rain"] || [wxTEMP1Rain containsString:@"rain"] || [wxTEMP2Rain containsString:@"rain"])
+        {
+            UILocalNotification *alert = [[UILocalNotification alloc]init];
+            
+            alert.fireDate = [NSDate date];
+            
+            alert.alertTitle = [NSString stringWithFormat:@"Yo %@,", self.userName];
+            NSLog(@"username to call is=%@",self.userName);
+            alert.alertBody = [NSString stringWithFormat:@"Don't forget your jacket!\nAnd you may get a little wet..."];
+            alert.soundName = UILocalNotificationDefaultSoundName;
+            
+            [[UIApplication sharedApplication] scheduleLocalNotification:alert];
+            NSLog(@"it'll rain!");
+        }
+        
+        else
+        {
+            UILocalNotification *alert = [[UILocalNotification alloc]init];
+
+            alert.fireDate = [NSDate date];
+
+            alert.alertTitle = [NSString stringWithFormat:@"Yo %@,", self.userName];
+            NSLog(@"username to call is=%@",self.userName);
+            alert.alertBody = [NSString stringWithFormat:@"Don't forget your jacket!"];
+            alert.soundName = UILocalNotificationDefaultSoundName;
+
+            [[UIApplication sharedApplication] scheduleLocalNotification:alert];
+        }
+    
+    }
+    
+    //not cold enough, but it'll rain
+    else if ([wxTEMP0Rain containsString:@"rain"] || [wxTEMP1Rain containsString:@"rain"] || [wxTEMP2Rain containsString:@"rain"])
+    {
+        UILocalNotification *alert = [[UILocalNotification alloc]init];
+        
+        alert.fireDate = [NSDate date];
+        
+        alert.alertTitle = [NSString stringWithFormat:@"Yo %@,", self.userName];
+        NSLog(@"username to call is=%@",self.userName);
+        alert.alertBody = [NSString stringWithFormat:@"You may get a little wet..."];
+        alert.soundName = UILocalNotificationDefaultSoundName;
+        
+        [[UIApplication sharedApplication] scheduleLocalNotification:alert];
+        NSLog(@"it'll rain!");
+    }
+    
+                
+    
+}
+
+-(void)locationManager:(CLLocationManager *)manager didStartMonitoringForRegion:(CLRegion *)region {
+    NSLog(@"Now monitoring for %@", region.identifier);
+    [[[UIAlertView alloc]initWithTitle:@"didStartMonitoringForRegion" message:@"didStartMonitoringForRegion" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil]show];
+}
+
 - (IBAction)setHomeLocation:(id)sender
 {
     self.loadingActivityView.hidden = NO;
 
     setHomeLocationTriggered = YES;
+    
+    CLCircularRegion *regionCirc = [[CLCircularRegion alloc]initWithCenter:location.coordinate radius:100 identifier:@"Home"];
+    [self.locationManager startMonitoringForRegion:regionCirc];
     
     ////////////////////////
     //GET GPS AT RANDOM
@@ -237,12 +322,16 @@
         [self.homeInformation addObject:self.addressLabel.text];
         [self.homeInformation addObject:addressFromGEO[1]];
         
+        
         //wrapped mutable array to store it in defaults
         NSData *arrayWrapper = [NSKeyedArchiver archivedDataWithRootObject:self.homeInformation];
         
         [[NSUserDefaults standardUserDefaults] setObject:arrayWrapper forKey:@"homeInformation"];
         
         homeWeatherDictionary = weatherDictionary;
+        
+        [[NSUserDefaults standardUserDefaults] setObject:homeWeatherDictionary forKey:@"homeWeatherDictionary"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         
         atHome = YES;
         NSLog(@"JUST SET HOME, athome = %d",atHome);
@@ -281,60 +370,60 @@
     
     NSLog(@"\natHome BOOL = %d",atHome);
     
-    if (location && [self.homeInformation count] >= 3 && distance <=18)
-    {
-        if (atHome == YES)
-        {
-            NSLog(@"ALREADY AT HOME");
-        }
-        
-        else//just got home
-        {
-            atHome = YES;
-            
-            NSLog(@"JUST GOT HOME");
-            NSLog(@"\n\nDISTANCE =%f",distance);
-        }
-    }
-    
-    else if (location && [self.homeInformation count] >= 3 && distance >18)
-    {
-        if (atHome == YES)
-        {
-            atHome = NO;
-            NSLog(@"JUST LEFT HOME");
-            
-            int wxTEMP = [self convertKelvinToFaranheit:[[[[homeWeatherDictionary objectForKey:@"list"][0] objectForKey:@"main"] objectForKey:@"temp"] intValue]];
-            int watchertemp =[[NSUserDefaults standardUserDefaults] integerForKey:@"monitoredTemp"];
-            NSLog(@"\nwxtemp=%d\nwatchertemp=%d",wxTEMP,watchertemp);
-
-            if (wxTEMP < watchertemp)
-            {
-                UILocalNotification *alert = [[UILocalNotification alloc]init];
-                
-                alert.fireDate = [NSDate date];
-                
-                alert.alertTitle = [NSString stringWithFormat:@"Yo %@,", self.userName];
-                NSLog(@"username to call is=%@",self.userName);
-                alert.alertBody = [NSString stringWithFormat:@"Don't forget your jacket!"];
-                alert.soundName = UILocalNotificationDefaultSoundName;
-                
-                [[UIApplication sharedApplication] scheduleLocalNotification:alert];
-            }
-            
-        }
-        
-        else//BEEN OUT AND ABOUT
-        {
-            NSLog(@"STILL OUT AND ABOUT");
-            NSLog(@"\n\nDISTANCE =%f",distance);
-        }
-    }
-    
-    //SAVE atHome BOOL
-    [[NSUserDefaults standardUserDefaults] setBool:atHome forKey:@"atHome"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    NSLog(@"AT HOME NOW = %d",[[NSUserDefaults standardUserDefaults] boolForKey:@"atHome"]);
+//    if (location && [self.homeInformation count] >= 3 && distance <=18)
+//    {
+//        if (atHome == YES)
+//        {
+//            NSLog(@"ALREADY AT HOME");
+//        }
+//        
+//        else//just got home
+//        {
+//            atHome = YES;
+//            
+//            NSLog(@"JUST GOT HOME");
+//            NSLog(@"\n\nDISTANCE =%f",distance);
+//        }
+//    }
+//    
+//    else if (location && [self.homeInformation count] >= 3 && distance >18)
+//    {
+//        if (atHome == YES)
+//        {
+//            atHome = NO;
+//            NSLog(@"JUST LEFT HOME");
+//            
+//            int wxTEMP = [self convertKelvinToFaranheit:[[[[homeWeatherDictionary objectForKey:@"list"][0] objectForKey:@"main"] objectForKey:@"temp"] intValue]];
+//            int watchertemp =[[NSUserDefaults standardUserDefaults] integerForKey:@"monitoredTemp"];
+//            NSLog(@"\nwxtemp=%d\nwatchertemp=%d",wxTEMP,watchertemp);
+//
+//            if (wxTEMP < watchertemp)
+//            {
+//                UILocalNotification *alert = [[UILocalNotification alloc]init];
+//                
+//                alert.fireDate = [NSDate date];
+//                
+//                alert.alertTitle = [NSString stringWithFormat:@"Yo %@,", self.userName];
+//                NSLog(@"username to call is=%@",self.userName);
+//                alert.alertBody = [NSString stringWithFormat:@"Don't forget your jacket!"];
+//                alert.soundName = UILocalNotificationDefaultSoundName;
+//                
+//                [[UIApplication sharedApplication] scheduleLocalNotification:alert];
+//            }
+//            
+//        }
+//        
+//        else//BEEN OUT AND ABOUT
+//        {
+//            NSLog(@"STILL OUT AND ABOUT");
+//            NSLog(@"\n\nDISTANCE =%f",distance);
+//        }
+//    }
+//    
+//    //SAVE atHome BOOL
+//    [[NSUserDefaults standardUserDefaults] setBool:atHome forKey:@"atHome"];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+//    NSLog(@"AT HOME NOW = %d",[[NSUserDefaults standardUserDefaults] boolForKey:@"atHome"]);
     
     
 //    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"])
@@ -580,6 +669,7 @@
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     self.locationManager.distanceFilter = 55; //filter for x meters
     self.locationManager.delegate = self;
+    
     
     if ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)])
     {
