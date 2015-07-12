@@ -108,7 +108,7 @@
                 //        NSLOG_SPACER
                 //        NSLog(@"%@",weatherDictionary);
                 //        NSLOG_SPACER
-                NSLog(@"json string\n%@", weatherJSON);
+                //NSLog(@"json string\n%@", weatherJSON);
                 //        NSLOG_SPACER
                 
             }];
@@ -706,6 +706,8 @@
         NSMutableArray *temp = [NSMutableArray arrayWithObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"]];
         
         self.homeInformation = [NSKeyedUnarchiver unarchiveObjectWithData:temp[0]];
+        
+        NSLog(@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"weatherDictionary"]);
 
         weatherDictionary = [[NSUserDefaults standardUserDefaults] objectForKey:@"weatherDictionary"];
         
