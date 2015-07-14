@@ -700,15 +700,15 @@
                                         <variation key="default">
                                             <mask key="constraints">
                                                 <exclude reference="3jp-mJ-4dk"/>
-                                                <exclude reference="1Zp-dT-UCO"/>
-                                                <exclude reference="6Hd-3c-QbQ"/>
-                                                <exclude reference="Pzd-iZ-IMg"/>
-                                                <exclude reference="f5C-HI-1wx"/>
                                                 <exclude reference="0F9-wp-3lu"/>
                                                 <exclude reference="PPZ-N8-RWJ"/>
                                                 <exclude reference="QZn-A5-q1n"/>
                                                 <exclude reference="jDU-N3-QMt"/>
                                                 <exclude reference="mXf-pc-0RF"/>
+                                                <exclude reference="1Zp-dT-UCO"/>
+                                                <exclude reference="6Hd-3c-QbQ"/>
+                                                <exclude reference="Pzd-iZ-IMg"/>
+                                                <exclude reference="f5C-HI-1wx"/>
                                             </mask>
                                         </variation>
                                     </view>

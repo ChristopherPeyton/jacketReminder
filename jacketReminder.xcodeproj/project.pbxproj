@@ -25,6 +25,11 @@
 		83B3574A1B337A710010C119 /* test.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B357491B337A710010C119 /* test.m */; };
 		83B3574D1B33BF2E0010C119 /* image.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B3574C1B33BF2E0010C119 /* image.m */; };
 		83B3574F1B33C7A30010C119 /* snow.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 83B3574E1B33C7A20010C119 /* snow.jpg */; };
+		83E6086E1B559C2900FE8824 /* icon_120.png in Resources */ = {isa = PBXBuildFile; fileRef = 83E6086D1B559C2900FE8824 /* icon_120.png */; };
+		83E608721B55A60200FE8824 /* icon_180.png in Resources */ = {isa = PBXBuildFile; fileRef = 83E608711B55A60200FE8824 /* icon_180.png */; };
+		83E608751B55A65300FE8824 /* icon_80.png in Resources */ = {isa = PBXBuildFile; fileRef = 83E608741B55A65300FE8824 /* icon_80.png */; };
+		83E608771B55A68C00FE8824 /* icon_87.png in Resources */ = {isa = PBXBuildFile; fileRef = 83E608761B55A68C00FE8824 /* icon_87.png */; };
+		83E608791B55A6B600FE8824 /* icon_58.png in Resources */ = {isa = PBXBuildFile; fileRef = 83E608781B55A6B600FE8824 /* icon_58.png */; };
 		83E622591B488C7300C71FEA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E622581B488C7300C71FEA /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +72,11 @@
 		83B3574B1B33BF2E0010C119 /* image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = image.h; sourceTree = "<group>"; };
 		83B3574C1B33BF2E0010C119 /* image.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = image.m; sourceTree = "<group>"; };
 		83B3574E1B33C7A20010C119 /* snow.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = snow.jpg; sourceTree = "<group>"; };
+		83E6086D1B559C2900FE8824 /* icon_120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_120.png; sourceTree = "<group>"; };
+		83E608711B55A60200FE8824 /* icon_180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_180.png; sourceTree = "<group>"; };
+		83E608741B55A65300FE8824 /* icon_80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_80.png; sourceTree = "<group>"; };
+		83E608761B55A68C00FE8824 /* icon_87.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_87.png; sourceTree = "<group>"; };
+		83E608781B55A6B600FE8824 /* icon_58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_58.png; sourceTree = "<group>"; };
 		83E622581B488C7300C71FEA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -166,6 +176,7 @@
 				838938391B3283CB00D1B7FA /* raindropsfal.jpg */,
 				8389383A1B3283CB00D1B7FA /* waves18.jpg */,
 				8389383B1B3283CB00D1B7FA /* raindrops.jpg */,
+				83E608731B55A60900FE8824 /* icons */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -179,6 +190,18 @@
 				83440CEF1B1D0F9E007D0C81 /* TableViewController.m */,
 			);
 			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		83E608731B55A60900FE8824 /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				83E608711B55A60200FE8824 /* icon_180.png */,
+				83E608761B55A68C00FE8824 /* icon_87.png */,
+				83E608781B55A6B600FE8824 /* icon_58.png */,
+				83E608741B55A65300FE8824 /* icon_80.png */,
+				83E6086D1B559C2900FE8824 /* icon_120.png */,
+			);
+			name = icons;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -270,12 +293,17 @@
 				8389383E1B3283CB00D1B7FA /* waves18.jpg in Resources */,
 				838A8FCF1B09AB8C005F69DF /* Main.storyboard in Resources */,
 				8389383D1B3283CB00D1B7FA /* raindropsfal.jpg in Resources */,
+				83E608721B55A60200FE8824 /* icon_180.png in Resources */,
 				838A8FD41B09AB8C005F69DF /* LaunchScreen.xib in Resources */,
 				830258FE1B18DFC200E4A199 /* storm-weather.jpg in Resources */,
+				83E608791B55A6B600FE8824 /* icon_58.png in Resources */,
+				83E6086E1B559C2900FE8824 /* icon_120.png in Resources */,
 				8389383F1B3283CB00D1B7FA /* raindrops.jpg in Resources */,
 				8389383C1B3283CB00D1B7FA /* papers.co-mf23-raining-windows-10-drops-nature-9-wallpaper.jpg in Resources */,
 				83B3574F1B33C7A30010C119 /* snow.jpg in Resources */,
+				83E608751B55A65300FE8824 /* icon_80.png in Resources */,
 				838A8FD11B09AB8C005F69DF /* Images.xcassets in Resources */,
+				83E608771B55A68C00FE8824 /* icon_87.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
