@@ -613,7 +613,7 @@
     return dateString;
 }
 
-- (void) viewWillAppear:(BOOL)animated
+- (void) viewDidAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     //alert user if no home loc is assigned
@@ -624,11 +624,9 @@
         alert.fireDate = [NSDate date];
         
         alert.alertTitle = @"No Home Location Detected";
-        alert.alertBody = @"Your current location has been assigned as your home address.";
+        alert.alertBody = @"Do not forget to set your home address.";
         
         [[UIApplication sharedApplication] scheduleLocalNotification:alert];
-        
-        [self setHomeLocation:self];
     }
     
 }

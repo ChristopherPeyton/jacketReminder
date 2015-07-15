@@ -140,10 +140,10 @@
         [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
     }
     
-    //[[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
-    //fetch every 30 mins
-    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:1800];
+    //fetch every 60 mins
+    //[[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:3600];
 
     return YES;
 }
@@ -153,6 +153,15 @@
     counter++;
     
     NSLog(@"########### Received Background Fetch #%d ###########",counter);
+    NSLog(@"BEFORE FETCH");
+    NSLOG_SPACER
+    NSLog(@"REGULAR WX\n%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"weatherDictionary"]);
+    
+    NSLOG_SPACER
+    NSLog(@"Home WX\n%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"]);
+    NSLOG_SPACER
+    NSLOG_SPACER
+    
     //Download  the Content .
     ViewController *view = [[ViewController alloc]init];
     [view getHomeWeather];
@@ -169,6 +178,12 @@
     //Cleanup
     completionHandler(UIBackgroundFetchResultNewData);
     NSLog(@"Fetch completed");
+    NSLog(@"AFTER FETCH");
+    NSLOG_SPACER
+    NSLog(@"REGULAR WX\n%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"weatherDictionary"]);
+    
+    NSLOG_SPACER
+    NSLog(@"Home WX\n%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"]);
     
 }
 
