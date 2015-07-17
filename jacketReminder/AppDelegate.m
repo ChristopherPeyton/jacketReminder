@@ -132,8 +132,31 @@
     
 }
 
+- (void)redirectNSLogToDocumentFolder{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    
+    NSString *fileName =[NSString stringWithFormat:@"%@.log",[NSDate date]];
+    
+    NSString *logFilePath = [documentsDirectory stringByAppendingPathComponent:fileName];
+    
+    freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+#if TARGET_IPHONE_SIMULATOR
+    NSString * const DeviceMode = @"Simulator";
+    
+#else
+    
+    NSString * const DeviceMode = @"Device";
+    
+    //redirect device to file
+    [self redirectNSLogToDocumentFolder];
+    
+#endif
     
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)])
     {
@@ -144,7 +167,7 @@
     
     //fetch every 60 mins
     //[[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:3600];
-
+    
     return YES;
 }
 
