@@ -494,6 +494,12 @@
         
     }];
     
+    if (self.loadingActivityView.hidden == NO)
+    {
+        self.loadingActivityView.hidden = YES;
+        
+    }
+    
 }
 
 - (void) postWeatherToLabels
