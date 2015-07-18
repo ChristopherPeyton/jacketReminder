@@ -47,6 +47,7 @@ IB_DESIGNABLE
 -(NSMutableDictionary *) getWeather;
 -(NSMutableDictionary *) getHomeWeather;
 -(NSMutableDictionary *) getBothWeather;
+-(NSMutableDictionary *) getHomeWeatherOnlyForBackground;
 
 @end
 

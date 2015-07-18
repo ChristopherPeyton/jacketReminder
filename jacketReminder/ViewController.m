@@ -73,6 +73,67 @@
     return temperatureInFaranheit;
 }
 
+- (NSMutableDictionary *) getHomeWeatherOnlyForBackground
+{
+    //make sure home location is available before calling, assign home loc
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"] != nil)
+    {
+        NSMutableArray *temp = [NSMutableArray arrayWithObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"]];
+        
+        self.homeInformation = [NSKeyedUnarchiver unarchiveObjectWithData:temp[0]];
+    }
+    
+    NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastBackgroundWeatherDateCalled"];
+    float dateInterval =[[NSDate date] timeIntervalSinceDate:date];
+    NSLog(@"SECONDS SINCE LAST CALL: %f",dateInterval);
+    
+    if (date == nil || dateInterval > 20)
+    {
+        setHomeLocationTriggered = NO;
+        
+        if ([self.homeInformation count]>=3)
+        {
+                
+                //RETRIEVE HOME LOCATION FROM ARRAY
+                CLLocation *homeLocation = self.homeInformation[0];
+                
+                //    //FINAL STRING WITH API KEY
+                //    NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%.8f&lon=%.8f&APPID=a96ff77043a749a97158ecbaaa30f249", location.coordinate.latitude, location.coordinate.longitude];
+                
+                //USING DURING TESTING api.openweathermap.org/data/2.5/forecast?lat=32.986775&lon=-97.37743
+                //NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%.8f&lon=%.8f", location.coordinate.latitude, location.coordinate.longitude];
+                
+                NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast?lat=%.8f&lon=%.8f", homeLocation.coordinate.latitude, homeLocation.coordinate.longitude];
+                
+                NSURL *url = [NSURL URLWithString:urlString];
+                NSURLRequest *request = [NSURLRequest requestWithURL:url];
+                
+                NSURLSessionDataTask *datatask = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                    homeWeatherDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                    
+                    [[NSUserDefaults standardUserDefaults] setObject:homeWeatherDictionary forKey:@"homeWeatherDictionary"];
+                    
+                    //set date of last weather call
+                    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastBackgroundWeatherDateCalled"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    
+                    //NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                    //        NSLOG_SPACER
+                    //        NSLog(@"%@",weatherDictionary);
+                    //        NSLOG_SPACER
+                    //NSLog(@"json string\n%@", weatherJSON);
+                    //        NSLOG_SPACER
+                    
+                }];
+                [datatask resume];
+            
+        }
+        
+    }
+    
+    return homeWeatherDictionary;
+}
+
 - (NSMutableDictionary *) getHomeWeather
 {
     NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastWeatherDateCalled"];
@@ -279,6 +340,7 @@
             NSLog(@"username to call is=%@",self.userName);
             alert.alertBody = [NSString stringWithFormat:@"Don't forget your jacket!"];
             alert.soundName = UILocalNotificationDefaultSoundName;
+            alert.applicationIconBadgeNumber = 1;
 
             [[UIApplication sharedApplication] scheduleLocalNotification:alert];
         }

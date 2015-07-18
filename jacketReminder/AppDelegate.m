@@ -102,8 +102,6 @@
     {
         UIAlertController *alertControllerTemp = [UIAlertController alertControllerWithTitle:notification.alertTitle message:notification.alertBody preferredStyle:UIAlertControllerStyleAlert];
         
-        
-        
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             ;
         }];
@@ -167,7 +165,7 @@
     
     //fetch every 60 mins
     //[[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:3600];
-    
+        
     return YES;
 }
 
@@ -187,7 +185,7 @@
     
     //Download  the Content .
     ViewController *view = [[ViewController alloc]init];
-    [view getHomeWeather];
+    [view getHomeWeatherOnlyForBackground];
     
     // Set up Local Notifications
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
@@ -199,7 +197,6 @@
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
     
     //Cleanup
-    completionHandler(UIBackgroundFetchResultNewData);
     NSLog(@"Fetch completed");
     NSLog(@"AFTER FETCH");
     NSLOG_SPACER
@@ -207,6 +204,17 @@
     
     NSLOG_SPACER
     NSLog(@"Home WX\n%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"]);
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"] != nil)
+    {
+        completionHandler(UIBackgroundFetchResultNewData);
+    }
+    
+    //something went wrong and the homewx_dictionary is nil
+    else
+    {
+        completionHandler(UIBackgroundFetchResultFailed);
+    }
     
 }
 
@@ -235,6 +243,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      //NSLog(@"\n\n\napplicationDidBecomeActive\n\n\n");
+    application.applicationIconBadgeNumber = 0;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
