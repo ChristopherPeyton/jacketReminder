@@ -117,11 +117,11 @@
                     [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastBackgroundWeatherDateCalled"];
                     [[NSUserDefaults standardUserDefaults] synchronize];
                     
-                    //NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                    NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
                     //        NSLOG_SPACER
                     //        NSLog(@"%@",weatherDictionary);
                     //        NSLOG_SPACER
-                    //NSLog(@"json string\n%@", weatherJSON);
+                    NSLog(@"json string from getHomeWeatherBACKGROUNDonly \n%@", weatherJSON);
                     //        NSLOG_SPACER
                     
                 }];
@@ -176,7 +176,7 @@
                     //        NSLOG_SPACER
                     //        NSLog(@"%@",weatherDictionary);
                     //        NSLOG_SPACER
-                    //NSLog(@"json string\n%@", weatherJSON);
+                    NSLog(@"json string from getHomeWeather \n%@", weatherJSON);
                     //        NSLOG_SPACER
                     
                 }];
@@ -223,7 +223,7 @@
 //        NSLOG_SPACER
 //        NSLog(@"%@",weatherDictionary);
 //        NSLOG_SPACER
-       // NSLog(@"json string\n%@", weatherJSON);
+          NSLog(@"json string from getWeather\n%@", weatherJSON);
 //        NSLOG_SPACER
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -261,7 +261,7 @@
         //        NSLOG_SPACER
         //        NSLog(@"%@",weatherDictionary);
         //        NSLOG_SPACER
-        // NSLog(@"json string\n%@", weatherJSON);
+                  NSLog(@"json string from getBothWeather\n%@", weatherJSON);
         //        NSLOG_SPACER
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -564,8 +564,20 @@
     
 }
 
+-(void) unhideLoaderView
+{
+    if (self.loadingActivityView.hidden == YES)
+    {
+        self.loadingActivityView.hidden = NO;
+        
+    }
+}
+
 - (void) postWeatherToLabels
 {
+    [self performSelectorInBackground:@selector(unhideLoaderView) withObject:nil];
+
+    
     //assign symbols
     self.tempSymbolCurrent1.text = @"\u00B0";
     self.tempSymbolCurrent2.text = @"\u00B0";
@@ -677,11 +689,14 @@
         self.forecast_9_timeHOME.text = [self getStringFromDate:date9];
     }
     
-    if (self.loadingActivityView.hidden == NO)
-    {
-        self.loadingActivityView.hidden = YES;
-        
-    }
+        if (self.loadingActivityView.hidden == NO)
+        {
+            self.loadingActivityView.hidden = YES;
+            
+        }
+
+    
+    
 }
 
 -(UIImage *)getIconImage: (NSString *) iconString

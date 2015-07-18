@@ -185,8 +185,16 @@
     NSLOG_SPACER
     
     //Download  the Content .
-    ViewController *view = [[ViewController alloc]init];
-    [view getHomeWeatherOnlyForBackground];
+    if ([self.window.rootViewController.childViewControllers[0] isKindOfClass:[ViewController class]])
+    {
+        [self.window.rootViewController.childViewControllers[0] getHomeWeatherOnlyForBackground];
+    }
+    else
+    {
+        NSLog(@"HAD TO CREATE NEW VIEW TO CALL WEATHER FROM BACKGROUND FETCH");
+        ViewController *view = [[ViewController alloc]init];
+        [view getHomeWeatherOnlyForBackground];
+    }
     
     // Set up Local Notifications
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
@@ -244,7 +252,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-     //NSLog(@"\n\n\napplicationDidBecomeActive\n\n\n");
+     NSLog(@"\n\n\napplicationDidBecomeActive\n\n\n");
     application.applicationIconBadgeNumber = 0;
     
     //alert user if no home loc is assigned
@@ -259,6 +267,14 @@
         alert.applicationIconBadgeNumber = 1;
         
         [[UIApplication sharedApplication] scheduleLocalNotification:alert];
+    }
+    
+    //check that view is main viewcontroller class
+    if ([self.window.rootViewController.childViewControllers[0] isKindOfClass:[ViewController class]])
+    {
+        NSLog(@"calling weather from applicationDidBecomeActive");
+        [self.window.rootViewController.childViewControllers[0] postWeatherToLabels];
+
     }
 
 }
