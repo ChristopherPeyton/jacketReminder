@@ -85,6 +85,7 @@
     {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No Home Location Detected" message:notification.alertBody preferredStyle:UIAlertControllerStyleAlert];
 
+        application.applicationIconBadgeNumber = 1;
         
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             ;
@@ -244,6 +245,21 @@
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      //NSLog(@"\n\n\napplicationDidBecomeActive\n\n\n");
     application.applicationIconBadgeNumber = 0;
+    
+    //alert user if no home loc is assigned
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"] == nil)
+    {
+        UILocalNotification *alert = [[UILocalNotification alloc]init];
+        
+        alert.fireDate = [NSDate date];
+        
+        alert.alertTitle = @"No Home Location Detected";
+        alert.alertBody = @"Do not forget to set your home address.";
+        alert.applicationIconBadgeNumber = 1;
+        
+        [[UIApplication sharedApplication] scheduleLocalNotification:alert];
+    }
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

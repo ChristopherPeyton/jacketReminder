@@ -704,7 +704,7 @@
 
 - (void) viewDidAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    [super viewDidAppear:animated];
     //alert user if no home loc is assigned
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"] == nil)
     {
@@ -714,6 +714,7 @@
         
         alert.alertTitle = @"No Home Location Detected";
         alert.alertBody = @"Do not forget to set your home address.";
+        alert.applicationIconBadgeNumber = 1;
         
         [[UIApplication sharedApplication] scheduleLocalNotification:alert];
     }
