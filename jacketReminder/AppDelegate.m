@@ -234,6 +234,7 @@
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     NSLog(@"\n\n\nDID ENTER BACKGROUND\n\n\n");
     [[NSUserDefaults standardUserDefaults] synchronize];
+    application.applicationIconBadgeNumber = 0;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
