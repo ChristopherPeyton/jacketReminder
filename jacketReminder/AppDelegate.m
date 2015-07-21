@@ -222,9 +222,9 @@
             NSLOG_SPACER
             NSLOG_SPACER
             NSLog(@"NEW DATA FETCHED FROM BACKGROUND!");
-            NSLog(@"\nOLD\n%@", oldWeatherToCompare);
-            NSLOG_SPACER
             NSLog(@"\nNEW\n%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"]);
+            NSLOG_SPACER
+            NSLog(@"\nOLD\n%@", oldWeatherToCompare);
             completionHandler(UIBackgroundFetchResultNewData);
         }
         else//dictionary is not nil and matches, so no new data downloaded
