@@ -635,7 +635,7 @@
                                     <constraint firstAttribute="bottom" secondItem="Bvj-EA-evP" secondAttribute="bottom" id="aj8-Na-RqB"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" alpha="0.79999999999999982" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BH3-Hw-6HG" userLabel="LoadingActivity container">
+                            <view hidden="YES" alpha="0.89999999999999991" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BH3-Hw-6HG" userLabel="LoadingActivity container">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
                                     <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lxd-v7-ro2">
