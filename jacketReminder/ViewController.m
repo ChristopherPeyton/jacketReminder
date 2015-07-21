@@ -121,7 +121,7 @@
                     //        NSLOG_SPACER
                     //        NSLog(@"%@",weatherDictionary);
                     //        NSLOG_SPACER
-                //    NSLog(@"json string from getHomeWeatherBACKGROUNDonly \n%@", weatherJSON);
+             //       NSLog(@"json string from getHomeWeatherBACKGROUNDonly \n%@", weatherJSON);
                     //        NSLOG_SPACER
                     
                 }];
@@ -757,7 +757,7 @@
         alert.fireDate = [NSDate date];
         
         alert.alertTitle = @"No Home Location Detected";
-        alert.alertBody = @"Do not forget to set your home address.";
+        alert.alertBody = @"Please set your home address.";
         alert.applicationIconBadgeNumber = 1;
         
         [[UIApplication sharedApplication] scheduleLocalNotification:alert];

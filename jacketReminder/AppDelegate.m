@@ -153,7 +153,7 @@
     NSString * const DeviceMode = @"Device";
     
     //redirect device to file
- //   [self redirectNSLogToDocumentFolder];
+    [self redirectNSLogToDocumentFolder];
     
 #endif
     
@@ -177,13 +177,14 @@
     NSLog(@"########### Received Background Fetch #%d ###########",counter);
     NSLog(@"BEFORE FETCH");
     NSLOG_SPACER
-    NSLog(@"REGULAR WX\n%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"weatherDictionary"]);
+ //   NSLog(@"REGULAR WX\n%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"weatherDictionary"]);
     
     NSLOG_SPACER
-    NSLog(@"Home WX\n%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"]);
+ //   NSLog(@"Home WX\n%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"]);
     NSLOG_SPACER
     NSLOG_SPACER
     
+    NSDictionary *oldWeatherToCompare = [[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"];
     //Download  the Content .
     if ([self.window.rootViewController.childViewControllers[0] isKindOfClass:[ViewController class]])
     {
@@ -209,19 +210,29 @@
     NSLog(@"Fetch completed");
     NSLog(@"AFTER FETCH");
     NSLOG_SPACER
-    NSLog(@"REGULAR WX\n%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"weatherDictionary"]);
+ //   NSLog(@"REGULAR WX\n%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"weatherDictionary"]);
     
     NSLOG_SPACER
-    NSLog(@"Home WX\n%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"]);
+//    NSLog(@"Home WX\n%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"]);
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"] != nil)
     {
-        completionHandler(UIBackgroundFetchResultNewData);
+        if ([oldWeatherToCompare isEqualToDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"]] == NO)
+        {
+            NSLog(@"NEW DATA FETCHED FROM BACKGROUND!");
+            completionHandler(UIBackgroundFetchResultNewData);
+        }
+        else//dictionary is not nil and matches, so no new data downloaded
+        {
+            NSLog(@"NO NEW DATA FETCHED FROM BACKGROUND!");
+            completionHandler(UIBackgroundFetchResultNoData);
+        }
     }
     
     //something went wrong and the homewx_dictionary is nil
     else
     {
+        NSLog(@"DATA FETCHED FROM BACKGROUND FAILED!");
         completionHandler(UIBackgroundFetchResultFailed);
     }
     
@@ -263,7 +274,7 @@
         alert.fireDate = [NSDate date];
         
         alert.alertTitle = @"No Home Location Detected";
-        alert.alertBody = @"Do not forget to set your home address.";
+        alert.alertBody = @"Please set your home address.";
         alert.applicationIconBadgeNumber = 1;
         
         [[UIApplication sharedApplication] scheduleLocalNotification:alert];
