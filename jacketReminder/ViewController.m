@@ -121,7 +121,7 @@
                     //        NSLOG_SPACER
                     //        NSLog(@"%@",weatherDictionary);
                     //        NSLOG_SPACER
-                    NSLog(@"json string from getHomeWeatherBACKGROUNDonly \n%@", weatherJSON);
+                //    NSLog(@"json string from getHomeWeatherBACKGROUNDonly \n%@", weatherJSON);
                     //        NSLOG_SPACER
                     
                 }];
@@ -138,6 +138,7 @@
 {
     NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastWeatherDateCalled"];
     float dateInterval =[[NSDate date] timeIntervalSinceDate:date];
+    NSLog(@"interval in getHomeWeather: %f",dateInterval);
     
     if (setHomeLocationTriggered == YES || date == nil || dateInterval > 20)
     {
@@ -176,7 +177,7 @@
                     //        NSLOG_SPACER
                     //        NSLog(@"%@",weatherDictionary);
                     //        NSLOG_SPACER
-                    NSLog(@"json string from getHomeWeather \n%@", weatherJSON);
+               //     NSLog(@"json string from getHomeWeather \n%@", weatherJSON);
                     //        NSLOG_SPACER
                     
                 }];
@@ -209,7 +210,12 @@
     
     //USING DURING TESTING api.openweathermap.org/data/2.5/forecast?lat=32.986775&lon=-97.37743
     //NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%.8f&lon=%.8f", location.coordinate.latitude, location.coordinate.longitude];
-    
+    if (location == nil || location == NULL)
+    {
+        NSLog(@"WRONG: LOCATION WAS NIL/NULL IN GETWEATHER!");
+        return nil;
+    }
+    NSLog(@"location from getweather: %@",location);
     NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast?lat=%.8f&lon=%.8f", location.coordinate.latitude, location.coordinate.longitude];
     
     NSURL *url = [NSURL URLWithString:urlString];
@@ -223,7 +229,7 @@
 //        NSLOG_SPACER
 //        NSLog(@"%@",weatherDictionary);
 //        NSLOG_SPACER
-          NSLog(@"json string from getWeather\n%@", weatherJSON);
+      //    NSLog(@"json string from getWeather\n%@", weatherJSON);
 //        NSLOG_SPACER
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -242,39 +248,60 @@
 
 - (NSMutableDictionary *) getBothWeather
 {
-    //    //FINAL STRING WITH API KEY
-    //    NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%.8f&lon=%.8f&APPID=a96ff77043a749a97158ecbaaa30f249", location.coordinate.latitude, location.coordinate.longitude];
-    
-    //USING DURING TESTING api.openweathermap.org/data/2.5/forecast?lat=32.986775&lon=-97.37743
-    //NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%.8f&lon=%.8f", location.coordinate.latitude, location.coordinate.longitude];
-    
-    NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast?lat=%.8f&lon=%.8f", location.coordinate.latitude, location.coordinate.longitude];
-    
-    NSURL *url = [NSURL URLWithString:urlString];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    NSURLSessionDataTask *datatask = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        weatherDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    //make sure home location is available before calling, assign home loc
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"] != nil)
+    {
+        NSMutableArray *temp = [NSMutableArray arrayWithObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"]];
         
-        //[weatherDictionary setObject: forKey:<#(id<NSCopying>)#>]
+        self.homeInformation = [NSKeyedUnarchiver unarchiveObjectWithData:temp[0]];
+    }
+    
+    if ([self.homeInformation count]>=3)
+    {
         
-        NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-        //        NSLOG_SPACER
-        //        NSLog(@"%@",weatherDictionary);
-        //        NSLOG_SPACER
-                  NSLog(@"json string from getBothWeather\n%@", weatherJSON);
-        //        NSLOG_SPACER
+            //RETRIEVE HOME LOCATION FROM ARRAY
+            CLLocation *homeLocation = self.homeInformation[0];
         
-        dispatch_async(dispatch_get_main_queue(), ^{
+        //    //FINAL STRING WITH API KEY
+        //    NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%.8f&lon=%.8f&APPID=a96ff77043a749a97158ecbaaa30f249", location.coordinate.latitude, location.coordinate.longitude];
+        
+        //USING DURING TESTING api.openweathermap.org/data/2.5/forecast?lat=32.986775&lon=-97.37743
+        //NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%.8f&lon=%.8f", location.coordinate.latitude, location.coordinate.longitude];
+        
+        NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast?lat=%.8f&lon=%.8f", homeLocation.coordinate.latitude, homeLocation.coordinate.longitude];
+        
+        NSURL *url = [NSURL URLWithString:urlString];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        NSURLSessionDataTask *datatask = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            weatherDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             
-            [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"weatherDictionary"];
-            [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"homeWeatherDictionary"];
+            //[weatherDictionary setObject: forKey:<#(id<NSCopying>)#>]
             
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            [self postWeatherToLabels];
+            NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+            //        NSLOG_SPACER
+            //        NSLog(@"%@",weatherDictionary);
+            //        NSLOG_SPACER
+                //      NSLog(@"json string from getBothWeather\n%@", weatherJSON);
+            //        NSLOG_SPACER
             
-        });
-    }];
-    [datatask resume];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"weatherDictionary"];
+                [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"homeWeatherDictionary"];
+                
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [self postWeatherToLabels];
+                
+            });
+        }];
+        [datatask resume];
+    }
+    
+    if (self.loadingActivityView.hidden == NO)
+    {
+        self.loadingActivityView.hidden = YES;
+        
+    }
     
     return weatherDictionary;
 }
@@ -412,7 +439,7 @@
         NSLog(@"JUST SET HOME, athome = %d",atHome);
 
         //call on background to improve button performance and allow action to unhide loading view
-        [self performSelectorInBackground:@selector(postWeatherToLabels) withObject:nil];
+        [self performSelectorInBackground:@selector(getHomeWeather) withObject:nil];
         
     }
     
@@ -445,9 +472,11 @@
     location = locations[0];
 
     //DISTANCE FROM HOUSE TO NEXT DOOR = 16.606390
-    CLLocationDistance distance = [location distanceFromLocation: self.homeInformation[0]];
+ //   CLLocationDistance distance = [location distanceFromLocation: self.homeInformation[0]];
     
+    NSLog(@"CURRENT LOCATION: %@",location);
     NSLog(@"\natHome BOOL = %d",atHome);
+
     
 //    if (location && [self.homeInformation count] >= 3 && distance <=18)
 //    {
@@ -511,7 +540,7 @@
 //        
 //    }
 
-    [self getHomeWeather];
+  //  [self getHomeWeather];
     
     CLGeocoder *geocoder = [[CLGeocoder alloc]init];
     [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error)
@@ -553,7 +582,7 @@
         }
 
         self.addressLabel.text = addressFromGEO[0];
-        
+        [self getHomeWeather];
     }];
     
     if (self.loadingActivityView.hidden == NO)
@@ -735,15 +764,15 @@
     }
     
     [self getHomeWeather];
-    NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastWeatherDateCalled"];
-    NSDate *date2 = [NSDate dateWithTimeIntervalSinceNow:1800];
-    if (date)
-    {
-        NSLog(@"old date = %@",date);
-        NSLog(@"date = %@",date2);
-        NSLog(@"interval = %f",[date2 timeIntervalSinceDate:date]);
-
-    }
+//    NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastWeatherDateCalled"];
+//    NSDate *date2 = [NSDate dateWithTimeIntervalSinceNow:1800];
+//    if (date)
+//    {
+//        NSLog(@"old date = %@",date);
+//        NSLog(@"date = %@",date2);
+//        NSLog(@"interval = %f",[date2 timeIntervalSinceDate:date]);
+//
+//    }
     
 }
 

@@ -153,7 +153,7 @@
     NSString * const DeviceMode = @"Device";
     
     //redirect device to file
-    [self redirectNSLogToDocumentFolder];
+ //   [self redirectNSLogToDocumentFolder];
     
 #endif
     
@@ -273,7 +273,7 @@
     if ([self.window.rootViewController.childViewControllers[0] isKindOfClass:[ViewController class]])
     {
         NSLog(@"calling weather from applicationDidBecomeActive");
-        [self.window.rootViewController.childViewControllers[0] postWeatherToLabels];
+        [self.window.rootViewController.childViewControllers[0] getHomeWeather];
 
     }
 
