@@ -407,7 +407,11 @@
 
     }
     
-    setHomeLocationTriggered = YES;
+    //if new home loc city is differnt, we need to get weather
+    if (![self.homeInformation[2] isEqualToString:addressFromGEO[1]])
+    {
+        setHomeLocationTriggered = YES;
+    }
     
     CLCircularRegion *regionCirc = [[CLCircularRegion alloc]initWithCenter:location.coordinate radius:100 identifier:@"Home"];
     [self.locationManager startMonitoringForRegion:regionCirc];
@@ -445,8 +449,20 @@
     
     else if (!location || self.addressLabel<=0)
     {
+        if (self.loadingActivityView.hidden == NO)
+        {
+            self.loadingActivityView.hidden = YES;
+            
+        }
+        
         [[[UIAlertView alloc]initWithTitle:@"ADDR ISSUE" message:@"UNABLE TO DETECT LOC" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil]show];
         [self.locationManager startUpdatingLocation];
+    }
+    
+    if (self.loadingActivityView.hidden == NO)
+    {
+        self.loadingActivityView.hidden = YES;
+        
     }
     
 }
