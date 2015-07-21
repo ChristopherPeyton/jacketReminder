@@ -219,7 +219,12 @@
     {
         if ([oldWeatherToCompare isEqualToDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"]] == NO)
         {
+            NSLOG_SPACER
+            NSLOG_SPACER
             NSLog(@"NEW DATA FETCHED FROM BACKGROUND!");
+            NSLog(@"\nOLD\n%@", oldWeatherToCompare);
+            NSLOG_SPACER
+            NSLog(@"\nNEW\n%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"]);
             completionHandler(UIBackgroundFetchResultNewData);
         }
         else//dictionary is not nil and matches, so no new data downloaded
