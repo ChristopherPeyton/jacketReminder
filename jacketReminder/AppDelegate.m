@@ -184,11 +184,11 @@
     NSLOG_SPACER
     NSLOG_SPACER
     
-    NSDictionary *oldWeatherToCompare = [[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"];
+    UIBackgroundFetchResult *result;
     //Download  the Content .
     if ([self.window.rootViewController.childViewControllers[0] isKindOfClass:[ViewController class]])
     {
-        [self.window.rootViewController.childViewControllers[0] getHomeWeatherOnlyForBackground];
+        result = [self.window.rootViewController.childViewControllers[0] getHomeWeatherOnlyForBackground];
     }
     else
     {
@@ -215,32 +215,27 @@
     NSLOG_SPACER
 //    NSLog(@"Home WX\n%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"]);
     
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"] != nil)
-    {
-        if ([oldWeatherToCompare isEqualToDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"]] == NO)
-        {
-            NSLOG_SPACER
-            NSLOG_SPACER
-            NSLog(@"NEW DATA FETCHED FROM BACKGROUND!");
-            NSLog(@"\nNEW\n%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"]);
-            NSLOG_SPACER
-            NSLog(@"\nOLD\n%@", oldWeatherToCompare);
-            completionHandler(UIBackgroundFetchResultNewData);
-        }
-        else//dictionary is not nil and matches, so no new data downloaded
-        {
-            NSLog(@"NO NEW DATA FETCHED FROM BACKGROUND!");
-            completionHandler(UIBackgroundFetchResultNoData);
-        }
-    }
     
     //something went wrong and the homewx_dictionary is nil
+
+    NSLog(@"MY NEW RESULT = %d",result);//0 new data, 1 no data, 2 failed
+    if ((int)result == 0)        //new data
+    {
+        NSLog(@"BACKGROUND FETCH HAS NEW DATA");
+        completionHandler(UIBackgroundFetchResultNewData);
+    }
+    else if ((int) result == 1)
+    {
+        NSLog(@"BACKGROUND FETCH HAS NO NEW DATA");
+
+        completionHandler(UIBackgroundFetchResultNoData);
+    }
     else
     {
-        NSLog(@"DATA FETCHED FROM BACKGROUND FAILED!");
+        NSLog(@"BACKGROUND FETCH HAS FAILED");
+
         completionHandler(UIBackgroundFetchResultFailed);
     }
-    
 }
 
 

@@ -47,7 +47,7 @@ IB_DESIGNABLE
 -(NSMutableDictionary *) getWeather;
 -(NSMutableDictionary *) getHomeWeather;
 -(NSMutableDictionary *) getBothWeather;
--(NSMutableDictionary *) getHomeWeatherOnlyForBackground;
+-(UIBackgroundFetchResult *) getHomeWeatherOnlyForBackground;
 -(void) postWeatherToLabels;
 
 @end
