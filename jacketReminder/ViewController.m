@@ -724,10 +724,26 @@
     }
 }
 
-- (void) postWeatherToLabels
+- (int) postWeatherToLabels
 {
     [self performSelectorInBackground:@selector(unhideLoaderView) withObject:nil];
 
+    if (location)
+    {
+        if (self.homeInformation != nil)
+        {
+            if (homeWeatherDictionary == nil || weatherDictionary == nil)
+            {
+                [self getHomeWeather];
+            }
+        }
+        
+        else if (weatherDictionary == nil)
+        {
+            [self getHomeWeather];
+        }
+    }
+    
     
     //assign symbols
     self.tempSymbolCurrent1.text = @"\u00B0";
@@ -846,7 +862,8 @@
             
         }
 
-    
+    return 1;
+
     
 }
 
