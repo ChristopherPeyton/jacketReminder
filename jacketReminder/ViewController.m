@@ -17,6 +17,8 @@
     NSMutableArray *addressFromGEO;//[0]=string address,[1]=city string
     int timer;
     int maxTimer;
+    int weatherTimer;
+    
     int forecast_3_time_epoch;
     int forecast_6_time_epoch;
     int forecast_9_time_epoch;
@@ -89,12 +91,13 @@
     float dateInterval =[[NSDate date] timeIntervalSinceDate:date];
     NSLog(@"SECONDS SINCE LAST CALL: %f",dateInterval);
     
-    if (date == nil || dateInterval > 20)
+    if (date == nil || dateInterval > 14400)//3600 secs = 1hr
     {
         if ([self.homeInformation count]>=3)
         {
             
             NSMutableDictionary *oldWeatherToCompare = [[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"];
+            homeWeatherDictionary = nil;
             
             //RETRIEVE HOME LOCATION FROM ARRAY
             CLLocation *homeLocation = self.homeInformation[0];
@@ -123,7 +126,7 @@
                 //        NSLOG_SPACER
                 //        NSLog(@"%@",weatherDictionary);
                 //        NSLOG_SPACER
-                //       NSLog(@"json string from getHomeWeatherBACKGROUNDonly \n%@", weatherJSON);
+                       NSLog(@"json string from getHomeWeatherBACKGROUNDonly \n%@", weatherJSON);
                 //        NSLOG_SPACER
             
             if (homeWeatherDictionary != nil)
@@ -175,7 +178,7 @@
 //    float dateInterval =[[NSDate date] timeIntervalSinceDate:date];
 //    NSLog(@"SECONDS SINCE LAST CALL: %f",dateInterval);
 //    
-//    if (date == nil || dateInterval > 20)
+//    if (date == nil || dateInterval > weatherTimer)
 //    {
 //        if ([self.homeInformation count]>=3)
 //        {
@@ -246,16 +249,17 @@
     float dateInterval =[[NSDate date] timeIntervalSinceDate:date];
     NSLog(@"interval in getHomeWeather: %f",dateInterval);
     
-    if (setHomeLocationTriggered == YES || date == nil || dateInterval > 20)
+    if (setHomeLocationTriggered == YES || date == nil || dateInterval > weatherTimer)
     {
         setHomeLocationTriggered = NO;
+        homeWeatherDictionary = nil;
+
     
         //RUNNING WEATHER UPDATE FOR HOME IF HOME IS DIFF FROM CURRENT LOC
         if ([self.homeInformation count]>=3)
         {
             if ([self.homeInformation[2] isEqualToString:addressFromGEO[1]] == NO)
             {
-                
                 //RETRIEVE HOME LOCATION FROM ARRAY
                 CLLocation *homeLocation = self.homeInformation[0];
                 
@@ -305,6 +309,10 @@
         }
         
     }
+    else
+    {
+        [self postWeatherToLabels];
+    }
     
     return homeWeatherDictionary;
 }
@@ -321,6 +329,9 @@
         NSLog(@"WRONG: LOCATION WAS NIL/NULL IN GETWEATHER!");
         return nil;
     }
+    
+    weatherDictionary = nil;
+    
     NSLog(@"location from getweather: %@",location);
     NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast?lat=%.8f&lon=%.8f", location.coordinate.latitude, location.coordinate.longitude];
     
@@ -364,6 +375,8 @@
     
     if ([self.homeInformation count]>=3)
     {
+        weatherDictionary = nil;
+
         
             //RETRIEVE HOME LOCATION FROM ARRAY
             CLLocation *homeLocation = self.homeInformation[0];
@@ -394,6 +407,7 @@
                 
                 [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"weatherDictionary"];
                 [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"homeWeatherDictionary"];
+                [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastWeatherDateCalled"];
                 
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [self postWeatherToLabels];
@@ -518,6 +532,7 @@
     {
         setHomeLocationTriggered = YES;
     }
+
     
     CLCircularRegion *regionCirc = [[CLCircularRegion alloc]initWithCenter:location.coordinate radius:100 identifier:@"Home"];
     [self.locationManager startMonitoringForRegion:regionCirc];
@@ -728,6 +743,13 @@
 {
     [self performSelectorInBackground:@selector(unhideLoaderView) withObject:nil];
 
+    if ([addressFromGEO[1] isEqualToString:self.homeInformation[2]])
+    {
+        homeWeatherDictionary = weatherDictionary;
+        [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"homeWeatherDictionary"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
     if (location)
     {
         if (self.homeInformation != nil)
@@ -744,6 +766,12 @@
         }
     }
     
+    if ([addressFromGEO[1] isEqualToString:self.homeInformation[2]])
+    {
+        homeWeatherDictionary = weatherDictionary;
+        [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"homeWeatherDictionary"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
     
     //assign symbols
     self.tempSymbolCurrent1.text = @"\u00B0";
@@ -762,6 +790,10 @@
     self.temperatureLabel.text = [NSString stringWithFormat:@"%@", tempTempString];
     
     NSArray *aaa = [NSArray arrayWithArray:[[weatherDictionary objectForKey:@"list"][0] objectForKey:@"weather"]];
+    if (aaa == nil || [aaa count] == 0)
+    {
+        aaa = [NSArray arrayWithObject:[NSMutableDictionary dictionary]];
+    }
     
     self.currentLocationWeatherTime.text = [self getStringFromDate:[NSDate date]];
     
@@ -932,6 +964,8 @@
     
     
     //NSLog(@"\nhomeinfo dflt:\n%@\n\nhomeweathdic dflt:\n%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"], [[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"]);
+    
+    weatherTimer = 7200;//3600 secs= 1hr
     
     self.loadingDarkView.layer.cornerRadius = 6;
     

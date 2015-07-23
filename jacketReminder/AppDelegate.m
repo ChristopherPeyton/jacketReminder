@@ -162,10 +162,10 @@
         [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
     }
     
-    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+    //[[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
-    //fetch every 60 mins
-    //[[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:3600];
+    //fetch every 4 hrs----3600 secs = 1hr
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:14400];
         
     return YES;
 }
