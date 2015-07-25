@@ -294,7 +294,7 @@
         else
         {
             NSLOG_SPACER
-            NSLog(@"CALLED GETHOMMEWEATHER FROM APPLICATIONDIDBECOMEACTIVE");
+            NSLog(@"CALLED GETHOMEWEATHER FROM APPLICATIONDIDBECOMEACTIVE");
             
             [self.window.rootViewController.childViewControllers[0] getHomeWeather];
         }

@@ -841,7 +841,7 @@
         
         //call on background to improve button performance and allow action to unhide loading view
             NSLOG_SPACER
-            NSLog(@"CALLED GETHOMMEWEATHER FROM SETHOMELOCATION");
+            NSLog(@"CALLED GETHOMEWEATHER FROM SETHOMELOCATION");
         [self performSelectorInBackground:@selector(getHomeWeather) withObject:nil];
         
         }
@@ -1014,7 +1014,7 @@
         else
         {
             NSLOG_SPACER
-            NSLog(@"CALLED GETHOMMEWEATHER FROM DIDUPDATELOC DEL");
+            NSLog(@"CALLED GETHOMEWEATHER FROM DIDUPDATELOC DEL");
             [self getHomeWeather];
             
         }
@@ -1107,7 +1107,7 @@
             if (homeWeatherDictionary == nil || weatherDictionary == nil)
             {
                 NSLOG_SPACER
-                NSLog(@"CALLED GETHOMMEWEATHER FROM POSTWEATHERTOLABELS : LOCATION IS AVAIL AND self.homeInformation != nil AND homeWeatherDictionary == nil || weatherDictionary == nil");
+                NSLog(@"CALLED GETHOMEWEATHER FROM POSTWEATHERTOLABELS : LOCATION IS AVAIL AND self.homeInformation != nil AND homeWeatherDictionary == nil || weatherDictionary == nil");
                 [self getHomeWeather];
                 
             }
@@ -1116,7 +1116,7 @@
         else if (weatherDictionary == nil)
         {
             NSLOG_SPACER
-            NSLog(@"CALLED GETHOMMEWEATHER FROM POSTWEATHERTOLABELS : LOCATION IS AVAIL AND self.homeInformation == nil AND weatherDictionary == nil");
+            NSLog(@"CALLED GETHOMEWEATHER FROM POSTWEATHERTOLABELS : LOCATION IS AVAIL AND self.homeInformation == nil AND weatherDictionary == nil");
             
                 [self getHomeWeather];
  
@@ -1354,7 +1354,7 @@
     else
     {
         NSLOG_SPACER
-        NSLog(@"CALLED GETHOMMEWEATHER FROM VIEWDIDAPPEAR");
+        NSLog(@"CALLED GETHOMEWEATHER FROM VIEWDIDAPPEAR");
 
         [self getHomeWeather];
 
