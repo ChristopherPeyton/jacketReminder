@@ -38,6 +38,20 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="raindrops.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="ILw-ab-fwW">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g7E-gv-Dew" userLabel="background calls">
+                                <rect key="frame" x="3" y="167" width="225" height="172"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Edo-8P-ueB" userLabel="gethome wx calls">
+                                <rect key="frame" x="373" y="167" width="225" height="172"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IUB-XP-jO1" userLabel="TOP Visual Effect View">
                                 <rect key="frame" x="0.0" y="64" width="600" height="100"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="RNE-hy-VxC">
@@ -766,24 +780,31 @@
                             <constraint firstItem="IUB-XP-jO1" firstAttribute="height" relation="greaterThanOrEqual" secondItem="kh9-bI-dsS" secondAttribute="height" multiplier="0.3" constant="-100" id="IJP-je-RJ8"/>
                             <constraint firstItem="IUB-XP-jO1" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="height" multiplier="5:8" id="LTR-7L-dh9"/>
                             <constraint firstItem="dLx-UN-MA8" firstAttribute="top" secondItem="oFo-6v-90j" secondAttribute="bottom" constant="20" id="M3u-pV-G1k"/>
+                            <constraint firstItem="g7E-gv-Dew" firstAttribute="top" secondItem="IUB-XP-jO1" secondAttribute="bottom" constant="3" id="MaS-z9-jeH"/>
                             <constraint firstItem="oFo-6v-90j" firstAttribute="centerX" secondItem="NPa-l8-bzE" secondAttribute="centerX" id="Ms4-Rf-HST"/>
                             <constraint firstItem="xnQ-ix-rJ4" firstAttribute="top" secondItem="ILw-ab-fwW" secondAttribute="bottom" constant="-80" id="NHT-73-dYt"/>
                             <constraint firstItem="dLx-UN-MA8" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="319" id="NkW-kH-562"/>
                             <constraint firstItem="xnQ-ix-rJ4" firstAttribute="height" secondItem="kh9-bI-dsS" secondAttribute="height" multiplier="0.004" constant="58" id="OnS-NV-hdA"/>
                             <constraint firstAttribute="bottom" secondItem="ILw-ab-fwW" secondAttribute="bottom" id="P7J-ed-wRv"/>
+                            <constraint firstItem="dLx-UN-MA8" firstAttribute="top" secondItem="g7E-gv-Dew" secondAttribute="bottom" constant="5" id="PC4-13-QrR"/>
                             <constraint firstItem="oFo-6v-90j" firstAttribute="top" secondItem="IUB-XP-jO1" secondAttribute="bottom" constant="20" id="Pnb-Te-42v"/>
                             <constraint firstItem="ILw-ab-fwW" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="Pvc-BM-JPf"/>
                             <constraint firstItem="ILw-ab-fwW" firstAttribute="centerX" secondItem="xnQ-ix-rJ4" secondAttribute="centerX" id="Rl1-2o-9EJ"/>
                             <constraint firstItem="dLx-UN-MA8" firstAttribute="top" secondItem="oFo-6v-90j" secondAttribute="bottom" constant="8" symbolic="YES" id="TUt-81-l5x"/>
                             <constraint firstItem="xnQ-ix-rJ4" firstAttribute="width" secondItem="dLx-UN-MA8" secondAttribute="width" multiplier="0.4" constant="60" id="Tfu-5s-pVF"/>
+                            <constraint firstItem="Edo-8P-ueB" firstAttribute="top" secondItem="IUB-XP-jO1" secondAttribute="bottom" constant="3" id="VkB-vE-RlW"/>
                             <constraint firstAttribute="trailing" secondItem="dLx-UN-MA8" secondAttribute="trailing" id="X7S-fm-5Ev"/>
                             <constraint firstAttribute="bottom" secondItem="BH3-Hw-6HG" secondAttribute="bottom" id="ZiI-1l-bhg"/>
                             <constraint firstItem="dLx-UN-MA8" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="cJp-Cl-iYk"/>
+                            <constraint firstAttribute="trailing" secondItem="Edo-8P-ueB" secondAttribute="trailing" constant="2" id="caw-oW-15B"/>
                             <constraint firstAttribute="trailing" secondItem="IUB-XP-jO1" secondAttribute="trailing" id="de4-yK-une"/>
                             <constraint firstItem="IUB-XP-jO1" firstAttribute="top" secondItem="6pu-6U-NlL" secondAttribute="bottom" id="eFV-Zz-rOB"/>
+                            <constraint firstItem="dLx-UN-MA8" firstAttribute="top" secondItem="Edo-8P-ueB" secondAttribute="bottom" constant="5" id="eHI-GV-FsZ"/>
                             <constraint firstItem="xnQ-ix-rJ4" firstAttribute="centerX" secondItem="Ev2-Qo-hPc" secondAttribute="centerX" id="elV-wu-Aft"/>
+                            <constraint firstItem="oFo-6v-90j" firstAttribute="leading" secondItem="g7E-gv-Dew" secondAttribute="trailing" constant="3" id="fo1-VK-rJO"/>
                             <constraint firstItem="oFo-6v-90j" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="height" multiplier="140:600" id="gGA-BT-xzI"/>
                             <constraint firstItem="dLx-UN-MA8" firstAttribute="height" secondItem="IUB-XP-jO1" secondAttribute="width" multiplier="91:300" constant="40" id="hxV-LY-eof"/>
+                            <constraint firstItem="g7E-gv-Dew" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="3" id="iQ4-Me-upS"/>
                             <constraint firstAttribute="centerX" secondItem="xnQ-ix-rJ4" secondAttribute="centerX" id="ilO-e4-bpV"/>
                             <constraint firstItem="ILw-ab-fwW" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="itB-Xg-uOg"/>
                             <constraint firstItem="ILw-ab-fwW" firstAttribute="centerX" secondItem="dLx-UN-MA8" secondAttribute="centerX" id="lmg-jC-VwD"/>
@@ -800,6 +821,7 @@
                             <constraint firstItem="BH3-Hw-6HG" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="wpz-QY-2iH"/>
                             <constraint firstItem="IUB-XP-jO1" firstAttribute="height" secondItem="kh9-bI-dsS" secondAttribute="height" multiplier="0.4" constant="-144" id="xIX-sL-WCj"/>
                             <constraint firstItem="oOS-PS-YsH" firstAttribute="top" secondItem="xnQ-ix-rJ4" secondAttribute="bottom" id="y4p-mg-X23"/>
+                            <constraint firstItem="Edo-8P-ueB" firstAttribute="leading" secondItem="oFo-6v-90j" secondAttribute="trailing" constant="2" id="yXL-D9-Hpt"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -845,6 +867,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addressLabel" destination="DqO-dA-CFP" id="gnq-B7-FQW"/>
+                        <outlet property="backgroundCallText" destination="g7E-gv-Dew" id="CP3-rc-rk2"/>
                         <outlet property="buttonContainer" destination="xnQ-ix-rJ4" id="8e6-VC-Chl"/>
                         <outlet property="buttonMainViewEffect" destination="tFp-kB-1S5" id="C9I-Ey-Z0X"/>
                         <outlet property="currentIcon" destination="eCz-bA-uTm" id="67w-Fq-csx"/>
@@ -867,6 +890,7 @@
                         <outlet property="forecast_9_icon_viewHOME" destination="VKG-qr-7yc" id="ITS-kn-cAL"/>
                         <outlet property="forecast_9_time" destination="cVu-li-dyO" id="MWw-JR-lyn"/>
                         <outlet property="forecast_9_timeHOME" destination="JTZ-gv-BA1" id="d44-eg-e1F"/>
+                        <outlet property="gethomeWXtext" destination="Edo-8P-ueB" id="3M3-4P-77W"/>
                         <outlet property="img" destination="oFo-6v-90j" id="OEX-eD-zbr"/>
                         <outlet property="loadingActivityView" destination="BH3-Hw-6HG" id="Zzl-bd-waP"/>
                         <outlet property="loadingDarkView" destination="NPa-l8-bzE" id="HUo-sB-2li"/>

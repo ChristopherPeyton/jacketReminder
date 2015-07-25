@@ -164,8 +164,8 @@
     
     //[[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
-    //fetch every 4 hrs----3600 secs = 1hr
-    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:14400];
+    //fetch every 3 hrs----3600 secs = 1hr
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:3600];
         
     return YES;
 }
@@ -174,15 +174,6 @@
 {
     counter++;
     
-    NSLog(@"########### Received Background Fetch #%d ###########",counter);
-    NSLog(@"BEFORE FETCH");
-    NSLOG_SPACER
- //   NSLog(@"REGULAR WX\n%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"weatherDictionary"]);
-    
-    NSLOG_SPACER
- //   NSLog(@"Home WX\n%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"]);
-    NSLOG_SPACER
-    NSLOG_SPACER
     
     UIBackgroundFetchResult *result;
     //Download  the Content .
@@ -207,18 +198,10 @@
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
     
     //Cleanup
-    NSLog(@"Fetch completed");
-    NSLog(@"AFTER FETCH");
-    NSLOG_SPACER
- //   NSLog(@"REGULAR WX\n%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"weatherDictionary"]);
-    
-    NSLOG_SPACER
-//    NSLog(@"Home WX\n%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"]);
-    
-    
+
     //something went wrong and the homewx_dictionary is nil
 
-    NSLog(@"MY NEW RESULT = %d",result);//0 new data, 1 no data, 2 failed
+    NSLog(@"BACKGROUND RESULT = %d ------ //0 new data, 1 no data, 2 failed",result);//0 new data, 1 no data, 2 failed
     if ((int)result == 0)        //new data
     {
         NSLog(@"BACKGROUND FETCH HAS NEW DATA");
@@ -283,10 +266,83 @@
     //check that view is main viewcontroller class
     if ([self.window.rootViewController.childViewControllers[0] isKindOfClass:[ViewController class]])
     {
-        NSLog(@"calling weather from applicationDidBecomeActive");
-        [self.window.rootViewController.childViewControllers[0] getHomeWeather];
+        if ([self.window.rootViewController.childViewControllers[0]  isNetworkAvailable] == NO)
+        {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Unable to retrieve Weather" message:@"There may be an issue with the network connection or access to your location." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+            UIAlertAction *settingsAction = [UIAlertAction actionWithTitle:@"Settings" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                                             {
+                                                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:
+                                                                                             UIApplicationOpenSettingsURLString]];
+                                             }];
+            
+            [alertController addAction:cancelAction];
+            [alertController addAction:settingsAction];
+            
+            [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+            
+            // Construct URL to sound file
+            SystemSoundID soundID;
+            
+            NSURL *fileURL = [NSURL URLWithString:@"/System/Library/Audio/UISounds/Modern/sms_alert_note.caf"];
+            
+            AudioServicesCreateSystemSoundID((__bridge_retained CFURLRef)fileURL , &soundID);
+            
+            AudioServicesPlayAlertSound (soundID);
+        }
+        
+        else
+        {
+            NSLOG_SPACER
+            NSLog(@"CALLED GETHOMMEWEATHER FROM APPLICATIONDIDBECOMEACTIVE");
+            
+            [self.window.rootViewController.childViewControllers[0] getHomeWeather];
+        }
+        
+        
+        
+        
+        ///////////////////////////////////////////////////////////
+        
+        
+        [self.window.rootViewController.childViewControllers[0] backgroundCallTextARRAYMETHOD];
+        [self.window.rootViewController.childViewControllers[0] gethomeWXtextARRAYMETHOD];
+
+        
+        
+        
+        ///////////////////////////////////////////////////////////
+
 
     }
+    
+    //load username or prompt user if missing
+    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == nil || [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == NULL || [[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] isEqualToString:@""])
+    {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Please enter your first name" message:@"Your name will be used to provide a personal experience." preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self.window.rootViewController.childViewControllers[0] setUserName:((UITextField *) alertController.textFields[0]).text];
+            [[NSUserDefaults standardUserDefaults] setObject:[self.window.rootViewController.childViewControllers[0] userName] forKey:@"userName"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            NSLog(@"JUST SAVED USER: %@",[self.window.rootViewController.childViewControllers[0] userName]);
+        }];
+        
+        [alertController addAction:okAction];
+        
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            textField.placeholder = @"First Name";
+        }];
+        
+        [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+        
+    }
+    
+    else
+    {
+        [self.window.rootViewController.childViewControllers[0] setUserName:[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"]];
+    }
+
 
 }
 

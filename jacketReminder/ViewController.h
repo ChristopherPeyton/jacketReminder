@@ -10,6 +10,11 @@
 @import CoreLocation;
 #import "NSLOG__SPACER.h"
 #import "TableViewController.h"
+#import <AVFoundation/AVFoundation.h>
+
+#include<unistd.h>
+#include<netdb.h>
+
 IB_DESIGNABLE
 @interface ViewController : UIViewController <CLLocationManagerDelegate>
 
@@ -17,6 +22,25 @@ IB_DESIGNABLE
     int LocationEnabledStatus;
     BOOL setHomeLocationTriggered;
     BOOL atHome;
+    
+    
+    
+    
+    
+    
+    ///////////////////////////////////////////////////
+    
+    
+    NSMutableArray *gethomeWXtextARRAY;
+    NSMutableArray *backgroundCallTextARRAY;
+    
+    
+    ///////////////////////////////////////////////////
+    
+    
+    
+    
+    
 }
 
 @property (weak, nonatomic) IBOutlet UIView *loadingActivityView;
@@ -49,6 +73,18 @@ IB_DESIGNABLE
 -(NSMutableDictionary *) getBothWeather;
 -(UIBackgroundFetchResult *) getHomeWeatherOnlyForBackground;
 -(int) postWeatherToLabels;
+-(BOOL)isNetworkAvailable;
+
+
+///////////////////////////////////////////////////
+
+
+
+-(void) backgroundCallTextARRAYMETHOD;
+-(void) gethomeWXtextARRAYMETHOD;
+
+
+///////////////////////////////////////////////////
 
 @end
 

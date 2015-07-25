@@ -27,7 +27,12 @@
     int forecast_9_time_epochHOME;
     IBInspectable int xx;
     
+    int errorCounter;
+    BOOL mayNeedToRunGetBothWeather;
+
 }
+@property (weak, nonatomic) IBOutlet UITextView *gethomeWXtext;
+@property (weak, nonatomic) IBOutlet UITextView *backgroundCallText;
 @property (weak, nonatomic) IBOutlet UIView *loadingDarkView;
 @property (weak, nonatomic) IBOutlet UIImageView *currentIcon;
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *buttonMainViewEffect;
@@ -62,6 +67,22 @@
 
 @implementation ViewController
 
+-(BOOL)isNetworkAvailable
+{
+    char *hostname;
+    struct hostent *hostinfo;
+    hostname = "google.com";
+    hostinfo = gethostbyname (hostname);
+    if (hostinfo == NULL){
+        NSLog(@"-> no connection!\n");
+        return NO;
+    }
+    else{
+        NSLog(@"-> connection established!\n");
+        return YES;
+    }
+}
+
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     TableViewController *vc = segue.destinationViewController;
@@ -86,12 +107,24 @@
         
         self.homeInformation = [NSKeyedUnarchiver unarchiveObjectWithData:temp[0]];
     }
+    else
+    {
+        UILocalNotification *alert = [[UILocalNotification alloc]init];
+        
+        alert.fireDate = [NSDate date];
+        
+        alert.alertTitle = @"No Home Location Detected";
+        alert.alertBody = @"Please set your home address.";
+        alert.applicationIconBadgeNumber = 1;
+        
+        [[UIApplication sharedApplication] scheduleLocalNotification:alert];
+    }
     
     NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastBackgroundWeatherDateCalled"];
     float dateInterval =[[NSDate date] timeIntervalSinceDate:date];
     NSLog(@"SECONDS SINCE LAST CALL: %f",dateInterval);
     
-    if (date == nil || dateInterval > 14400)//3600 secs = 1hr
+    if (date == nil || dateInterval >= 3600)//3600 secs = 1hr
     {
         if ([self.homeInformation count]>=3)
         {
@@ -120,6 +153,24 @@
                 
                 //set date of last weather call
                 [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastBackgroundWeatherDateCalled"];
+            
+            
+            
+            ///////////////////////////////////////////////////
+            
+            
+            backgroundCallTextARRAY = [backgroundCallTextARRAY mutableCopy];
+            [backgroundCallTextARRAY addObject:[self getStringFromDateFORTESTING:[NSDate date]]];
+            [[NSUserDefaults standardUserDefaults] setObject:backgroundCallTextARRAY forKey:@"backgroundCallTextARRAY"];
+            
+            
+            ///////////////////////////////////////////////////
+            
+            
+            
+            
+            
+            
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 
                 NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
@@ -245,12 +296,41 @@
 
 - (NSMutableDictionary *) getHomeWeather
 {
+    if ([self  isNetworkAvailable] == NO)
+    {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Unable to retrieve Weather" message:@"There may be an issue with the network connection or access to your location." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *settingsAction = [UIAlertAction actionWithTitle:@"Settings" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                                         {
+                                             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:
+                                                                                         UIApplicationOpenSettingsURLString]];
+                                         }];
+        
+        [alertController addAction:cancelAction];
+        [alertController addAction:settingsAction];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+        // Construct URL to sound file
+        SystemSoundID soundID;
+        
+        NSURL *fileURL = [NSURL URLWithString:@"/System/Library/Audio/UISounds/Modern/sms_alert_note.caf"];
+        
+        AudioServicesCreateSystemSoundID((__bridge_retained CFURLRef)fileURL , &soundID);
+        
+        AudioServicesPlayAlertSound (soundID);
+        return nil;
+    }
+    
     NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastWeatherDateCalled"];
     float dateInterval =[[NSDate date] timeIntervalSinceDate:date];
     NSLog(@"interval in getHomeWeather: %f",dateInterval);
     
-    if (setHomeLocationTriggered == YES || date == nil || dateInterval > weatherTimer)
+    if (setHomeLocationTriggered == YES || weatherDictionary ==nil || date == nil || dateInterval >= weatherTimer)
     {
+        //used to delegate if we should run both wx, will be changed back to no in that method or below if we just run homewx method
+        mayNeedToRunGetBothWeather = YES;
+        
         setHomeLocationTriggered = NO;
         homeWeatherDictionary = nil;
 
@@ -260,6 +340,9 @@
         {
             if ([self.homeInformation[2] isEqualToString:addressFromGEO[1]] == NO)
             {
+                //running this method instead
+                mayNeedToRunGetBothWeather = NO;
+                
                 //RETRIEVE HOME LOCATION FROM ARRAY
                 CLLocation *homeLocation = self.homeInformation[0];
                 
@@ -278,9 +361,7 @@
                     homeWeatherDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
                     
                     [[NSUserDefaults standardUserDefaults] setObject:homeWeatherDictionary forKey:@"homeWeatherDictionary"];
-                    
-                    //set date of last weather call
-                    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastWeatherDateCalled"];
+                   
                     [[NSUserDefaults standardUserDefaults] synchronize];
                     
                     NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
@@ -324,41 +405,85 @@
     
     //USING DURING TESTING api.openweathermap.org/data/2.5/forecast?lat=32.986775&lon=-97.37743
     //NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%.8f&lon=%.8f", location.coordinate.latitude, location.coordinate.longitude];
+    
+    //running this method instead
+    mayNeedToRunGetBothWeather = NO;
+    
     if (location == nil || location == NULL)
     {
         NSLog(@"WRONG: LOCATION WAS NIL/NULL IN GETWEATHER!");
+        [[NSUserDefaults standardUserDefaults] synchronize];
         return nil;
     }
     
-    weatherDictionary = nil;
+    NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastWeatherDateCalled"];
+    float dateInterval =[[NSDate date] timeIntervalSinceDate:date];
+    NSLog(@"interval in getHomeWeather: %f",dateInterval);
     
-    NSLog(@"location from getweather: %@",location);
-    NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast?lat=%.8f&lon=%.8f", location.coordinate.latitude, location.coordinate.longitude];
     
-    NSURL *url = [NSURL URLWithString:urlString];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    NSURLSessionDataTask *datatask = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        weatherDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    if (weatherDictionary == nil || date == nil || dateInterval >= weatherTimer)
+    {
+    
         
-        //[weatherDictionary setObject: forKey:<#(id<NSCopying>)#>]
-            
-        NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-//        NSLOG_SPACER
-//        NSLog(@"%@",weatherDictionary);
-//        NSLOG_SPACER
-      //    NSLog(@"json string from getWeather\n%@", weatherJSON);
-//        NSLOG_SPACER
+            //weatherDictionary = nil;
+
         
-        dispatch_async(dispatch_get_main_queue(), ^{
+    
+        NSLog(@"location from getweather: %@",location);
+        NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast?lat=%.8f&lon=%.8f", location.coordinate.latitude, location.coordinate.longitude];
+        
+        NSURL *url = [NSURL URLWithString:urlString];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        NSURLSessionDataTask *datatask = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            weatherDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             
-            [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"weatherDictionary"];
+            //[weatherDictionary setObject: forKey:<#(id<NSCopying>)#>]
+                
+            NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    //        NSLOG_SPACER
+    //        NSLog(@"%@",weatherDictionary);
+    //        NSLOG_SPACER
+          //    NSLog(@"json string from getWeather\n%@", weatherJSON);
+    //        NSLOG_SPACER
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"weatherDictionary"];
 
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            [self postWeatherToLabels];
+                //set date of last weather call
+                [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastWeatherDateCalled"];
+                
+                
+                
+                ///////////////////////////////////////////////////
+                
+                
+                gethomeWXtextARRAY = [gethomeWXtextARRAY mutableCopy];
+                [gethomeWXtextARRAY addObject:[self getStringFromDateFORTESTING:[NSDate date]]];
+                [[NSUserDefaults standardUserDefaults] setObject:gethomeWXtextARRAY forKey:@"gethomeWXtextARRAY"];
+                
+                
+                ///////////////////////////////////////////////////
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [self postWeatherToLabels];
 
-        });
-    }];
-    [datatask resume];
+            });
+        }];
+        [datatask resume];
+    }
+    else
+    {
+        [self postWeatherToLabels];
+    }
     
     return weatherDictionary;
 }
@@ -373,9 +498,14 @@
         self.homeInformation = [NSKeyedUnarchiver unarchiveObjectWithData:temp[0]];
     }
     
-    if ([self.homeInformation count]>=3)
+    NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastWeatherDateCalled"];
+    float dateInterval =[[NSDate date] timeIntervalSinceDate:date];
+    NSLog(@"interval in getHomeWeather: %f",dateInterval);
+    
+    if ([self.homeInformation count]>=3 && dateInterval >= weatherTimer)
     {
-        weatherDictionary = nil;
+        mayNeedToRunGetBothWeather = NO;
+        //weatherDictionary = nil;
 
         
             //RETRIEVE HOME LOCATION FROM ARRAY
@@ -393,9 +523,7 @@
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         NSURLSessionDataTask *datatask = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             weatherDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            
-            //[weatherDictionary setObject: forKey:<#(id<NSCopying>)#>]
-            
+                        
             NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
             //        NSLOG_SPACER
             //        NSLog(@"%@",weatherDictionary);
@@ -409,12 +537,133 @@
                 [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"homeWeatherDictionary"];
                 [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastWeatherDateCalled"];
                 
+                
+                
+                
+                
+                
+                ///////////////////////////////////////////////////
+                
+                
+                gethomeWXtextARRAY = [gethomeWXtextARRAY mutableCopy];
+                [gethomeWXtextARRAY addObject:[self getStringFromDateFORTESTING:[NSDate date]]];
+                [[NSUserDefaults standardUserDefaults] setObject:gethomeWXtextARRAY forKey:@"gethomeWXtextARRAY"];
+                
+                
+                ///////////////////////////////////////////////////
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [self postWeatherToLabels];
                 
             });
         }];
         [datatask resume];
+    }
+    else if (mayNeedToRunGetBothWeather)
+    {
+        mayNeedToRunGetBothWeather = NO;
+        
+        //weatherDictionary = nil;
+        
+        
+        //RETRIEVE HOME LOCATION FROM ARRAY
+        CLLocation *homeLocation = self.homeInformation[0];
+        
+        //    //FINAL STRING WITH API KEY
+        //    NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%.8f&lon=%.8f&APPID=a96ff77043a749a97158ecbaaa30f249", location.coordinate.latitude, location.coordinate.longitude];
+        
+        //USING DURING TESTING api.openweathermap.org/data/2.5/forecast?lat=32.986775&lon=-97.37743
+        //NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%.8f&lon=%.8f", location.coordinate.latitude, location.coordinate.longitude];
+        
+        NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast?lat=%.8f&lon=%.8f", homeLocation.coordinate.latitude, homeLocation.coordinate.longitude];
+        
+        NSURL *url = [NSURL URLWithString:urlString];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        NSURLSessionDataTask *datatask = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            weatherDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            
+            NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+            //        NSLOG_SPACER
+            //        NSLog(@"%@",weatherDictionary);
+            //        NSLOG_SPACER
+            //      NSLog(@"json string from getBothWeather\n%@", weatherJSON);
+            //        NSLOG_SPACER
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"weatherDictionary"];
+                [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"homeWeatherDictionary"];
+                [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastWeatherDateCalled"];
+                
+                
+                
+                
+                
+                
+                ///////////////////////////////////////////////////
+                
+                
+                gethomeWXtextARRAY = [gethomeWXtextARRAY mutableCopy];
+                [gethomeWXtextARRAY addObject:[self getStringFromDateFORTESTING:[NSDate date]]];
+                [[NSUserDefaults standardUserDefaults] setObject:gethomeWXtextARRAY forKey:@"gethomeWXtextARRAY"];
+                
+                
+                ///////////////////////////////////////////////////
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [self postWeatherToLabels];
+                
+            });
+        }];
+        [datatask resume];
+
+    }
+    
+    else if(weatherDictionary != nil)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"weatherDictionary"];
+            [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"homeWeatherDictionary"];
+            
+            
+            
+            
+            
+            ///////////////////////////////////////////////////
+            
+
+            
+            ///////////////////////////////////////////////////
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [self postWeatherToLabels];
+            
+        });
     }
     
     if (self.loadingActivityView.hidden == NO)
@@ -514,9 +763,9 @@
     
 }
 
--(void)locationManager:(CLLocationManager *)manager didStartMonitoringForRegion:(CLRegion *)region {
+-(void)locationManager:(CLLocationManager *)manager didStartMonitoringForRegion:(CLRegion *)region
+{
     NSLog(@"Now monitoring for %@", region.identifier);
-    [[[UIAlertView alloc]initWithTitle:@"didStartMonitoringForRegion" message:@"didStartMonitoringForRegion" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil]show];
 }
 
 - (IBAction)setHomeLocation:(id)sender
@@ -563,8 +812,39 @@
         atHome = YES;
         NSLog(@"JUST SET HOME, athome = %d",atHome);
 
+        if ([self  isNetworkAvailable] == NO)
+        {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Unable to retrieve Weather" message:@"There may be an issue with the network connection or access to your location." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+            UIAlertAction *settingsAction = [UIAlertAction actionWithTitle:@"Settings" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                                             {
+                                                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:
+                                                                                             UIApplicationOpenSettingsURLString]];
+                                             }];
+            
+            [alertController addAction:cancelAction];
+            [alertController addAction:settingsAction];
+            
+            [self presentViewController:alertController animated:YES completion:nil];
+            
+            // Construct URL to sound file
+            SystemSoundID soundID;
+            
+            NSURL *fileURL = [NSURL URLWithString:@"/System/Library/Audio/UISounds/Modern/sms_alert_note.caf"];
+            
+            AudioServicesCreateSystemSoundID((__bridge_retained CFURLRef)fileURL , &soundID);
+            
+            AudioServicesPlayAlertSound (soundID);
+        }
+        else
+        {
+        
         //call on background to improve button performance and allow action to unhide loading view
+            NSLOG_SPACER
+            NSLog(@"CALLED GETHOMMEWEATHER FROM SETHOMELOCATION");
         [self performSelectorInBackground:@selector(getHomeWeather) withObject:nil];
+        
+        }
         
     }
     
@@ -576,7 +856,7 @@
             
         }
         
-        [[[UIAlertView alloc]initWithTitle:@"ADDR ISSUE" message:@"UNABLE TO DETECT LOC" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil]show];
+        //[[[UIAlertView alloc]initWithTitle:@"ADDR ISSUE" message:@"UNABLE TO DETECT LOC" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil]show];
         [self.locationManager startUpdatingLocation];
     }
     
@@ -603,6 +883,12 @@
         self.loadingActivityView.hidden = NO;
         
     }
+    
+    //wrapped mutable array to store it in defaults
+    NSData *arrayWrapperLocations = [NSKeyedArchiver archivedDataWithRootObject:self.homeInformation];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:arrayWrapperLocations forKey:@"locationsFromLocationManager"];
+    //[[NSUserDefaults standardUserDefaults] synchronize];
 
     //[self.locationManager stopUpdatingLocation];
 
@@ -719,8 +1005,23 @@
         }
 
         self.addressLabel.text = addressFromGEO[0];
-        [self getHomeWeather];
+        
+        
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"] == nil)
+        {
+            [self setHomeLocation:self];
+        }
+        else
+        {
+            NSLOG_SPACER
+            NSLog(@"CALLED GETHOMMEWEATHER FROM DIDUPDATELOC DEL");
+            [self getHomeWeather];
+            
+        }
+        
     }];
+    
+
     
     if (self.loadingActivityView.hidden == NO)
     {
@@ -742,6 +1043,55 @@
 - (int) postWeatherToLabels
 {
     [self performSelectorInBackground:@selector(unhideLoaderView) withObject:nil];
+    
+    
+    
+    
+    
+    
+    ///////////////////////////////////////////////////
+    
+    
+    [self gethomeWXtextARRAYMETHOD];
+    [self backgroundCallTextARRAYMETHOD];
+    
+    
+    ///////////////////////////////////////////////////
+    
+    
+    
+    
+    
+    
+    
+    if ([addressFromGEO count] > 1 && ![self.addressLabel.text isEqualToString:addressFromGEO[0]])
+    {
+        if (![addressFromGEO[0] isEqualToString:@""])
+        {
+            self.addressLabel.text = addressFromGEO[0];
+        }
+        
+        else if ([[NSUserDefaults standardUserDefaults] objectForKey:@"locationsFromLocationManager"] != nil)
+        {
+            NSMutableArray *temp = [NSMutableArray arrayWithObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"locationsFromLocationManager"]];
+
+            NSArray *arrayLocations = [NSKeyedUnarchiver unarchiveObjectWithData:temp[0]];
+            [self.locationManager.delegate locationManager:self.locationManager didUpdateLocations:arrayLocations];
+        }
+
+    }
+    else if ([addressFromGEO count] > 1 && [addressFromGEO[0] isEqualToString:@""])
+    {
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"locationsFromLocationManager"] != nil)
+        {
+            NSMutableArray *temp = [NSMutableArray arrayWithObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"locationsFromLocationManager"]];
+            
+            NSArray *arrayLocations = [NSKeyedUnarchiver unarchiveObjectWithData:temp[0]];
+            [self.locationManager.delegate locationManager:self.locationManager didUpdateLocations:arrayLocations];
+        }
+
+    }
+    
 
     if ([addressFromGEO[1] isEqualToString:self.homeInformation[2]])
     {
@@ -756,14 +1106,25 @@
         {
             if (homeWeatherDictionary == nil || weatherDictionary == nil)
             {
+                NSLOG_SPACER
+                NSLog(@"CALLED GETHOMMEWEATHER FROM POSTWEATHERTOLABELS : LOCATION IS AVAIL AND self.homeInformation != nil AND homeWeatherDictionary == nil || weatherDictionary == nil");
                 [self getHomeWeather];
+                
             }
         }
         
         else if (weatherDictionary == nil)
         {
-            [self getHomeWeather];
+            NSLOG_SPACER
+            NSLog(@"CALLED GETHOMMEWEATHER FROM POSTWEATHERTOLABELS : LOCATION IS AVAIL AND self.homeInformation == nil AND weatherDictionary == nil");
+            
+                [self getHomeWeather];
+ 
         }
+    }
+    else
+    {
+        return 0;
     }
     
     if ([addressFromGEO[1] isEqualToString:self.homeInformation[2]])
@@ -917,24 +1278,88 @@
     return dateString;
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    //load username or prompt user if missing
+    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == nil || [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == NULL || [[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] isEqualToString:@""])
+    {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Please enter your first name" message:@"Your name will be used to provide a personal experience." preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            self.userName = ((UITextField *) alertController.textFields[0]).text;
+            [[NSUserDefaults standardUserDefaults] setObject:self.userName forKey:@"userName"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            NSLog(@"JUST SAVED USER: %@",self.userName);
+        }];
+        
+        [alertController addAction:okAction];
+        
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            textField.placeholder = @"First Name";
+        }];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+    }
+    
+    else
+    {
+        self.userName = [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"];
+    }
+}
+
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    //alert user if no home loc is assigned
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"] == nil)
+//    //alert user if no home loc is assigned
+//    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"] == nil)
+//    {
+//        UILocalNotification *alert = [[UILocalNotification alloc]init];
+//        
+//        alert.fireDate = [NSDate date];
+//        
+//        alert.alertTitle = @"No Home Location Detected";
+//        alert.alertBody = @"Please set your home address.";
+//        alert.applicationIconBadgeNumber = 1;
+//        
+//        [[UIApplication sharedApplication] scheduleLocalNotification:alert];
+//    }
+    
+    if ([self  isNetworkAvailable] == NO)
     {
-        UILocalNotification *alert = [[UILocalNotification alloc]init];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Unable to retrieve Weather" message:@"There may be an issue with the network connection or access to your location." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *settingsAction = [UIAlertAction actionWithTitle:@"Settings" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                                         {
+                                             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:
+                                                                                         UIApplicationOpenSettingsURLString]];
+                                         }];
         
-        alert.fireDate = [NSDate date];
+        [alertController addAction:cancelAction];
+        [alertController addAction:settingsAction];
         
-        alert.alertTitle = @"No Home Location Detected";
-        alert.alertBody = @"Please set your home address.";
-        alert.applicationIconBadgeNumber = 1;
+        [self presentViewController:alertController animated:YES completion:nil];
         
-        [[UIApplication sharedApplication] scheduleLocalNotification:alert];
+        // Construct URL to sound file
+        SystemSoundID soundID;
+        
+        NSURL *fileURL = [NSURL URLWithString:@"/System/Library/Audio/UISounds/Modern/sms_alert_note.caf"];
+        
+        AudioServicesCreateSystemSoundID((__bridge_retained CFURLRef)fileURL , &soundID);
+        
+        AudioServicesPlayAlertSound (soundID);
+    }
+    else
+    {
+        NSLOG_SPACER
+        NSLog(@"CALLED GETHOMMEWEATHER FROM VIEWDIDAPPEAR");
+
+        [self getHomeWeather];
+
     }
     
-    [self getHomeWeather];
 //    NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastWeatherDateCalled"];
 //    NSDate *date2 = [NSDate dateWithTimeIntervalSinceNow:1800];
 //    if (date)
@@ -945,15 +1370,117 @@
 //
 //    }
     
+    
+    
+    ///////////////////////////////////////////////////
+    
+    self.backgroundCallText.text = [backgroundCallTextARRAY description];
+    self.gethomeWXtext.text = gethomeWXtextARRAY.description;
+    
+    
+    
+    ///////////////////////////////////////////////////
 }
 
-- (void) checkToRunWeather
+
+
+
+///////////////////////////////////////////////////
+
+- (void) backgroundCallTextARRAYMETHOD
 {
-    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"backgroundCallTextARRAY"] != nil)
+    {
+        backgroundCallTextARRAY =[[NSUserDefaults standardUserDefaults] objectForKey:@"backgroundCallTextARRAY"] ;
+    }
+    self.backgroundCallText.text = backgroundCallTextARRAY.description;
 }
+- (void) gethomeWXtextARRAYMETHOD
+{
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"gethomeWXtextARRAY"] != nil)
+    {
+        gethomeWXtextARRAY =[[NSUserDefaults standardUserDefaults] objectForKey:@"gethomeWXtextARRAY"];
+    }
+    self.gethomeWXtext.text = gethomeWXtextARRAY.description;
+}
+
+///////////////////////////////////////////////////
+
+
+
+///////////////////////////////////////////////////
+
+
+-(NSString *)getStringFromDateFORTESTING:(NSDate *) myDate
+{
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"EEE,MMM d h:mm:ss a"];
+    NSString *dateString = [dateFormat stringFromDate:myDate];
+    
+    return dateString;
+}
+
+
+////////////////////////////////////////////////////
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    
+    ///////////////////////////////////////////////////
+    
+    backgroundCallTextARRAY = [NSMutableArray array];
+    gethomeWXtextARRAY = [NSMutableArray array];
+
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"backgroundCallTextARRAY"] != nil)
+    {
+        backgroundCallTextARRAY = [[NSUserDefaults standardUserDefaults] objectForKey:@"backgroundCallTextARRAY"];
+
+    }
+    self.backgroundCallText.text = [backgroundCallTextARRAY description];
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"gethomeWXtextARRAY"] != nil)
+    {
+        gethomeWXtextARRAY = [[NSUserDefaults standardUserDefaults] objectForKey:@"gethomeWXtextARRAY"];
+        
+    }
+    self.gethomeWXtext.text = [gethomeWXtextARRAY description];
+    
+    
+    
+    ///////////////////////////////////////////////////
+    
+    
+    if ([self  isNetworkAvailable] == NO)
+    {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Unable to retrieve Weather" message:@"There may be an issue with the network connection or access to your location." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *settingsAction = [UIAlertAction actionWithTitle:@"Settings" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+                                         {
+                                             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:
+                                                                                         UIApplicationOpenSettingsURLString]];
+                                         }];
+        
+        [alertController addAction:cancelAction];
+        [alertController addAction:settingsAction];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+        // Construct URL to sound file
+        SystemSoundID soundID;
+        
+        NSURL *fileURL = [NSURL URLWithString:@"/System/Library/Audio/UISounds/Modern/sms_alert_note.caf"];
+        
+        AudioServicesCreateSystemSoundID((__bridge_retained CFURLRef)fileURL , &soundID);
+        
+        AudioServicesPlayAlertSound (soundID);
+    }
+    
     // Do any additional setup after loading the view, typically from a nib.
 
     //change settings button to wheel icon
@@ -1032,15 +1559,16 @@
         
         self.homeInformation = [NSKeyedUnarchiver unarchiveObjectWithData:temp[0]];
         
-        NSLog(@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"weatherDictionary"]);
-
         weatherDictionary = [[NSUserDefaults standardUserDefaults] objectForKey:@"weatherDictionary"];
         
         homeWeatherDictionary = [[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"];
         
         [self postWeatherToLabels];
     }
-    
+    else
+    {
+        weatherDictionary = [[NSUserDefaults standardUserDefaults] objectForKey:@"weatherDictionary"];
+    }
     
     
     
@@ -1065,32 +1593,8 @@
     
     self.buttonContainer.layer.cornerRadius = self.buttonMainViewEffect.layer.cornerRadius;
     
-    //load username or prompt user if missing
-    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == nil || [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == NULL)
-    {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Please enter your first name" message:@"Your name will be used to provide a personal experience." preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            self.userName = ((UITextField *) alertController.textFields[0]).text;
-            [[NSUserDefaults standardUserDefaults] setObject:self.userName forKey:@"userName"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            NSLog(@"JUST SAVED USER: %@",self.userName);
-        }];
-        
-        [alertController addAction:okAction];
-        
-        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-            textField.placeholder = @"First Name";
-        }];
-        
-        [self presentViewController:alertController animated:YES completion:nil];
-        
-    }
     
-    else
-    {
-        self.userName = [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"];
-    }
+
 }
 
 -(void) locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
