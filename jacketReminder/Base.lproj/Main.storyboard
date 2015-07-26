@@ -859,6 +859,11 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Grab That Jacket" id="Fe6-jh-WgW">
+                        <barButtonItem key="leftBarButtonItem" title="Refresh" id="0JG-wc-qIp">
+                            <connections>
+                                <action selector="requestRefreshButtonPressed:" destination="vXZ-lx-hvc" id="Qsv-ne-YfE"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="6eG-7P-Ngt">
                             <connections>
                                 <segue destination="X2a-Eg-Hug" kind="show" id="rzq-JX-qX5"/>

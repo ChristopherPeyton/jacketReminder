@@ -82,6 +82,12 @@
         return YES;
     }
 }
+- (IBAction)requestRefreshButtonPressed:(id)sender
+{
+    NSLOG_SPACER
+    NSLog(@"CALLED GETHOMEWEATHER FROM requestRefreshButtonPressed");
+    [self getHomeWeather];
+}
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -98,6 +104,7 @@
 
 - (UIBackgroundFetchResult *) getHomeWeatherOnlyForBackground
 {
+    
     UIBackgroundFetchResult *result;
     
     //make sure home location is available before calling, assign home loc
@@ -120,11 +127,27 @@
         [[UIApplication sharedApplication] scheduleLocalNotification:alert];
     }
     
+    //load username or prompt user if missing
+    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == nil || [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == NULL || [[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] isEqualToString:@""])
+    {
+        
+        UILocalNotification *alert = [[UILocalNotification alloc]init];
+        
+        alert.fireDate = [NSDate date];
+        
+        alert.alertTitle = @"Please enter your first name in the settings view";
+        alert.alertBody = @"Your name will be used to provide a personal experience.";
+        alert.applicationIconBadgeNumber = 1;
+        
+        [[UIApplication sharedApplication] scheduleLocalNotification:alert];
+        
+    }
+    
     NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastBackgroundWeatherDateCalled"];
     float dateInterval =[[NSDate date] timeIntervalSinceDate:date];
     NSLog(@"SECONDS SINCE LAST CALL: %f",dateInterval);
     
-    if (date == nil || dateInterval >= 3600)//3600 secs = 1hr
+    if (date == nil || dateInterval >= 9000)//3600 secs = 1hr
     {
         if ([self.homeInformation count]>=3)
         {
@@ -873,6 +896,33 @@
     [super viewWillDisappear:animated];
     
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    //load username or prompt user if missing
+    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == nil || [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == NULL || [[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] isEqualToString:@""])
+    {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Please enter your first name" message:@"Your name will be used to provide a personal experience." preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            self.userName = ((UITextField *) alertController.textFields[0]).text;
+            [[NSUserDefaults standardUserDefaults] setObject:self.userName forKey:@"userName"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            NSLog(@"JUST SAVED USER: %@",self.userName);
+        }];
+        
+        [alertController addAction:okAction];
+        
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            textField.placeholder = @"First Name";
+        }];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+        
+    }
+    
+    else
+    {
+        self.userName = [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"];
+    }
 
 }
 
@@ -883,6 +933,34 @@
         self.loadingActivityView.hidden = NO;
         
     }
+    
+        //load username or prompt user if missing
+        if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == nil || [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == NULL || [[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] isEqualToString:@""])
+        {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Please enter your first name" message:@"Your name will be used to provide a personal experience." preferredStyle:UIAlertControllerStyleAlert];
+    
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                self.userName = ((UITextField *) alertController.textFields[0]).text;
+                [[NSUserDefaults standardUserDefaults] setObject:self.userName forKey:@"userName"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                NSLog(@"JUST SAVED USER: %@",self.userName);
+            }];
+    
+            [alertController addAction:okAction];
+    
+            [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+                textField.placeholder = @"First Name";
+            }];
+    
+            [self presentViewController:alertController animated:YES completion:nil];
+    
+        }
+    
+        else
+        {
+            self.userName = [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"];
+        }
+
     
     //wrapped mutable array to store it in defaults
     NSData *arrayWrapperLocations = [NSKeyedArchiver archivedDataWithRootObject:self.homeInformation];
@@ -1282,32 +1360,34 @@
 {
     [super viewWillAppear:animated];
     
-    //load username or prompt user if missing
-    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == nil || [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == NULL || [[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] isEqualToString:@""])
-    {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Please enter your first name" message:@"Your name will be used to provide a personal experience." preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            self.userName = ((UITextField *) alertController.textFields[0]).text;
-            [[NSUserDefaults standardUserDefaults] setObject:self.userName forKey:@"userName"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            NSLog(@"JUST SAVED USER: %@",self.userName);
-        }];
-        
-        [alertController addAction:okAction];
-        
-        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-            textField.placeholder = @"First Name";
-        }];
-        
-        [self presentViewController:alertController animated:YES completion:nil];
-        
-    }
     
-    else
-    {
-        self.userName = [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"];
-    }
+    
+//    //load username or prompt user if missing
+//    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == nil || [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == NULL || [[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] isEqualToString:@""])
+//    {
+//        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Please enter your first name" message:@"Your name will be used to provide a personal experience." preferredStyle:UIAlertControllerStyleAlert];
+//        
+//        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+//            self.userName = ((UITextField *) alertController.textFields[0]).text;
+//            [[NSUserDefaults standardUserDefaults] setObject:self.userName forKey:@"userName"];
+//            [[NSUserDefaults standardUserDefaults] synchronize];
+//            NSLog(@"JUST SAVED USER: %@",self.userName);
+//        }];
+//        
+//        [alertController addAction:okAction];
+//        
+//        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+//            textField.placeholder = @"First Name";
+//        }];
+//        
+//        [self presentViewController:alertController animated:YES completion:nil];
+//        
+//    }
+//    
+//    else
+//    {
+//        self.userName = [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"];
+//    }
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -1353,6 +1433,7 @@
     }
     else
     {
+        
         NSLOG_SPACER
         NSLog(@"CALLED GETHOMEWEATHER FROM VIEWDIDAPPEAR");
 
@@ -1427,10 +1508,11 @@
 
 ////////////////////////////////////////////////////
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
+
     
     ///////////////////////////////////////////////////
     

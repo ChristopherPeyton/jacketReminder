@@ -99,6 +99,24 @@
         
     }
     
+    else if ([notification.alertTitle isEqualToString:@"Please enter your first name"])
+    {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Please enter your first name" message:notification.alertBody preferredStyle:UIAlertControllerStyleAlert];
+        
+        application.applicationIconBadgeNumber = 1;
+        
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            ;
+        }];
+        
+        [alertController addAction:okAction];
+        
+        [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+        
+        [self playAlertSound];
+        
+    }
+    
     else if ([notification.alertTitle isEqualToString:[NSString stringWithFormat:@"Yo %@,", [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"]]])
     {
         UIAlertController *alertControllerTemp = [UIAlertController alertControllerWithTitle:notification.alertTitle message:notification.alertBody preferredStyle:UIAlertControllerStyleAlert];
@@ -165,7 +183,7 @@
     //[[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
     //fetch every 3 hrs----3600 secs = 1hr
-    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:3600];
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:10800];
         
     return YES;
 }
@@ -189,7 +207,7 @@
     }
     
     // Set up Local Notifications
-    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+ //   [[UIApplication sharedApplication] cancelAllLocalNotifications];
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     NSDate *now = [NSDate date];
     localNotification.fireDate = now;
@@ -229,6 +247,9 @@
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     NSLog(@"\n\n\napplicationWillResignActive\n\n\n");
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    
+    
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -249,19 +270,19 @@
      NSLog(@"\n\n\napplicationDidBecomeActive\n\n\n");
     application.applicationIconBadgeNumber = 0;
     
-    //alert user if no home loc is assigned
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"] == nil)
-    {
-        UILocalNotification *alert = [[UILocalNotification alloc]init];
-        
-        alert.fireDate = [NSDate date];
-        
-        alert.alertTitle = @"No Home Location Detected";
-        alert.alertBody = @"Please set your home address.";
-        alert.applicationIconBadgeNumber = 1;
-        
-        [[UIApplication sharedApplication] scheduleLocalNotification:alert];
-    }
+//    //alert user if no home loc is assigned
+//    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"] == nil)
+//    {
+//        UILocalNotification *alert = [[UILocalNotification alloc]init];
+//        
+//        alert.fireDate = [NSDate date];
+//        
+//        alert.alertTitle = @"No Home Location Detected";
+//        alert.alertBody = @"Please set your home address.";
+//        alert.applicationIconBadgeNumber = 1;
+//        
+//        [[UIApplication sharedApplication] scheduleLocalNotification:alert];
+//    }
     
     //check that view is main viewcontroller class
     if ([self.window.rootViewController.childViewControllers[0] isKindOfClass:[ViewController class]])
@@ -316,32 +337,32 @@
 
     }
     
-    //load username or prompt user if missing
-    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == nil || [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == NULL || [[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] isEqualToString:@""])
-    {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Please enter your first name" message:@"Your name will be used to provide a personal experience." preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self.window.rootViewController.childViewControllers[0] setUserName:((UITextField *) alertController.textFields[0]).text];
-            [[NSUserDefaults standardUserDefaults] setObject:[self.window.rootViewController.childViewControllers[0] userName] forKey:@"userName"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            NSLog(@"JUST SAVED USER: %@",[self.window.rootViewController.childViewControllers[0] userName]);
-        }];
-        
-        [alertController addAction:okAction];
-        
-        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-            textField.placeholder = @"First Name";
-        }];
-        
-        [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
-        
-    }
-    
-    else
-    {
-        [self.window.rootViewController.childViewControllers[0] setUserName:[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"]];
-    }
+//    //load username or prompt user if missing
+//    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == nil || [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == NULL || [[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] isEqualToString:@""])
+//    {
+//        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Please enter your first name" message:@"Your name will be used to provide a personal experience." preferredStyle:UIAlertControllerStyleAlert];
+//        
+//        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+//            [self.window.rootViewController.childViewControllers[0] setUserName:((UITextField *) alertController.textFields[0]).text];
+//            [[NSUserDefaults standardUserDefaults] setObject:[self.window.rootViewController.childViewControllers[0] userName] forKey:@"userName"];
+//            [[NSUserDefaults standardUserDefaults] synchronize];
+//            NSLog(@"JUST SAVED USER: %@",[self.window.rootViewController.childViewControllers[0] userName]);
+//        }];
+//        
+//        [alertController addAction:okAction];
+//        
+//        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+//            textField.placeholder = @"First Name";
+//        }];
+//        
+//        [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+//        
+//    }
+//    
+//    else
+//    {
+//        [self.window.rootViewController.childViewControllers[0] setUserName:[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"]];
+//    }
 
 
 }
