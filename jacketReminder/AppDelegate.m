@@ -206,15 +206,6 @@
         [view getHomeWeatherOnlyForBackground];
     }
     
-    // Set up Local Notifications
- //   [[UIApplication sharedApplication] cancelAllLocalNotifications];
-    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    NSDate *now = [NSDate date];
-    localNotification.fireDate = now;
-    localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background",counter];
-    localNotification.soundName = UILocalNotificationDefaultSoundName;
-    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-    
     //Cleanup
 
     //something went wrong and the homewx_dictionary is nil
@@ -223,17 +214,53 @@
     if ((int)result == 0)        //new data
     {
         NSLog(@"BACKGROUND FETCH HAS NEW DATA");
+        
+        
+        // Set up Local Notifications
+        //   [[UIApplication sharedApplication] cancelAllLocalNotifications];
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        NSDate *now = [NSDate date];
+        localNotification.fireDate = now;
+        localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background has NEW data",counter];
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+        
+        
         completionHandler(UIBackgroundFetchResultNewData);
     }
     else if ((int) result == 1)
     {
         NSLog(@"BACKGROUND FETCH HAS NO NEW DATA");
+        
+        
+        // Set up Local Notifications
+        //   [[UIApplication sharedApplication] cancelAllLocalNotifications];
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        NSDate *now = [NSDate date];
+        localNotification.fireDate = now;
+        localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background has NO NEW data",counter];
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+        
+        
 
         completionHandler(UIBackgroundFetchResultNoData);
     }
     else
     {
         NSLog(@"BACKGROUND FETCH HAS FAILED");
+        
+        
+        // Set up Local Notifications
+        //   [[UIApplication sharedApplication] cancelAllLocalNotifications];
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        NSDate *now = [NSDate date];
+        localNotification.fireDate = now;
+        localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background has FAILED",counter];
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+        
+        
 
         completionHandler(UIBackgroundFetchResultFailed);
     }
