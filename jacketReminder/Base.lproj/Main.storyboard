@@ -543,39 +543,44 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="140" height="140"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="the sky is clear" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Nq-w9-rrP">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="the sky is clear" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumScaleFactor="0.29999999999999999" translatesAutoresizingMaskIntoConstraints="NO" id="3Nq-w9-rrP">
                                                                 <rect key="frame" x="0.0" y="2" width="140" height="17"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="17" id="nDq-vE-vw3"/>
                                                                 </constraints>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                 <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
+                                                                <variation key="default">
+                                                                    <mask key="constraints">
+                                                                        <exclude reference="nDq-vE-vw3"/>
+                                                                    </mask>
+                                                                </variation>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fri, 10 PM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fID-bl-uEp">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Fri, 10 PM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fID-bl-uEp">
                                                                 <rect key="frame" x="0.0" y="19" width="140" height="18"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="18" id="P0g-KG-jgs"/>
                                                                 </constraints>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                 <color key="textColor" red="0.39567550509999999" green="0.39567550509999999" blue="0.39567550509999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Location" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="piR-L3-Kkf">
-                                                                <rect key="frame" x="20" y="75" width="101" height="16"/>
+                                                                <rect key="frame" x="20" y="80" width="101" height="16"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                 <color key="textColor" red="0.39567550509999999" green="0.39567550509999999" blue="0.39567550509999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="98" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OCD-pG-LjW">
-                                                                <rect key="frame" x="48" y="92" width="45" height="48"/>
-                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
+                                                                <rect key="frame" x="46" y="86" width="50" height="54"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="45"/>
                                                                 <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="o" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bRJ-ak-mEZ" userLabel="Temp Symbol">
-                                                                <rect key="frame" x="93" y="92" width="48" height="48"/>
-                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
+                                                                <rect key="frame" x="96" y="86" width="45" height="54"/>
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="45"/>
                                                                 <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
@@ -592,7 +597,7 @@
                                                             <constraint firstItem="piR-L3-Kkf" firstAttribute="top" secondItem="eCz-bA-uTm" secondAttribute="bottom" id="2ul-31-Dlu"/>
                                                             <constraint firstItem="piR-L3-Kkf" firstAttribute="centerY" secondItem="SSr-1y-kj5" secondAttribute="centerY" id="32Y-IC-x68"/>
                                                             <constraint firstItem="fID-bl-uEp" firstAttribute="leading" secondItem="3Nq-w9-rrP" secondAttribute="leading" id="4Os-Wf-PDq"/>
-                                                            <constraint firstItem="piR-L3-Kkf" firstAttribute="top" secondItem="eCz-bA-uTm" secondAttribute="bottom" constant="-10" id="62b-WR-8nB"/>
+                                                            <constraint firstItem="piR-L3-Kkf" firstAttribute="top" secondItem="eCz-bA-uTm" secondAttribute="bottom" constant="-12" id="62b-WR-8nB"/>
                                                             <constraint firstItem="OCD-pG-LjW" firstAttribute="top" secondItem="piR-L3-Kkf" secondAttribute="bottom" id="69R-zW-f3G"/>
                                                             <constraint firstItem="OCD-pG-LjW" firstAttribute="centerX" secondItem="eCz-bA-uTm" secondAttribute="centerX" id="6Q7-Ab-9va"/>
                                                             <constraint firstItem="piR-L3-Kkf" firstAttribute="top" secondItem="fID-bl-uEp" secondAttribute="bottom" constant="44" id="8dc-fs-Nr6"/>
@@ -625,6 +630,8 @@
                                                             <constraint firstItem="piR-L3-Kkf" firstAttribute="top" secondItem="OCD-pG-LjW" secondAttribute="top" constant="-4" id="eGc-ot-CAu"/>
                                                             <constraint firstItem="eCz-bA-uTm" firstAttribute="centerX" secondItem="piR-L3-Kkf" secondAttribute="centerX" id="gbM-Nf-UiZ"/>
                                                             <constraint firstAttribute="trailing" secondItem="bRJ-ak-mEZ" secondAttribute="trailing" constant="-1" id="hti-9r-qdZ"/>
+                                                            <constraint firstAttribute="trailing" secondItem="3Nq-w9-rrP" secondAttribute="trailing" id="iPJ-YS-CMW"/>
+                                                            <constraint firstItem="3Nq-w9-rrP" firstAttribute="leading" secondItem="SSr-1y-kj5" secondAttribute="leading" id="iR4-2O-KGo"/>
                                                             <constraint firstItem="OCD-pG-LjW" firstAttribute="top" secondItem="eCz-bA-uTm" secondAttribute="bottom" constant="33" id="jFl-5q-WGb"/>
                                                             <constraint firstItem="OCD-pG-LjW" firstAttribute="top" secondItem="3Nq-w9-rrP" secondAttribute="top" constant="77" id="kFd-Nm-h5h"/>
                                                             <constraint firstItem="piR-L3-Kkf" firstAttribute="top" secondItem="fID-bl-uEp" secondAttribute="bottom" constant="48" id="mHK-WK-8F1"/>
@@ -637,6 +644,8 @@
                                                             <mask key="constraints">
                                                                 <exclude reference="9dv-tP-YXh"/>
                                                                 <exclude reference="ZhN-Fw-sd1"/>
+                                                                <exclude reference="4Os-Wf-PDq"/>
+                                                                <exclude reference="ISj-41-mjd"/>
                                                                 <exclude reference="MaO-aH-KrF"/>
                                                                 <exclude reference="qTU-vl-xQd"/>
                                                                 <exclude reference="gbM-Nf-UiZ"/>
