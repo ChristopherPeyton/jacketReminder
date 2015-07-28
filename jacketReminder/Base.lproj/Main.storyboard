@@ -119,12 +119,12 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="75"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fri, 12:00 AM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="none" minimumScaleFactor="0.55000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="5od-vE-is3">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Fri, 12:00 AM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="none" minimumScaleFactor="0.55000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="5od-vE-is3">
                                                                         <rect key="frame" x="0.0" y="2" width="82" height="24"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="30" id="LDA-rD-Dks"/>
                                                                         </constraints>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <variation key="default">
@@ -133,51 +133,51 @@
                                                                             </mask>
                                                                         </variation>
                                                                     </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sat, 12:00 AM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="none" minimumScaleFactor="0.55000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="RV8-40-hfh">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Sat, 12:00 AM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="none" minimumScaleFactor="0.55000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="RV8-40-hfh">
                                                                         <rect key="frame" x="259" y="2" width="82" height="24"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="103" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.10000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="bZH-2k-c1G">
                                                                         <rect key="frame" x="26" y="34" width="30" height="48"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="35"/>
                                                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="103" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.10000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="05x-ab-gAO">
                                                                         <rect key="frame" x="285" y="34" width="30" height="48"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="35"/>
                                                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="--" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.10000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="CDI-iq-jqu">
                                                                         <rect key="frame" x="544" y="34" width="30" height="48"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="35"/>
                                                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sun, 12:00 PM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="none" minimumScaleFactor="0.55000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="cVu-li-dyO">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Sun, 12:00 PM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="none" minimumScaleFactor="0.55000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="cVu-li-dyO">
                                                                         <rect key="frame" x="518" y="3" width="82" height="24"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="o" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.10000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="kfM-N8-kMo" userLabel="symbol">
                                                                         <rect key="frame" x="56" y="34" width="13" height="48"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="34"/>
+                                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="29"/>
                                                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="o" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.10000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="tM3-t4-gUt" userLabel="symbol">
                                                                         <rect key="frame" x="315" y="34" width="13" height="48"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="34"/>
+                                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="29"/>
                                                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="o" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.10000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="uf2-wp-jJZ" userLabel="symbol">
                                                                         <rect key="frame" x="574" y="34" width="13" height="48"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="34"/>
+                                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="29"/>
                                                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
@@ -193,7 +193,7 @@
                                                                     <constraint firstItem="05x-ab-gAO" firstAttribute="centerY" secondItem="bZH-2k-c1G" secondAttribute="centerY" id="LH2-gj-F6b"/>
                                                                     <constraint firstItem="kfM-N8-kMo" firstAttribute="width" secondItem="uf2-wp-jJZ" secondAttribute="width" id="OVe-iX-JZs"/>
                                                                     <constraint firstItem="bZH-2k-c1G" firstAttribute="width" secondItem="CDI-iq-jqu" secondAttribute="width" id="PFX-2H-ZgE"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="05x-ab-gAO" secondAttribute="bottom" constant="-7" id="Po9-gG-wnd"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="05x-ab-gAO" secondAttribute="bottom" constant="-6" id="Po9-gG-wnd"/>
                                                                     <constraint firstAttribute="bottom" secondItem="05x-ab-gAO" secondAttribute="bottom" id="SlN-G5-Rk7"/>
                                                                     <constraint firstItem="cVu-li-dyO" firstAttribute="width" secondItem="RV8-40-hfh" secondAttribute="width" id="Su0-La-4g9"/>
                                                                     <constraint firstItem="tM3-t4-gUt" firstAttribute="width" secondItem="kfM-N8-kMo" secondAttribute="width" id="Uxu-cD-Wzd"/>
@@ -202,22 +202,22 @@
                                                                     <constraint firstItem="tM3-t4-gUt" firstAttribute="leading" secondItem="05x-ab-gAO" secondAttribute="trailing" id="XWh-3p-sEq"/>
                                                                     <constraint firstItem="cVu-li-dyO" firstAttribute="centerX" secondItem="CDI-iq-jqu" secondAttribute="centerX" id="Y0O-4e-x61"/>
                                                                     <constraint firstItem="kfM-N8-kMo" firstAttribute="leading" secondItem="bZH-2k-c1G" secondAttribute="trailing" id="YFS-m2-exx"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="CDI-iq-jqu" secondAttribute="bottom" constant="-7" id="alv-1p-pPS"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="tM3-t4-gUt" secondAttribute="bottom" constant="-7" id="dDW-Dl-aLF"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="CDI-iq-jqu" secondAttribute="bottom" constant="-6" id="alv-1p-pPS"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="tM3-t4-gUt" secondAttribute="bottom" constant="-6" id="dDW-Dl-aLF"/>
                                                                     <constraint firstItem="bZH-2k-c1G" firstAttribute="centerX" secondItem="5od-vE-is3" secondAttribute="centerX" id="f9v-0n-jWg"/>
                                                                     <constraint firstItem="bZH-2k-c1G" firstAttribute="width" secondItem="kfM-N8-kMo" secondAttribute="width" id="gLI-od-UG6"/>
                                                                     <constraint firstAttribute="trailing" secondItem="cVu-li-dyO" secondAttribute="trailing" id="j48-a0-1Sd"/>
                                                                     <constraint firstItem="kfM-N8-kMo" firstAttribute="height" secondItem="uf2-wp-jJZ" secondAttribute="height" id="k5P-7y-2OR"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="bZH-2k-c1G" secondAttribute="bottom" constant="-7" id="kUc-mY-LZg"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="bZH-2k-c1G" secondAttribute="bottom" constant="-6" id="kUc-mY-LZg"/>
                                                                     <constraint firstItem="05x-ab-gAO" firstAttribute="height" secondItem="bZH-2k-c1G" secondAttribute="height" id="l1Y-7X-QQg"/>
                                                                     <constraint firstItem="bZH-2k-c1G" firstAttribute="width" relation="greaterThanOrEqual" secondItem="kfM-N8-kMo" secondAttribute="width" multiplier="60:24" id="oAs-6r-SCS"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="uf2-wp-jJZ" secondAttribute="bottom" constant="-7" id="pYp-eU-50H"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="uf2-wp-jJZ" secondAttribute="bottom" constant="-6" id="pYp-eU-50H"/>
                                                                     <constraint firstItem="RV8-40-hfh" firstAttribute="height" secondItem="5od-vE-is3" secondAttribute="height" id="pnw-hf-U53"/>
                                                                     <constraint firstItem="uf2-wp-jJZ" firstAttribute="leading" secondItem="CDI-iq-jqu" secondAttribute="trailing" id="ugI-aR-jyJ"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="kfM-N8-kMo" secondAttribute="bottom" constant="-7" id="uxB-4J-HLM"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="kfM-N8-kMo" secondAttribute="bottom" constant="-6" id="uxB-4J-HLM"/>
                                                                     <constraint firstItem="5od-vE-is3" firstAttribute="leading" secondItem="Lp3-9p-t1U" secondAttribute="leading" id="vfi-NU-g9y"/>
                                                                     <constraint firstItem="RV8-40-hfh" firstAttribute="width" secondItem="5od-vE-is3" secondAttribute="width" id="wi8-wx-ich"/>
-                                                                    <constraint firstItem="5od-vE-is3" firstAttribute="top" secondItem="Lp3-9p-t1U" secondAttribute="top" constant="2" id="xJh-hv-Tae"/>
+                                                                    <constraint firstItem="5od-vE-is3" firstAttribute="top" secondItem="Lp3-9p-t1U" secondAttribute="top" constant="1" id="xJh-hv-Tae"/>
                                                                     <constraint firstItem="cVu-li-dyO" firstAttribute="height" secondItem="RV8-40-hfh" secondAttribute="height" id="yTo-lL-npW"/>
                                                                 </constraints>
                                                                 <variation key="default">
