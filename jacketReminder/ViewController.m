@@ -345,11 +345,34 @@
         return nil;
     }
     
+    
+    
+    
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"weatherDictionary"] != nil && weatherDictionary == nil)
+    {
+        weatherDictionary = [[NSUserDefaults standardUserDefaults] objectForKey:@"weatherDictionary"];
+        
+        NSLog(@"[[NSUserDefaults standardUserDefaults] objectForKey:@'weatherDictionary'] != nil && weatherDictionary == nil)");
+        
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"] != nil && homeWeatherDictionary == nil)
+        {
+            homeWeatherDictionary = [[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"];
+            NSLog(@"[[NSUserDefaults standardUserDefaults] objectForKey:@'homeWeatherDictionary'] != nil && homeWeatherDictionary == nil)");
+            
+        }
+    }
+    
+    
+    
+    
+    
+    
     NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastWeatherDateCalled"];
     float dateInterval =[[NSDate date] timeIntervalSinceDate:date];
     NSLog(@"interval in getHomeWeather: %f",dateInterval);
     
-    if (setHomeLocationTriggered == YES || weatherDictionary ==nil || date == nil || dateInterval >= weatherTimer)
+    if (setHomeLocationTriggered == YES || weatherDictionary ==nil || homeWeatherDictionary == nil || date == nil || dateInterval >= weatherTimer)
     {
         //used to delegate if we should run both wx, will be changed back to no in that method or below if we just run homewx method
         mayNeedToRunGetBothWeather = YES;
@@ -448,7 +471,7 @@
     {
     
         
-            //weatherDictionary = nil;
+            weatherDictionary = nil;
 
         
     
@@ -528,7 +551,7 @@
     if ([self.homeInformation count]>=3 && dateInterval >= weatherTimer)
     {
         mayNeedToRunGetBothWeather = NO;
-        //weatherDictionary = nil;
+        weatherDictionary = nil;
 
         
             //RETRIEVE HOME LOCATION FROM ARRAY
@@ -594,7 +617,7 @@
     {
         mayNeedToRunGetBothWeather = NO;
         
-        //weatherDictionary = nil;
+        weatherDictionary = nil;
         
         
         //RETRIEVE HOME LOCATION FROM ARRAY
@@ -1350,7 +1373,7 @@
 -(NSString *)getStringFromDate:(NSDate *) myDate
 {
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"EEE, h:mm a"];
+    [dateFormat setDateFormat:@"hh:mm a"];
     NSString *dateString = [dateFormat stringFromDate:myDate];
     
     return dateString;
@@ -1388,6 +1411,19 @@
 //    {
 //        self.userName = [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"];
 //    }
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"weatherDictionary"] != nil && weatherDictionary == nil)
+    {
+        weatherDictionary = [[NSUserDefaults standardUserDefaults] objectForKey:@"weatherDictionary"];
+
+        NSLog(@"[[NSUserDefaults standardUserDefaults] objectForKey:@'weatherDictionary'] != nil && weatherDictionary == nil)");
+        
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"] != nil && homeWeatherDictionary == nil)
+        {
+            homeWeatherDictionary = [[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"];
+            NSLog(@"[[NSUserDefaults standardUserDefaults] objectForKey:@'homeWeatherDictionary'] != nil && homeWeatherDictionary == nil)");
+
+        }
+    }
 }
 
 - (void) viewDidAppear:(BOOL)animated

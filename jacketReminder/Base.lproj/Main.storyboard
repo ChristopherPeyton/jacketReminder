@@ -35,7 +35,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="raindrops.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="ILw-ab-fwW">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="2015-07-31 16.22.06.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="ILw-ab-fwW">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g7E-gv-Dew" userLabel="background calls">
@@ -1168,6 +1168,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="raindrops.jpg" width="1920" height="1080"/>
+        <image name="2015-07-31 16.22.06.jpg" width="2448" height="3264"/>
     </resources>
 </document>
