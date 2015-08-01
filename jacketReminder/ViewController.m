@@ -1120,9 +1120,23 @@
         }
         else
         {
-            NSLOG_SPACER
-            NSLog(@"CALLED GETHOMEWEATHER FROM DIDUPDATELOC DEL");
-            [self getHomeWeather];
+            
+            
+            ///////////////////////
+            NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastWeatherDateCalled"];
+            float dateInterval =[[NSDate date] timeIntervalSinceDate:date];
+            if (dateInterval >= weatherTimer || setHomeLocationTriggered == YES)
+            {
+                            NSLOG_SPACER
+                            NSLog(@"CALLED GETHOMEWEATHER FROM DIDUPDATELOC DEL");
+                            [self getHomeWeather];
+            }
+            /////////////////////
+            
+            
+//            NSLOG_SPACER
+//            NSLog(@"CALLED GETHOMEWEATHER FROM DIDUPDATELOC DEL");
+//            [self getHomeWeather];
             
         }
         
