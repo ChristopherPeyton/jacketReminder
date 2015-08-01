@@ -74,7 +74,7 @@
     [self.picker selectRow:[[[NSUserDefaults standardUserDefaults] objectForKey:@"picker"] intValue] inComponent:0 animated:YES];
 
     //self.view.backgroundColor = self.settingsTableBackgroundColor;
-    UIImage *image = [UIImage imageNamed:@"raindrops.jpg"];
+    UIImage *image = [UIImage imageNamed:@"waves18.jpg"];
     
     UIImageView *backimage = [[UIImageView alloc]initWithImage:image];
     //backimage.alpha = .23;
