@@ -147,7 +147,7 @@
     float dateInterval =[[NSDate date] timeIntervalSinceDate:date];
     NSLog(@"SECONDS SINCE LAST CALL: %f",dateInterval);
     
-    if (date == nil || dateInterval >= 9000)//3600 secs = 1hr
+    if (date == nil || dateInterval >= 11995)//3600 secs = 1hr
     {
         if ([self.homeInformation count]>=3)
         {
@@ -414,7 +414,7 @@
                     //        NSLOG_SPACER
                     //        NSLog(@"%@",weatherDictionary);
                     //        NSLOG_SPACER
-               //     NSLog(@"json string from getHomeWeather \n%@", weatherJSON);
+       //             NSLog(@"json string from getHomeWeather \n%@", weatherJSON);
                     //        NSLOG_SPACER
                     
                 }];
@@ -574,7 +574,7 @@
             //        NSLOG_SPACER
             //        NSLog(@"%@",weatherDictionary);
             //        NSLOG_SPACER
-                //      NSLog(@"json string from getBothWeather\n%@", weatherJSON);
+       //               NSLog(@"json string from getBothWeather\n%@", weatherJSON);
             //        NSLOG_SPACER
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -640,7 +640,7 @@
             //        NSLOG_SPACER
             //        NSLog(@"%@",weatherDictionary);
             //        NSLOG_SPACER
-            //      NSLog(@"json string from getBothWeather\n%@", weatherJSON);
+         //         NSLog(@"json string from getBothWeather\n%@", weatherJSON);
             //        NSLOG_SPACER
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -949,6 +949,8 @@
 
 }
 
+
+
 -(void) locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     if (self.loadingActivityView.hidden == YES)
@@ -956,6 +958,10 @@
         self.loadingActivityView.hidden = NO;
         
     }
+    
+    
+    
+    
     
         //load username or prompt user if missing
         if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == nil || [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == NULL || [[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] isEqualToString:@""])
@@ -1258,8 +1264,8 @@
     }
     
     self.currentLocationWeatherTime.text = [self getStringFromDate:[NSDate date]];
-    
-    self.weatherDescriptionLabel.text = [aaa[0] objectForKey:@"description"];
+
+    self.weatherDescriptionLabel.text = [[aaa[0] objectForKey:@"description"] capitalizedString];
     
     self.currentIcon.image = [self getIconImage:[aaa[0]  objectForKey:@"icon"]];
 

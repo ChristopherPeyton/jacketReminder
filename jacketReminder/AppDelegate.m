@@ -183,7 +183,7 @@
     //[[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
     //fetch every 3 hrs----3600 secs = 1hr
-    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:10800];
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:14400];
         
     return YES;
 }
