@@ -180,10 +180,10 @@
         [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
     }
     
-    //[[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
     //fetch every 3 hrs----3600 secs = 1hr
-    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:10800];
+    //[[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:10800];
         
     return YES;
 }
@@ -203,12 +203,16 @@
     {
         NSLog(@"HAD TO CREATE NEW VIEW TO CALL WEATHER FROM BACKGROUND FETCH");
         ViewController *view = [[ViewController alloc]init];
-        [view getHomeWeatherOnlyForBackground];
+        result = [view getHomeWeatherOnlyForBackground];
     }
     
     //Cleanup
 
     //something went wrong and the homewx_dictionary is nil
+    
+    NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastBackgroundWeatherDateCalled"];
+    float dateInterval =[[NSDate date] timeIntervalSinceDate:date];
+    NSLog(@"SECONDS SINCE LAST CALL: %f",dateInterval);
 
     NSLog(@"BACKGROUND RESULT = %d ------ //0 new data, 1 no data, 2 failed",result);//0 new data, 1 no data, 2 failed
     if ((int)result == 0)        //new data
@@ -221,7 +225,7 @@
         UILocalNotification *localNotification = [[UILocalNotification alloc] init];
         NSDate *now = [NSDate date];
         localNotification.fireDate = now;
-        localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background has NEW data",counter];
+        localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background has NEW data\nSECONDS SINCE LAST CALL: %f",counter,dateInterval];
         localNotification.soundName = UILocalNotificationDefaultSoundName;
         [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
         
@@ -238,7 +242,7 @@
         UILocalNotification *localNotification = [[UILocalNotification alloc] init];
         NSDate *now = [NSDate date];
         localNotification.fireDate = now;
-        localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background has NO NEW data",counter];
+        localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background has NO NEW data\nSECONDS SINCE LAST CALL: %f",counter,dateInterval];
         localNotification.soundName = UILocalNotificationDefaultSoundName;
         [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
         
@@ -256,7 +260,7 @@
         UILocalNotification *localNotification = [[UILocalNotification alloc] init];
         NSDate *now = [NSDate date];
         localNotification.fireDate = now;
-        localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background has FAILED",counter];
+        localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background has FAILED\nSECONDS SINCE LAST CALL: %f",counter,dateInterval];
         localNotification.soundName = UILocalNotificationDefaultSoundName;
         [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
         
