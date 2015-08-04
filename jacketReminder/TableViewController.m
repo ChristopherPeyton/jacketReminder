@@ -42,6 +42,8 @@
     [sender resignFirstResponder];
 }
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -109,6 +111,28 @@
 //    // add both effect views to the image view
 //    [backimage addSubview:effectView];
 //    [backimage addSubview:vibrantView];
+    
+    
+    //load username or prompt user if missing
+    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == nil || [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == NULL || [[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] isEqualToString:@""])
+    {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Please enter your first name" message:@"Your name will be used to provide a personal experience." preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            self.userNameFromSettings.text = ((UITextField *) alertController.textFields[0]).text;
+            [[NSUserDefaults standardUserDefaults] setObject:self.userNameFromSettings.text forKey:@"userName"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            NSLog(@"JUST SAVED USER: %@",self.userNameFromSettings);
+        }];
+        
+        [alertController addAction:okAction];
+        
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            textField.placeholder = @"First Name";
+        }];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
 

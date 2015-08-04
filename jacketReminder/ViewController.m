@@ -923,22 +923,22 @@
     //load username or prompt user if missing
     if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == nil || [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == NULL || [[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] isEqualToString:@""])
     {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Please enter your first name" message:@"Your name will be used to provide a personal experience." preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            self.userName = ((UITextField *) alertController.textFields[0]).text;
-            [[NSUserDefaults standardUserDefaults] setObject:self.userName forKey:@"userName"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            NSLog(@"JUST SAVED USER: %@",self.userName);
-        }];
-        
-        [alertController addAction:okAction];
-        
-        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-            textField.placeholder = @"First Name";
-        }];
-        
-        [self presentViewController:alertController animated:YES completion:nil];
+//        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Please enter your first name" message:@"Your name will be used to provide a personal experience." preferredStyle:UIAlertControllerStyleAlert];
+//        
+//        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+//            self.userName = ((UITextField *) alertController.textFields[0]).text;
+//            [[NSUserDefaults standardUserDefaults] setObject:self.userName forKey:@"userName"];
+//            [[NSUserDefaults standardUserDefaults] synchronize];
+//            NSLog(@"JUST SAVED USER: %@",self.userName);
+//        }];
+//        
+//        [alertController addAction:okAction];
+//        
+//        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+//            textField.placeholder = @"First Name";
+//        }];
+//        
+//        [self presentViewController:alertController animated:YES completion:nil];
         
     }
     
