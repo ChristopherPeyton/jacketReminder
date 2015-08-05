@@ -1256,12 +1256,12 @@
     }
     
     //assign symbols
-    self.tempSymbolCurrent1.text = @"\u00B0";
-    self.tempSymbolCurrent2.text = @"\u00B0";
-    self.tempSymbolCurrent3.text = @"\u00B0";
-    self.tempSymbolHome1.text = @"\u00B0";
-    self.tempSymbolHome2.text = @"\u00B0";
-    self.tempSymbolHome3.text = @"\u00B0";
+//    self.tempSymbolCurrent1.text = @"\u00B0";
+//    self.tempSymbolCurrent2.text = @"\u00B0";
+//    self.tempSymbolCurrent3.text = @"\u00B0";
+//    self.tempSymbolHome1.text = @"\u00B0";
+//    self.tempSymbolHome2.text = @"\u00B0";
+//    self.tempSymbolHome3.text = @"\u00B0";
 
     //self.forecast_3_hr.text = weatherDictionary;
     //NSLog(@"\n%@",weatherDictionary);
@@ -1285,13 +1285,14 @@
 
  
     int temp = [[[[weatherDictionary objectForKey:@"list"][0] objectForKey:@"main"] objectForKey:@"temp"] intValue];
-    self.forecast_3_hr.text = [NSString stringWithFormat:@"%d", [self convertKelvinToFaranheit:temp]];
+    //self.forecast_3_hr.text = [NSString stringWithFormat:@"%d", [self convertKelvinToFaranheit:temp]];
+    self.forecast_3_hr.text = [NSString stringWithFormat:@"%d\u00B0", [self convertKelvinToFaranheit:temp]];
     
     temp = [[[[weatherDictionary objectForKey:@"list"][1] objectForKey:@"main"] objectForKey:@"temp"] intValue];
-    self.forecast_6_hr.text = [NSString stringWithFormat:@"%d", [self convertKelvinToFaranheit:temp]];
+    self.forecast_6_hr.text = [NSString stringWithFormat:@"%d\u00B0", [self convertKelvinToFaranheit:temp]];
     
     temp = [[[[weatherDictionary objectForKey:@"list"][2] objectForKey:@"main"] objectForKey:@"temp"] intValue];
-    self.forecast_9_hr.text = [NSString stringWithFormat:@"%d", [self convertKelvinToFaranheit:temp]];
+    self.forecast_9_hr.text = [NSString stringWithFormat:@"%d\u00B0", [self convertKelvinToFaranheit:temp]];
     
  
     NSString *aa = [[weatherDictionary objectForKey:@"list"][0] objectForKey:@"dt"];
@@ -1342,14 +1343,14 @@
         //NSLog(@"HOME\n%@",homeWeatherDictionary);
         
         temp = [[[[homeWeatherDictionary objectForKey:@"list"][0] objectForKey:@"main"] objectForKey:@"temp"] intValue];
-        self.forecast_3_hrHOME.text = [NSString stringWithFormat:@"%d", [self convertKelvinToFaranheit:temp]];
+        self.forecast_3_hrHOME.text = [NSString stringWithFormat:@"%d\u00B0", [self convertKelvinToFaranheit:temp]];
         //NSLog(@"temp: %d\ntext: %@",temp,self.forecast_3_hrHOME.text);
         
         temp = [[[[homeWeatherDictionary objectForKey:@"list"][1] objectForKey:@"main"] objectForKey:@"temp"] intValue];
-        self.forecast_6_hrHOME.text = [NSString stringWithFormat:@"%d", [self convertKelvinToFaranheit:temp]];
+        self.forecast_6_hrHOME.text = [NSString stringWithFormat:@"%d\u00B0", [self convertKelvinToFaranheit:temp]];
         
         temp = [[[[homeWeatherDictionary objectForKey:@"list"][2] objectForKey:@"main"] objectForKey:@"temp"] intValue];
-        self.forecast_9_hrHOME.text = [NSString stringWithFormat:@"%d", [self convertKelvinToFaranheit:temp]];
+        self.forecast_9_hrHOME.text = [NSString stringWithFormat:@"%d\u00B0", [self convertKelvinToFaranheit:temp]];
         
         //SET HOME LOC TIME STAMPS
         forecast_3_time_epochHOME = [[[homeWeatherDictionary objectForKey:@"list"] [0] objectForKey:@"dt"] intValue];
