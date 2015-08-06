@@ -19,7 +19,6 @@
 		838A8FCF1B09AB8C005F69DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 838A8FCD1B09AB8C005F69DF /* Main.storyboard */; };
 		838A8FD11B09AB8C005F69DF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 838A8FD01B09AB8C005F69DF /* Images.xcassets */; };
 		838A8FD41B09AB8C005F69DF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 838A8FD21B09AB8C005F69DF /* LaunchScreen.xib */; };
-		838A8FE01B09AB8C005F69DF /* jacketReminderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 838A8FDF1B09AB8C005F69DF /* jacketReminderTests.m */; };
 		838A8FEA1B09AB9D005F69DF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 838A8FE91B09AB9D005F69DF /* CoreLocation.framework */; };
 		839ADBDD1B2BF3A5000F8C48 /* ios-linen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 839ADBDC1B2BF3A5000F8C48 /* ios-linen.jpg */; };
 		83B3574A1B337A710010C119 /* test.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B357491B337A710010C119 /* test.m */; };
@@ -33,16 +32,6 @@
 		83E608791B55A6B600FE8824 /* icon_58.png in Resources */ = {isa = PBXBuildFile; fileRef = 83E608781B55A6B600FE8824 /* icon_58.png */; };
 		83E622591B488C7300C71FEA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E622581B488C7300C71FEA /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		838A8FDA1B09AB8C005F69DF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 838A8FB81B09AB8C005F69DF /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 838A8FBF1B09AB8C005F69DF;
-			remoteInfo = jacketReminder;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		830258FD1B18DFC200E4A199 /* storm-weather.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "storm-weather.jpg"; sourceTree = "<group>"; };
@@ -62,7 +51,6 @@
 		838A8FCE1B09AB8C005F69DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		838A8FD01B09AB8C005F69DF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		838A8FD31B09AB8C005F69DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		838A8FD91B09AB8C005F69DF /* Grab Yo JacketTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Grab Yo JacketTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		838A8FDE1B09AB8C005F69DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		838A8FDF1B09AB8C005F69DF /* jacketReminderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = jacketReminderTests.m; sourceTree = "<group>"; };
 		838A8FE91B09AB9D005F69DF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -92,13 +80,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		838A8FD61B09AB8C005F69DF /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -117,7 +98,6 @@
 			isa = PBXGroup;
 			children = (
 				838A8FC01B09AB8C005F69DF /* Grab Yo Jacket.app */,
-				838A8FD91B09AB8C005F69DF /* Grab Yo JacketTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -227,24 +207,6 @@
 			productReference = 838A8FC01B09AB8C005F69DF /* Grab Yo Jacket.app */;
 			productType = "com.apple.product-type.application";
 		};
-		838A8FD81B09AB8C005F69DF /* Grab Yo JacketTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 838A8FE61B09AB8C005F69DF /* Build configuration list for PBXNativeTarget "Grab Yo JacketTests" */;
-			buildPhases = (
-				838A8FD51B09AB8C005F69DF /* Sources */,
-				838A8FD61B09AB8C005F69DF /* Frameworks */,
-				838A8FD71B09AB8C005F69DF /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				838A8FDB1B09AB8C005F69DF /* PBXTargetDependency */,
-			);
-			name = "Grab Yo JacketTests";
-			productName = jacketReminderTests;
-			productReference = 838A8FD91B09AB8C005F69DF /* Grab Yo JacketTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -262,10 +224,6 @@
 							};
 						};
 					};
-					838A8FD81B09AB8C005F69DF = {
-						CreatedOnToolsVersion = 6.3.1;
-						TestTargetID = 838A8FBF1B09AB8C005F69DF;
-					};
 				};
 			};
 			buildConfigurationList = 838A8FBB1B09AB8C005F69DF /* Build configuration list for PBXProject "Grab Yo Jacket" */;
@@ -282,7 +240,6 @@
 			projectRoot = "";
 			targets = (
 				838A8FBF1B09AB8C005F69DF /* Grab Yo Jacket */,
-				838A8FD81B09AB8C005F69DF /* Grab Yo JacketTests */,
 			);
 		};
 /* End PBXProject section */
@@ -311,13 +268,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		838A8FD71B09AB8C005F69DF /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -334,23 +284,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		838A8FD51B09AB8C005F69DF /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				838A8FE01B09AB8C005F69DF /* jacketReminderTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		838A8FDB1B09AB8C005F69DF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 838A8FBF1B09AB8C005F69DF /* Grab Yo Jacket */;
-			targetProxy = 838A8FDA1B09AB8C005F69DF /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		838A8FCD1B09AB8C005F69DF /* Main.storyboard */ = {
@@ -472,40 +406,6 @@
 			};
 			name = Release;
 		};
-		838A8FE71B09AB8C005F69DF /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = jacketReminderTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "Grab Yo JacketTests";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Grab Yo Jacket.app/Grab Yo Jacket";
-			};
-			name = Debug;
-		};
-		838A8FE81B09AB8C005F69DF /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = jacketReminderTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "Grab Yo JacketTests";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Grab Yo Jacket.app/Grab Yo Jacket";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -523,15 +423,6 @@
 			buildConfigurations = (
 				838A8FE41B09AB8C005F69DF /* Debug */,
 				838A8FE51B09AB8C005F69DF /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		838A8FE61B09AB8C005F69DF /* Build configuration list for PBXNativeTarget "Grab Yo JacketTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				838A8FE71B09AB8C005F69DF /* Debug */,
-				838A8FE81B09AB8C005F69DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

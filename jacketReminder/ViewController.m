@@ -106,118 +106,124 @@
 {
     
     UIBackgroundFetchResult *result;
-    
-    //make sure home location is available before calling, assign home loc
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"] != nil)
+    if ([self isNetworkAvailable] == YES)
     {
-        NSMutableArray *temp = [NSMutableArray arrayWithObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"]];
+        result = UIBackgroundFetchResultNoData;
+        //make sure home location is available before calling, assign home loc
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"] != nil)
+        {
+            NSMutableArray *temp = [NSMutableArray arrayWithObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"]];
+            
+            self.homeInformation = [NSKeyedUnarchiver unarchiveObjectWithData:temp[0]];
+        }
+        else
+        {
+            UILocalNotification *alert = [[UILocalNotification alloc]init];
+            
+            alert.fireDate = [NSDate date];
+            
+            alert.alertTitle = @"No Home Location Detected";
+            alert.alertBody = @"Please set your home address.";
+            alert.applicationIconBadgeNumber = 1;
+            
+            [[UIApplication sharedApplication] scheduleLocalNotification:alert];
+        }
         
-        self.homeInformation = [NSKeyedUnarchiver unarchiveObjectWithData:temp[0]];
-    }
-    else
-    {
-        UILocalNotification *alert = [[UILocalNotification alloc]init];
-        
-        alert.fireDate = [NSDate date];
-        
-        alert.alertTitle = @"No Home Location Detected";
-        alert.alertBody = @"Please set your home address.";
-        alert.applicationIconBadgeNumber = 1;
-        
-        [[UIApplication sharedApplication] scheduleLocalNotification:alert];
-    }
-    
-    //load username or prompt user if missing
-    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == nil || [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == NULL || [[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] isEqualToString:@""])
-    {
-        
-        UILocalNotification *alert = [[UILocalNotification alloc]init];
-        
-        alert.fireDate = [NSDate date];
-        
-        alert.alertTitle = @"Please enter your first name in the settings view";
-        alert.alertBody = @"Your name will be used to provide a personal experience.";
-        alert.applicationIconBadgeNumber = 1;
-        
-        [[UIApplication sharedApplication] scheduleLocalNotification:alert];
-        
-    }
-    
-    NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastBackgroundWeatherDateCalled"];
-    float dateInterval =[[NSDate date] timeIntervalSinceDate:date];
-    NSLog(@"SECONDS SINCE LAST CALL: %f",dateInterval);
-    
-    if (date == nil || dateInterval >= 10800)//3600 secs = 1hr
-    {
-        if ([self.homeInformation count]>=3)
+        //load username or prompt user if missing
+        if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == nil || [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == NULL || [[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] isEqualToString:@""])
         {
             
-            NSMutableDictionary *oldWeatherToCompare = [[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"];
-            homeWeatherDictionary = nil;
+            UILocalNotification *alert = [[UILocalNotification alloc]init];
             
-            //RETRIEVE HOME LOCATION FROM ARRAY
-            CLLocation *homeLocation = self.homeInformation[0];
+            alert.fireDate = [NSDate date];
             
-            //    //FINAL STRING WITH API KEY
-                NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast?lat=%.8f&lon=%.8f&APPID=a96ff77043a749a97158ecbaaa30f249", homeLocation.coordinate.latitude, homeLocation.coordinate.longitude];
+            alert.alertTitle = @"Please enter your first name in the settings view";
+            alert.alertBody = @"Your name will be used to provide a personal experience.";
+            alert.applicationIconBadgeNumber = 1;
             
-            //USING DURING TESTING api.openweathermap.org/data/2.5/forecast?lat=32.986775&lon=-97.37743
-            //NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%.8f&lon=%.8f", location.coordinate.latitude, location.coordinate.longitude];
-            
-            //NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast?lat=%.8f&lon=%.8f", homeLocation.coordinate.latitude, homeLocation.coordinate.longitude];
-            
-            NSURL *url = [NSURL URLWithString:urlString];
-            NSData *data = [NSData dataWithContentsOfURL:url];
-            
-                homeWeatherDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            
-            
-                [[NSUserDefaults standardUserDefaults] setObject:homeWeatherDictionary forKey:@"homeWeatherDictionary"];
-                
-                //set date of last weather call
-                [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastBackgroundWeatherDateCalled"];
-            
-            
-            
-            ///////////////////////////////////////////////////
-            
-            
-            backgroundCallTextARRAY = [backgroundCallTextARRAY mutableCopy];
-            [backgroundCallTextARRAY addObject:[self getStringFromDateFORTESTING:[NSDate date]]];
-            [[NSUserDefaults standardUserDefaults] setObject:backgroundCallTextARRAY forKey:@"backgroundCallTextARRAY"];
-            
-            
-            ///////////////////////////////////////////////////
-            
-            
-            
-            
-            
-            
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                
-                NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-                //        NSLOG_SPACER
-                //        NSLog(@"%@",weatherDictionary);
-                //        NSLOG_SPACER
-                       NSLog(@"json string from getHomeWeatherBACKGROUNDonly \n%@", weatherJSON);
-                //        NSLOG_SPACER
-            
-            if (homeWeatherDictionary != nil)
-            {
-                if (![oldWeatherToCompare isEqualToDictionary:homeWeatherDictionary])
-                {
-
-                    result = UIBackgroundFetchResultNewData;
-                }
-                else//dictionary is not nil and matches, so no new data downloaded
-                {
-                    result = UIBackgroundFetchResultNoData;
-                }
-            }
+            [[UIApplication sharedApplication] scheduleLocalNotification:alert];
             
         }
         
+        NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastBackgroundWeatherDateCalled"];
+        float dateInterval =[[NSDate date] timeIntervalSinceDate:date];
+        NSLog(@"SECONDS SINCE LAST CALL: %f",dateInterval);
+        
+        if (date == nil || dateInterval >= 10800)//3600 secs = 1hr
+        {
+            if ([self.homeInformation count]>=3)
+            {
+                
+                NSMutableDictionary *oldWeatherToCompare = [[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"];
+                homeWeatherDictionary = nil;
+                
+                //RETRIEVE HOME LOCATION FROM ARRAY
+                CLLocation *homeLocation = self.homeInformation[0];
+                
+                //    //FINAL STRING WITH API KEY
+                    NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast?lat=%.8f&lon=%.8f&APPID=a96ff77043a749a97158ecbaaa30f249", homeLocation.coordinate.latitude, homeLocation.coordinate.longitude];
+                
+                //USING DURING TESTING api.openweathermap.org/data/2.5/forecast?lat=32.986775&lon=-97.37743
+                //NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%.8f&lon=%.8f", location.coordinate.latitude, location.coordinate.longitude];
+                
+                //NSString *urlString = [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/forecast?lat=%.8f&lon=%.8f", homeLocation.coordinate.latitude, homeLocation.coordinate.longitude];
+                
+                NSURL *url = [NSURL URLWithString:urlString];
+                NSData *data = [NSData dataWithContentsOfURL:url];
+                
+                    homeWeatherDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                
+                
+                    [[NSUserDefaults standardUserDefaults] setObject:homeWeatherDictionary forKey:@"homeWeatherDictionary"];
+                    
+                    //set date of last weather call
+                    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastBackgroundWeatherDateCalled"];
+                
+                
+                
+                ///////////////////////////////////////////////////
+                
+                
+                backgroundCallTextARRAY = [backgroundCallTextARRAY mutableCopy];
+                [backgroundCallTextARRAY addObject:[self getStringFromDateFORTESTING:[NSDate date]]];
+                [[NSUserDefaults standardUserDefaults] setObject:backgroundCallTextARRAY forKey:@"backgroundCallTextARRAY"];
+                
+                
+                ///////////////////////////////////////////////////
+                
+                
+                
+                
+                
+                
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    
+                    NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                    //        NSLOG_SPACER
+                    //        NSLog(@"%@",weatherDictionary);
+                    //        NSLOG_SPACER
+                           NSLog(@"json string from getHomeWeatherBACKGROUNDonly \n%@", weatherJSON);
+                    //        NSLOG_SPACER
+                
+                if (homeWeatherDictionary != nil)
+                {
+                    if (![oldWeatherToCompare isEqualToDictionary:homeWeatherDictionary])
+                    {
+
+                        result = UIBackgroundFetchResultNewData;
+                    }
+                    else//dictionary is not nil and matches, so no new data downloaded
+                    {
+                        result = UIBackgroundFetchResultNoData;
+                    }
+                }
+                
+            }
+            
+        }
+    }
+    else { //failed connection test
+        result = UIBackgroundFetchResultFailed;
     }
     if ((int)result == 0) //0 new data, 1 no data, 2 failed
     {
