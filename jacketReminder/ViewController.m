@@ -147,7 +147,7 @@
     float dateInterval =[[NSDate date] timeIntervalSinceDate:date];
     NSLog(@"SECONDS SINCE LAST CALL: %f",dateInterval);
     
-    if (date == nil || dateInterval >= 14400)//3600 secs = 1hr
+    if (date == nil || dateInterval >= 10800)//3600 secs = 1hr
     {
         if ([self.homeInformation count]>=3)
         {
