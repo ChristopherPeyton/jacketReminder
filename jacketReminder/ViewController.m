@@ -970,7 +970,7 @@
     
             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 self.userName = ((UITextField *) alertController.textFields[0]).text;
-                [[NSUserDefaults standardUserDefaults] setObject:self.userName forKey:@"userName"];
+                [[NSUserDefaults standardUserDefaults] setObject:[self.userName capitalizedString] forKey:@"userName"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 NSLog(@"JUST SAVED USER: %@",self.userName);
             }];

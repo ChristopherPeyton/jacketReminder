@@ -33,7 +33,7 @@
 }
 - (IBAction)saveChangesToName:(id)sender
 {
-    [[NSUserDefaults standardUserDefaults] setObject:self.userNameFromSettings.text forKey:@"userName"];
+    [[NSUserDefaults standardUserDefaults] setObject:[self.userNameFromSettings.text capitalizedString] forKey:@"userName"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     NSLog(@"saving changes to name");
 }
@@ -120,7 +120,7 @@
         
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             self.userNameFromSettings.text = ((UITextField *) alertController.textFields[0]).text;
-            [[NSUserDefaults standardUserDefaults] setObject:self.userNameFromSettings.text forKey:@"userName"];
+            [[NSUserDefaults standardUserDefaults] setObject:[self.userNameFromSettings.text capitalizedString] forKey:@"userName"];
             [[NSUserDefaults standardUserDefaults] synchronize];
             NSLog(@"JUST SAVED USER: %@",self.userNameFromSettings);
         }];
