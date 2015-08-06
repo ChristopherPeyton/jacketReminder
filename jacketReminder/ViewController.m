@@ -829,7 +829,7 @@
     }
 
     
-    CLCircularRegion *regionCirc = [[CLCircularRegion alloc]initWithCenter:location.coordinate radius:30 identifier:@"Home"]; //Radius was 100
+    CLCircularRegion *regionCirc = [[CLCircularRegion alloc]initWithCenter:location.coordinate radius:37 identifier:@"Home"]; //Radius was 100
     [self.locationManager startMonitoringForRegion:regionCirc];
     
     ////////////////////////
