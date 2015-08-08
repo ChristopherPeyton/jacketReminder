@@ -257,7 +257,7 @@
     }
     else
     {
-        NSLog(@"HAD TO CREATE NEW VIEW TO CALL WEATHER FROM BACKGROUND FETCH");
+        NSLog(@"HAD TO CREATE NEW VIEW TO CALL WEATHER FROM REMOTE PUSH BACKGROUND FETCH");
         ViewController *view = [[ViewController alloc]init];
         result = [view getHomeWeatherOnlyForBackground];
     }
@@ -267,16 +267,16 @@
     //something went wrong and the homewx_dictionary is nil
     NSLOG_SPACER
     NSLOG_SPACER
-    NSLog(@"CALLED WEATHER FROM ONESIGNALPUSH");
+    NSLog(@"CALLED WEATHER FROM REMOTE PUSH");
     
     NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastBackgroundWeatherDateCalled"];
     float dateInterval =[[NSDate date] timeIntervalSinceDate:date];
     NSLog(@"SECONDS SINCE LAST CALL: %f",dateInterval);
     
-    NSLog(@"BACKGROUND RESULT = %d ------ //0 new data, 1 no data, 2 failed",result);//0 new data, 1 no data, 2 failed
+    NSLog(@"REMOTE PUSH BACKGROUND RESULT = %d ------ //0 new data, 1 no data, 2 failed",result);//0 new data, 1 no data, 2 failed
     if ((int)result == 0)        //new data
     {
-        NSLog(@"BACKGROUND FETCH HAS NEW DATA");
+        NSLog(@"REMOTE PUSH BACKGROUND FETCH HAS NEW DATA");
         
         
         // Set up Local Notifications
@@ -284,16 +284,16 @@
         UILocalNotification *localNotification = [[UILocalNotification alloc] init];
         NSDate *now = [NSDate date];
         localNotification.fireDate = now;
-        localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background has NEW data\nSECONDS SINCE LAST CALL: %f",counter,dateInterval];
+        localNotification.alertBody = [NSString stringWithFormat:@"REMOTE PUSH fetch #%d in background has NEW data\nSECONDS SINCE LAST CALL: %f",counter,dateInterval];
         localNotification.soundName = UILocalNotificationDefaultSoundName;
-        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+ //       [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
         
         
         completionHandler(UIBackgroundFetchResultNewData);
     }
     else if ((int) result == 1)
     {
-        NSLog(@"BACKGROUND FETCH HAS NO NEW DATA");
+        NSLog(@"REMOTE PUSH BACKGROUND FETCH HAS NO NEW DATA");
         
         
         // Set up Local Notifications
@@ -301,9 +301,9 @@
         UILocalNotification *localNotification = [[UILocalNotification alloc] init];
         NSDate *now = [NSDate date];
         localNotification.fireDate = now;
-        localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background has NO NEW data\nSECONDS SINCE LAST CALL: %f",counter,dateInterval];
+        localNotification.alertBody = [NSString stringWithFormat:@"REMOTE PUSH fetch #%d in background has NO NEW data\nSECONDS SINCE LAST CALL: %f",counter,dateInterval];
         localNotification.soundName = UILocalNotificationDefaultSoundName;
-        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+  //      [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
         
         
         
@@ -311,7 +311,7 @@
     }
     else
     {
-        NSLog(@"BACKGROUND FETCH HAS FAILED");
+        NSLog(@"REMOTE PUSH BACKGROUND FETCH HAS FAILED");
         
         
         // Set up Local Notifications
@@ -319,9 +319,9 @@
         UILocalNotification *localNotification = [[UILocalNotification alloc] init];
         NSDate *now = [NSDate date];
         localNotification.fireDate = now;
-        localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background has FAILED\nSECONDS SINCE LAST CALL: %f",counter,dateInterval];
+        localNotification.alertBody = [NSString stringWithFormat:@"REMOTE PUSH fetch #%d in background has FAILED\nSECONDS SINCE LAST CALL: %f",counter,dateInterval];
         localNotification.soundName = UILocalNotificationDefaultSoundName;
-        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+  //      [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
         
         
         
@@ -414,6 +414,12 @@
     NSLog(@"BACKGROUND RESULT = %d ------ //0 new data, 1 no data, 2 failed",result);//0 new data, 1 no data, 2 failed
     if ((int)result == 0)        //new data
     {
+        
+        [self.oneSignal IdsAvailable:^(NSString *userId, NSString *pushToken) {
+            
+        }];
+
+        
         NSLog(@"BACKGROUND FETCH HAS NEW DATA");
         
         
@@ -431,6 +437,11 @@
     }
     else if ((int) result == 1)
     {
+        [self.oneSignal IdsAvailable:^(NSString *userId, NSString *pushToken) {
+            
+        }];
+
+        
         NSLog(@"BACKGROUND FETCH HAS NO NEW DATA");
         
         
@@ -497,6 +508,10 @@
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      NSLog(@"\n\n\napplicationDidBecomeActive\n\n\n");
     application.applicationIconBadgeNumber = 0;
+    
+    [self.oneSignal IdsAvailable:^(NSString *userId, NSString *pushToken) {
+        
+    }];
     
 //    //alert user if no home loc is assigned
 //    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"] == nil)
