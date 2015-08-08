@@ -18,6 +18,89 @@
 
 @implementation AppDelegate
 
+- (void) fetchWeatherFromPush
+{
+    counter++;
+    
+    
+    UIBackgroundFetchResult *result;
+    //Download  the Content .
+    if ([self.window.rootViewController.childViewControllers[0] isKindOfClass:[ViewController class]])
+    {
+        result = [self.window.rootViewController.childViewControllers[0] getHomeWeatherOnlyForBackground];
+    }
+    else
+    {
+        NSLog(@"HAD TO CREATE NEW VIEW TO CALL WEATHER FROM BACKGROUND FETCH");
+        ViewController *view = [[ViewController alloc]init];
+        result = [view getHomeWeatherOnlyForBackground];
+    }
+    
+    //Cleanup
+    
+    //something went wrong and the homewx_dictionary is nil
+    NSLOG_SPACER
+    NSLOG_SPACER
+    NSLog(@"CALLED WEATHER FROM ONESIGNALPUSH");
+    
+    NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastBackgroundWeatherDateCalled"];
+    float dateInterval =[[NSDate date] timeIntervalSinceDate:date];
+    NSLog(@"SECONDS SINCE LAST CALL: %f",dateInterval);
+    
+    NSLog(@"BACKGROUND RESULT = %d ------ //0 new data, 1 no data, 2 failed",result);//0 new data, 1 no data, 2 failed
+    if ((int)result == 0)        //new data
+    {
+        NSLog(@"BACKGROUND FETCH HAS NEW DATA");
+        
+        
+        // Set up Local Notifications
+        //   [[UIApplication sharedApplication] cancelAllLocalNotifications];
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        NSDate *now = [NSDate date];
+        localNotification.fireDate = now;
+        localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background has NEW data\nSECONDS SINCE LAST CALL: %f",counter,dateInterval];
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+        
+        
+    }
+    else if ((int) result == 1)
+    {
+        NSLog(@"BACKGROUND FETCH HAS NO NEW DATA");
+        
+        
+        // Set up Local Notifications
+        //   [[UIApplication sharedApplication] cancelAllLocalNotifications];
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        NSDate *now = [NSDate date];
+        localNotification.fireDate = now;
+        localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background has NO NEW data\nSECONDS SINCE LAST CALL: %f",counter,dateInterval];
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+        
+        
+        
+    }
+    else
+    {
+        NSLog(@"BACKGROUND FETCH HAS FAILED");
+        
+        
+        // Set up Local Notifications
+        //   [[UIApplication sharedApplication] cancelAllLocalNotifications];
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        NSDate *now = [NSDate date];
+        localNotification.fireDate = now;
+        localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background has FAILED\nSECONDS SINCE LAST CALL: %f",counter,dateInterval];
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+        
+        
+        
+    }
+
+}
+
 - (void) playAlertSound
 {
     // Construct URL to sound file
@@ -161,6 +244,93 @@
     freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
 }
 
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    counter++;
+    
+    
+    UIBackgroundFetchResult *result;
+    //Download  the Content .
+    if ([self.window.rootViewController.childViewControllers[0] isKindOfClass:[ViewController class]])
+    {
+        result = [self.window.rootViewController.childViewControllers[0] getHomeWeatherOnlyForBackground];
+    }
+    else
+    {
+        NSLog(@"HAD TO CREATE NEW VIEW TO CALL WEATHER FROM BACKGROUND FETCH");
+        ViewController *view = [[ViewController alloc]init];
+        result = [view getHomeWeatherOnlyForBackground];
+    }
+    
+    //Cleanup
+    
+    //something went wrong and the homewx_dictionary is nil
+    NSLOG_SPACER
+    NSLOG_SPACER
+    NSLog(@"CALLED WEATHER FROM ONESIGNALPUSH");
+    
+    NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastBackgroundWeatherDateCalled"];
+    float dateInterval =[[NSDate date] timeIntervalSinceDate:date];
+    NSLog(@"SECONDS SINCE LAST CALL: %f",dateInterval);
+    
+    NSLog(@"BACKGROUND RESULT = %d ------ //0 new data, 1 no data, 2 failed",result);//0 new data, 1 no data, 2 failed
+    if ((int)result == 0)        //new data
+    {
+        NSLog(@"BACKGROUND FETCH HAS NEW DATA");
+        
+        
+        // Set up Local Notifications
+        //   [[UIApplication sharedApplication] cancelAllLocalNotifications];
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        NSDate *now = [NSDate date];
+        localNotification.fireDate = now;
+        localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background has NEW data\nSECONDS SINCE LAST CALL: %f",counter,dateInterval];
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+        
+        
+        completionHandler(UIBackgroundFetchResultNewData);
+    }
+    else if ((int) result == 1)
+    {
+        NSLog(@"BACKGROUND FETCH HAS NO NEW DATA");
+        
+        
+        // Set up Local Notifications
+        //   [[UIApplication sharedApplication] cancelAllLocalNotifications];
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        NSDate *now = [NSDate date];
+        localNotification.fireDate = now;
+        localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background has NO NEW data\nSECONDS SINCE LAST CALL: %f",counter,dateInterval];
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+        
+        
+        
+        completionHandler(UIBackgroundFetchResultNoData);
+    }
+    else
+    {
+        NSLog(@"BACKGROUND FETCH HAS FAILED");
+        
+        
+        // Set up Local Notifications
+        //   [[UIApplication sharedApplication] cancelAllLocalNotifications];
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        NSDate *now = [NSDate date];
+        localNotification.fireDate = now;
+        localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background has FAILED\nSECONDS SINCE LAST CALL: %f",counter,dateInterval];
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+        
+        
+        
+        completionHandler(UIBackgroundFetchResultFailed);
+    }
+    
+}
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
 #if TARGET_IPHONE_SIMULATOR
@@ -174,6 +344,33 @@
     [self redirectNSLogToDocumentFolder];
     
 #endif
+    
+    self.oneSignal = [[OneSignal alloc] initWithLaunchOptions:launchOptions
+                                                        appId:@"0781fdaa-3d23-11e5-a9f4-eb679716ed36"
+                                           handleNotification:^(NSString* message, NSDictionary* additionalData, BOOL isActive) {
+                                               // This function gets call when a notification is tapped on
+                                               // or one is received while the app is in focus.
+                                               NSString* messageTitle = @"OneSignal Example";
+                                               NSString* fullMessage = [message copy];
+                                               
+                                               if (additionalData) {
+                                                   if (additionalData[@"inAppTitle"])
+                                                       messageTitle = additionalData[@"inAppTitle"];
+                                                   
+                                                   if (additionalData[@"actionSelected"])
+                                                       fullMessage = [fullMessage stringByAppendingString:[NSString stringWithFormat:@"\nPressed ButtonId:%@", additionalData[@"actionSelected"]]];
+                                               }
+                                               
+//                                               UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:messageTitle
+//                                                                                                   message:fullMessage
+//                                                                                                  delegate:self
+//                                                                                         cancelButtonTitle:@"Close"
+//                                                                                         otherButtonTitles:nil, nil];
+//                                               [alertView show];
+                                               
+                                           }];
+    
+    
     
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)])
     {

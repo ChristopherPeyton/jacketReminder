@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		830258FE1B18DFC200E4A199 /* storm-weather.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 830258FD1B18DFC200E4A199 /* storm-weather.jpg */; };
 		83440CF01B1D0F9E007D0C81 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83440CEF1B1D0F9E007D0C81 /* TableViewController.m */; };
+		83505EF31B7513C60068335E /* OneSignal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83505EF21B7513C60068335E /* OneSignal.framework */; };
+		83505EF51B7514120068335E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83505EF41B7514120068335E /* SystemConfiguration.framework */; };
 		8389383C1B3283CB00D1B7FA /* papers.co-mf23-raining-windows-10-drops-nature-9-wallpaper.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 838938381B3283CB00D1B7FA /* papers.co-mf23-raining-windows-10-drops-nature-9-wallpaper.jpg */; };
 		8389383D1B3283CB00D1B7FA /* raindropsfal.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 838938391B3283CB00D1B7FA /* raindropsfal.jpg */; };
 		8389383E1B3283CB00D1B7FA /* waves18.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8389383A1B3283CB00D1B7FA /* waves18.jpg */; };
@@ -37,6 +39,8 @@
 		830258FD1B18DFC200E4A199 /* storm-weather.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "storm-weather.jpg"; sourceTree = "<group>"; };
 		83440CEE1B1D0F9E007D0C81 /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
 		83440CEF1B1D0F9E007D0C81 /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
+		83505EF21B7513C60068335E /* OneSignal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OneSignal.framework; sourceTree = "<group>"; };
+		83505EF41B7514120068335E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		838938381B3283CB00D1B7FA /* papers.co-mf23-raining-windows-10-drops-nature-9-wallpaper.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "papers.co-mf23-raining-windows-10-drops-nature-9-wallpaper.jpg"; sourceTree = "<group>"; };
 		838938391B3283CB00D1B7FA /* raindropsfal.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = raindropsfal.jpg; sourceTree = "<group>"; };
 		8389383A1B3283CB00D1B7FA /* waves18.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = waves18.jpg; sourceTree = "<group>"; };
@@ -75,8 +79,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83505EF51B7514120068335E /* SystemConfiguration.framework in Frameworks */,
 				83E622591B488C7300C71FEA /* AVFoundation.framework in Frameworks */,
 				838A8FEA1B09AB9D005F69DF /* CoreLocation.framework in Frameworks */,
+				83505EF31B7513C60068335E /* OneSignal.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +92,7 @@
 		838A8FB71B09AB8C005F69DF = {
 			isa = PBXGroup;
 			children = (
+				83505EF41B7514120068335E /* SystemConfiguration.framework */,
 				83E622581B488C7300C71FEA /* AVFoundation.framework */,
 				838A8FE91B09AB9D005F69DF /* CoreLocation.framework */,
 				838A8FC21B09AB8C005F69DF /* jacketReminder */,
@@ -105,6 +112,7 @@
 		838A8FC21B09AB8C005F69DF /* jacketReminder */ = {
 			isa = PBXGroup;
 			children = (
+				83505EF21B7513C60068335E /* OneSignal.framework */,
 				838A8FC71B09AB8C005F69DF /* AppDelegate.h */,
 				838A8FC81B09AB8C005F69DF /* AppDelegate.m */,
 				83CD4EBA1B1F7D64001A2058 /* View Controllers */,
@@ -345,6 +353,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -381,6 +390,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -390,6 +400,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/jacketReminder",
+				);
 				INFOPLIST_FILE = jacketReminder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "Grab Yo Jacket";
@@ -400,6 +414,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/jacketReminder",
+				);
 				INFOPLIST_FILE = jacketReminder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "Grab Yo Jacket";

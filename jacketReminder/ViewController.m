@@ -751,12 +751,78 @@
     int wxTEMP1 = [self convertKelvinToFaranheit:[[[[homeWeatherDictionary objectForKey:@"list"][1] objectForKey:@"main"] objectForKey:@"temp"] intValue]];
     int wxTEMP2 = [self convertKelvinToFaranheit:[[[[homeWeatherDictionary objectForKey:@"list"][2] objectForKey:@"main"] objectForKey:@"temp"] intValue]];
     
-    NSString *wxTEMP0Rain = [[[homeWeatherDictionary objectForKey:@"list"][0] objectForKey:@"weather"][0] objectForKey:@"description"];
-    NSString *city = [[homeWeatherDictionary objectForKey:@"city"] objectForKey:@"name"];
+    
+    
+    NSMutableArray *weatherArray = [NSMutableArray array];
+    for (int x = 0; x < [[homeWeatherDictionary objectForKey:@"list"] count]; x++)
+    {
+        
+        NSDate *dd= [NSDate dateWithTimeIntervalSince1970:[[[homeWeatherDictionary objectForKey:@"list"][x] objectForKey:@"dt"] intValue]];
+        NSDate *ddd = [NSDate date];
+        float dateInterval =[dd timeIntervalSinceDate:ddd];
+        if (dateInterval <= 25200 && dateInterval  >= -3600 )
+        {
+            [weatherArray addObject:[homeWeatherDictionary objectForKey:@"list"][x]];
+        }
+        else if (dateInterval > 25200)
+        {
+            x = 9000;
+        }
+    }
+    NSString *wxTEMP0Rain;
+    
+    NSString *wxTEMP1Rain;
+    NSString *wxTEMP2Rain;
+    
+    if ([weatherArray count] >= 3)
+    {
+        wxTEMP0 = [self convertKelvinToFaranheit:[[[weatherArray[0] objectForKey:@"main"] objectForKey:@"temp"] intValue]];
+        wxTEMP1 = [self convertKelvinToFaranheit:[[[weatherArray[1] objectForKey:@"main"] objectForKey:@"temp"] intValue]];
+        wxTEMP2 = [self convertKelvinToFaranheit:[[[weatherArray[2] objectForKey:@"main"] objectForKey:@"temp"] intValue]];
+        
+        wxTEMP0Rain = [[weatherArray[0] objectForKey:@"weather"][0] objectForKey:@"description"];
+        wxTEMP1Rain = [[weatherArray[1] objectForKey:@"weather"][0] objectForKey:@"description"];
+        NSLog(@"TESTING: %@",wxTEMP0Rain);
+        wxTEMP2Rain = [[weatherArray[2] objectForKey:@"weather"][0] objectForKey:@"description"];
 
-    NSString *wxTEMP1Rain = [[[homeWeatherDictionary objectForKey:@"list"][0] objectForKey:@"weather"][0] objectForKey:@"description"];
-    NSLog(@"TESTING: %@",wxTEMP0Rain);
-    NSString *wxTEMP2Rain = [[[homeWeatherDictionary objectForKey:@"list"][0] objectForKey:@"weather"][0] objectForKey:@"description"];
+    }
+    else if ([weatherArray count] == 2)
+    {
+        wxTEMP0 = [self convertKelvinToFaranheit:[[[weatherArray[0] objectForKey:@"main"] objectForKey:@"temp"] intValue]];
+        wxTEMP1 = [self convertKelvinToFaranheit:[[[weatherArray[1] objectForKey:@"main"] objectForKey:@"temp"] intValue]];
+        wxTEMP2 = 200;//assigning 200 as a nil
+        
+        wxTEMP0Rain = [[weatherArray[0] objectForKey:@"weather"][0] objectForKey:@"description"];
+        wxTEMP1Rain = [[weatherArray[1] objectForKey:@"weather"][0] objectForKey:@"description"];
+        NSLog(@"TESTING: %@",wxTEMP0Rain);
+        wxTEMP2Rain = @"";
+    }
+    else if ([weatherArray count] == 1)
+    {
+        wxTEMP0 = [self convertKelvinToFaranheit:[[[weatherArray[0] objectForKey:@"main"] objectForKey:@"temp"] intValue]];
+        wxTEMP1 = 200;//assigning 200 as a nil
+        wxTEMP2 = 200;//assigning 200 as a nil
+        
+        wxTEMP0Rain = [[weatherArray[0] objectForKey:@"weather"][0] objectForKey:@"description"];
+        wxTEMP1Rain = @"";
+        NSLog(@"TESTING: %@",wxTEMP0Rain);
+        wxTEMP2Rain = @"";
+
+    }
+    else if ([weatherArray count] <= 0)
+    {
+        wxTEMP0 = 200;//assigning 200 as a nil
+        wxTEMP1 = 200;//assigning 200 as a nil
+        wxTEMP2 = 200;//assigning 200 as a nil
+        
+        wxTEMP0Rain = @"";
+        wxTEMP1Rain = @"";
+        NSLog(@"TESTING: %@",wxTEMP0Rain);
+        wxTEMP2Rain = @"";
+    }
+   
+    
+ //   NSString *city = [[homeWeatherDictionary objectForKey:@"city"] objectForKey:@"name"];
     
     int watchertemp =[[NSUserDefaults standardUserDefaults] integerForKey:@"monitoredTemp"];
     
