@@ -639,16 +639,8 @@
     return _session;
 }
 
--(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
-    NSLog(@"Welcome to %@", region.identifier);
-    [[[UIAlertView alloc]initWithTitle:@"ENTERED REGION" message:@"WELCOME HOME" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil]show];
-}
-
-
--(void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
-    NSLog(@"Bye bye");
-    [[[UIAlertView alloc]initWithTitle:@"didExitRegion" message:@"Bye bye" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil]show];
-    
+-(void)checkForWeatherTriggers
+{
     int wxTEMP0 = [self convertKelvinToFaranheit:[[[[homeWeatherDictionary objectForKey:@"list"][0] objectForKey:@"main"] objectForKey:@"temp"] intValue]];
     int wxTEMP1 = [self convertKelvinToFaranheit:[[[[homeWeatherDictionary objectForKey:@"list"][1] objectForKey:@"main"] objectForKey:@"temp"] intValue]];
     int wxTEMP2 = [self convertKelvinToFaranheit:[[[[homeWeatherDictionary objectForKey:@"list"][2] objectForKey:@"main"] objectForKey:@"temp"] intValue]];
@@ -685,7 +677,7 @@
         wxTEMP1Rain = [[weatherArray[1] objectForKey:@"weather"][0] objectForKey:@"description"];
         NSLog(@"TESTING: %@",wxTEMP0Rain);
         wxTEMP2Rain = [[weatherArray[2] objectForKey:@"weather"][0] objectForKey:@"description"];
-
+        
     }
     else if ([weatherArray count] == 2)
     {
@@ -708,7 +700,7 @@
         wxTEMP1Rain = @"";
         NSLog(@"TESTING: %@",wxTEMP0Rain);
         wxTEMP2Rain = @"";
-
+        
     }
     else if ([weatherArray count] <= 0)
     {
@@ -721,15 +713,15 @@
         NSLog(@"TESTING: %@",wxTEMP0Rain);
         wxTEMP2Rain = @"";
     }
-   
     
- //   NSString *city = [[homeWeatherDictionary objectForKey:@"city"] objectForKey:@"name"];
+    
+    //   NSString *city = [[homeWeatherDictionary objectForKey:@"city"] objectForKey:@"name"];
     
     //temperature value set by user to alert if below
     int watchertemp =[[NSUserDefaults standardUserDefaults] integerForKey:@"monitoredTemp"];
     
     if (wxTEMP0 < watchertemp || wxTEMP1 < watchertemp || wxTEMP2 < watchertemp)
-    
+        
     {
         if ([wxTEMP0Rain containsString:@"rain"] || [wxTEMP1Rain containsString:@"rain"] || [wxTEMP2Rain containsString:@"rain"])
         {
@@ -749,18 +741,18 @@
         else
         {
             UILocalNotification *alert = [[UILocalNotification alloc]init];
-
+            
             alert.fireDate = [NSDate date];
-
+            
             alert.alertTitle = [NSString stringWithFormat:@"Yo %@,", self.userName];
             NSLog(@"username to call is=%@",self.userName);
             alert.alertBody = [NSString stringWithFormat:@"Don't forget your jacket!"];
             alert.soundName = UILocalNotificationDefaultSoundName;
             alert.applicationIconBadgeNumber = 1;
-
+            
             [[UIApplication sharedApplication] scheduleLocalNotification:alert];
         }
-    
+        
     }
     
     //not cold enough, but it'll rain
@@ -778,9 +770,41 @@
         [[UIApplication sharedApplication] scheduleLocalNotification:alert];
         NSLog(@"it'll rain!");
     }
+}
+
+-(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
+    NSLog(@"Welcome to %@", region.identifier);
+    [[[UIAlertView alloc]initWithTitle:@"ENTERED REGION" message:@"WELCOME HOME" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil]show];
     
-                
+    //egion monitor as backup plan
+    if (atHome == NO)
+    {
+        atHome = YES;
+        
+        //SAVE atHome BOOL
+        [[NSUserDefaults standardUserDefaults] setBool:atHome forKey:@"atHome"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        NSLog(@"AT HOME NOW = %d",[[NSUserDefaults standardUserDefaults] boolForKey:@"atHome"]);
+    }
+}
+
+
+-(void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
+    NSLog(@"Bye bye");
+    [[[UIAlertView alloc]initWithTitle:@"didExitRegion" message:@"Bye bye" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil]show];
     
+    //checking if didupdatelocations already ran the required weather check, which will happen if in background or running on screen, but terminated it will then use this region monitor as backup plan
+    if (atHome == YES)
+    {
+        atHome = NO;
+        
+        [self checkForWeatherTriggers];
+        
+        //SAVE atHome BOOL
+        [[NSUserDefaults standardUserDefaults] setBool:atHome forKey:@"atHome"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        NSLog(@"AT HOME NOW = %d",[[NSUserDefaults standardUserDefaults] boolForKey:@"atHome"]);
+    }
 }
 
 -(void)locationManager:(CLLocationManager *)manager didStartMonitoringForRegion:(CLRegion *)region
@@ -972,67 +996,51 @@
 
     location = locations[0];
 
-//    //DISTANCE FROM HOUSE TO NEXT DOOR = 16.606390
-//    CLLocationDistance distance = [location distanceFromLocation: self.homeInformation[0]];
-//    
-//    NSLog(@"CURRENT LOCATION: %@",location);
-//    NSLog(@"\natHome BOOL = %d",atHome);
-//
-//    //using this to check user location to home, as its faster than region checks, but region can check with app terminated so that is the backup plan
-//    if (location && [self.homeInformation count] >= 3 && distance <=18)
-//    {
-//        if (atHome == YES)
-//        {
-//            NSLog(@"ALREADY AT HOME");
-//        }
-//        
-//        else//just got home
-//        {
-//            atHome = YES;
-//            
-//            NSLog(@"JUST GOT HOME");
-//            NSLog(@"\n\nDISTANCE =%f",distance);
-//        }
-//    }
-//    
-//    else if (location && [self.homeInformation count] >= 3 && distance >18)
-//    {
-//        if (atHome == YES)
-//        {
-//            atHome = NO;
-//            NSLog(@"JUST LEFT HOME");
-//            
-//            int wxTEMP = [self convertKelvinToFaranheit:[[[[homeWeatherDictionary objectForKey:@"list"][0] objectForKey:@"main"] objectForKey:@"temp"] intValue]];
-//            int watchertemp =[[NSUserDefaults standardUserDefaults] integerForKey:@"monitoredTemp"];
-//            NSLog(@"\nwxtemp=%d\nwatchertemp=%d",wxTEMP,watchertemp);
-//
-//            if (wxTEMP < watchertemp)
-//            {
-//                UILocalNotification *alert = [[UILocalNotification alloc]init];
-//                
-//                alert.fireDate = [NSDate date];
-//                
-//                alert.alertTitle = [NSString stringWithFormat:@"Yo %@,", self.userName];
-//                NSLog(@"username to call is=%@",self.userName);
-//                alert.alertBody = [NSString stringWithFormat:@"Don't forget your jacket!"];
-//                alert.soundName = UILocalNotificationDefaultSoundName;
-//                
-//                [[UIApplication sharedApplication] scheduleLocalNotification:alert];
-//            }
-//            
-//        }
-//        
-//        else//BEEN OUT AND ABOUT
-//        {
-//            NSLog(@"STILL OUT AND ABOUT");
-//            NSLog(@"\n\nDISTANCE =%f",distance);
-//        }
-//    }
-//    
-//    //SAVE atHome BOOL
-//    [[NSUserDefaults standardUserDefaults] setBool:atHome forKey:@"atHome"];
-//    [[NSUserDefaults standardUserDefaults] synchronize];
-//    NSLog(@"AT HOME NOW = %d",[[NSUserDefaults standardUserDefaults] boolForKey:@"atHome"]);
+    //DISTANCE FROM HOUSE TO NEXT DOOR = 16.606390
+    CLLocationDistance distance = [location distanceFromLocation: self.homeInformation[0]];
+    
+    NSLog(@"CURRENT LOCATION: %@",location);
+    NSLog(@"\natHome BOOL = %d",atHome);
+
+    //using this to check user location to home, as its faster than region checks, but region can check with app terminated so that is the backup plan
+    if (location && [self.homeInformation count] >= 3 && distance <=18)
+    {
+        if (atHome == YES)
+        {
+            NSLog(@"ALREADY AT HOME");
+        }
+        
+        else//just got home
+        {
+            atHome = YES;
+            
+            NSLog(@"JUST GOT HOME");
+            NSLog(@"\n\nDISTANCE =%f",distance);
+        }
+    }
+    
+    else if (location && [self.homeInformation count] >= 3 && distance >18)
+    {
+        if (atHome == YES)
+        {
+            atHome = NO;
+            NSLog(@"JUST LEFT HOME");
+            
+            [self checkForWeatherTriggers];
+            
+        }
+        
+        else//BEEN OUT AND ABOUT
+        {
+            NSLog(@"STILL OUT AND ABOUT");
+            NSLog(@"\n\nDISTANCE =%f",distance);
+        }
+    }
+    
+    //SAVE atHome BOOL
+    [[NSUserDefaults standardUserDefaults] setBool:atHome forKey:@"atHome"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    NSLog(@"AT HOME NOW = %d",[[NSUserDefaults standardUserDefaults] boolForKey:@"atHome"]);
     
     
 //    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"])

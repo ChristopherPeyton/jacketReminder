@@ -54,6 +54,7 @@
 -(UIBackgroundFetchResult *) getHomeWeatherOnlyForBackground;
 -(int) postWeatherToLabels;
 -(BOOL)isNetworkAvailable;
+-(void)checkForWeatherTriggers;
 
 @end
 
