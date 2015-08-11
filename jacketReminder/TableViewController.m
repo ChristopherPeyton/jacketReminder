@@ -20,7 +20,7 @@
 
 @property (strong, nonatomic) NSString *addressString;
 
-@property (nonatomic) IBInspectable UIColor *settingsTableBackgroundColor;
+@property (nonatomic) UIColor *settingsTableBackgroundColor;
 
 @end
 

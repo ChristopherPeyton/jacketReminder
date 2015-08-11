@@ -15,32 +15,12 @@
 #include<unistd.h>
 #include<netdb.h>
 
-IB_DESIGNABLE
 @interface ViewController : UIViewController <CLLocationManagerDelegate>
 
 {
     int LocationEnabledStatus;
     BOOL setHomeLocationTriggered;
     BOOL atHome;
-    
-    
-    
-    
-    
-    
-    ///////////////////////////////////////////////////
-    
-    
-    NSMutableArray *gethomeWXtextARRAY;
-    NSMutableArray *backgroundCallTextARRAY;
-    
-    
-    ///////////////////////////////////////////////////
-    
-    
-    
-    
-    
 }
 
 @property (weak, nonatomic) IBOutlet UIView *loadingActivityView;
@@ -74,17 +54,6 @@ IB_DESIGNABLE
 -(UIBackgroundFetchResult *) getHomeWeatherOnlyForBackground;
 -(int) postWeatherToLabels;
 -(BOOL)isNetworkAvailable;
-
-
-///////////////////////////////////////////////////
-
-
-
--(void) backgroundCallTextARRAYMETHOD;
--(void) gethomeWXtextARRAYMETHOD;
-
-
-///////////////////////////////////////////////////
 
 @end
 

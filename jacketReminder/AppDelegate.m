@@ -562,21 +562,6 @@
             
             [self.window.rootViewController.childViewControllers[0] getHomeWeather];
         }
-        
-        
-        
-        
-        ///////////////////////////////////////////////////////////
-        
-        
-        [self.window.rootViewController.childViewControllers[0] backgroundCallTextARRAYMETHOD];
-        [self.window.rootViewController.childViewControllers[0] gethomeWXtextARRAYMETHOD];
-
-        
-        
-        
-        ///////////////////////////////////////////////////////////
-
 
     }
     

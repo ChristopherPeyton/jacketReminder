@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-IB_DESIGNABLE
 @interface TableViewController : UITableViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (strong, nonatomic) NSMutableArray *homeInformationFromRoot;//will contain 2 items: cllocation and address string

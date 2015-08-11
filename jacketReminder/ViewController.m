@@ -25,26 +25,23 @@
     int forecast_3_time_epochHOME;
     int forecast_6_time_epochHOME;
     int forecast_9_time_epochHOME;
-    IBInspectable int xx;
     
     int errorCounter;
     BOOL mayNeedToRunGetBothWeather;
 
 }
-@property (weak, nonatomic) IBOutlet UITextView *gethomeWXtext;
-@property (weak, nonatomic) IBOutlet UITextView *backgroundCallText;
 @property (weak, nonatomic) IBOutlet UIView *loadingDarkView;
 @property (weak, nonatomic) IBOutlet UIImageView *currentIcon;
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *buttonMainViewEffect;
 @property (weak, nonatomic) IBOutlet UIView *buttonContainer;
 @property (weak, nonatomic) IBOutlet UILabel *tempSymbol;
 @property (weak, nonatomic) IBOutlet UILabel *currentLocationWeatherTime;
-@property (weak, nonatomic) IBOutlet UILabel *tempSymbolCurrent1;
-@property (weak, nonatomic) IBOutlet UILabel *tempSymbolCurrent2;
-@property (weak, nonatomic) IBOutlet UILabel *tempSymbolCurrent3;
-@property (weak, nonatomic) IBOutlet UILabel *tempSymbolHome1;
-@property (weak, nonatomic) IBOutlet UILabel *tempSymbolHome2;
-@property (weak, nonatomic) IBOutlet UILabel *tempSymbolHome3;
+//@property (weak, nonatomic) IBOutlet UILabel *tempSymbolCurrent1;
+//@property (weak, nonatomic) IBOutlet UILabel *tempSymbolCurrent2;
+//@property (weak, nonatomic) IBOutlet UILabel *tempSymbolCurrent3;
+//@property (weak, nonatomic) IBOutlet UILabel *tempSymbolHome1;
+//@property (weak, nonatomic) IBOutlet UILabel *tempSymbolHome2;
+//@property (weak, nonatomic) IBOutlet UILabel *tempSymbolHome3;
 @property (weak, nonatomic) IBOutlet UIImageView *forecast_3_icon_view;
 @property (weak, nonatomic) IBOutlet UIImageView *forecast_6_icon_view;
 @property (weak, nonatomic) IBOutlet UIImageView *forecast_9_icon_view;
@@ -61,12 +58,12 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *temperatureLabel;
-- (void) getRandomGPS;
 
 @end
 
 @implementation ViewController
 
+//testing if device has network access
 -(BOOL)isNetworkAvailable
 {
     char *hostname;
@@ -102,6 +99,7 @@
     return temperatureInFaranheit;
 }
 
+//weather call from background fetch
 - (UIBackgroundFetchResult *) getHomeWeatherOnlyForBackground
 {
     
@@ -178,24 +176,7 @@
                     
                     //set date of last weather call
                     [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastBackgroundWeatherDateCalled"];
-                
-                
-                
-                ///////////////////////////////////////////////////
-                
-                
-                backgroundCallTextARRAY = [backgroundCallTextARRAY mutableCopy];
-                [backgroundCallTextARRAY addObject:[self getStringFromDateFORTESTING:[NSDate date]]];
-                [[NSUserDefaults standardUserDefaults] setObject:backgroundCallTextARRAY forKey:@"backgroundCallTextARRAY"];
-                
-                
-                ///////////////////////////////////////////////////
-                
-                
-                
-                
-                
-                
+
                     [[NSUserDefaults standardUserDefaults] synchronize];
                     
                     NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
@@ -241,6 +222,8 @@
         
     return result;
 }
+
+//OLD WEATHER BACKGROUND FETCH METHOD --- HAD TO CHANGE IT AS BACKGROUND FETCH WILL NOT USE DATATASK
 
 //- (UIBackgroundFetchResult *) getHomeWeatherOnlyForBackground
 //{
@@ -450,6 +433,7 @@
     return homeWeatherDictionary;
 }
 
+//current location weather call
 - (NSMutableDictionary *) getWeather
 {
 
@@ -504,27 +488,7 @@
 
                 //set date of last weather call
                 [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastWeatherDateCalled"];
-                
-                
-                
-                ///////////////////////////////////////////////////
-                
-                
-                gethomeWXtextARRAY = [gethomeWXtextARRAY mutableCopy];
-                [gethomeWXtextARRAY addObject:[self getStringFromDateFORTESTING:[NSDate date]]];
-                [[NSUserDefaults standardUserDefaults] setObject:gethomeWXtextARRAY forKey:@"gethomeWXtextARRAY"];
-                
-                
-                ///////////////////////////////////////////////////
-                
-                
-                
-                
-                
-                
-                
-                
-                
+
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [self postWeatherToLabels];
 
@@ -540,6 +504,7 @@
     return weatherDictionary;
 }
 
+//call if current and home location are the same
 - (NSMutableDictionary *) getBothWeather
 {
     //make sure home location is available before calling, assign home loc
@@ -588,29 +553,7 @@
                 [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"weatherDictionary"];
                 [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"homeWeatherDictionary"];
                 [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastWeatherDateCalled"];
-                
-                
-                
-                
-                
-                
-                ///////////////////////////////////////////////////
-                
-                
-                gethomeWXtextARRAY = [gethomeWXtextARRAY mutableCopy];
-                [gethomeWXtextARRAY addObject:[self getStringFromDateFORTESTING:[NSDate date]]];
-                [[NSUserDefaults standardUserDefaults] setObject:gethomeWXtextARRAY forKey:@"gethomeWXtextARRAY"];
-                
-                
-                ///////////////////////////////////////////////////
-                
-                
-                
-                
-                
-                
-                
-                
+
                 
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [self postWeatherToLabels];
@@ -654,30 +597,7 @@
                 [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"weatherDictionary"];
                 [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"homeWeatherDictionary"];
                 [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastWeatherDateCalled"];
-                
-                
-                
-                
-                
-                
-                ///////////////////////////////////////////////////
-                
-                
-                gethomeWXtextARRAY = [gethomeWXtextARRAY mutableCopy];
-                [gethomeWXtextARRAY addObject:[self getStringFromDateFORTESTING:[NSDate date]]];
-                [[NSUserDefaults standardUserDefaults] setObject:gethomeWXtextARRAY forKey:@"gethomeWXtextARRAY"];
-                
-                
-                ///////////////////////////////////////////////////
-                
-                
-                
-                
-                
-                
-                
-                
-                
+
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [self postWeatherToLabels];
                 
@@ -693,24 +613,6 @@
             
             [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"weatherDictionary"];
             [[NSUserDefaults standardUserDefaults] setObject:weatherDictionary forKey:@"homeWeatherDictionary"];
-            
-            
-            
-            
-            
-            ///////////////////////////////////////////////////
-            
-
-            
-            ///////////////////////////////////////////////////
-            
-            
-            
-            
-            
-            
-            
-            
             
             [[NSUserDefaults standardUserDefaults] synchronize];
             [self postWeatherToLabels];
@@ -752,25 +654,24 @@
     int wxTEMP2 = [self convertKelvinToFaranheit:[[[[homeWeatherDictionary objectForKey:@"list"][2] objectForKey:@"main"] objectForKey:@"temp"] intValue]];
     
     
-    
+    //iterate through array to find relevant weather data from the 15 day forecaast in case background fetch has been failing
     NSMutableArray *weatherArray = [NSMutableArray array];
+    NSDate *ddd = [NSDate date];
     for (int x = 0; x < [[homeWeatherDictionary objectForKey:@"list"] count]; x++)
     {
         
         NSDate *dd= [NSDate dateWithTimeIntervalSince1970:[[[homeWeatherDictionary objectForKey:@"list"][x] objectForKey:@"dt"] intValue]];
-        NSDate *ddd = [NSDate date];
         float dateInterval =[dd timeIntervalSinceDate:ddd];
-        if (dateInterval <= 25200 && dateInterval  >= -3600 )
+        if (dateInterval <= 25200 && dateInterval  >= -3600 )// <= 7hrs and >= -1hr, in case its 4pm, still use 3pm temp as a relevant value as forecast is every 3 hrs
         {
             [weatherArray addObject:[homeWeatherDictionary objectForKey:@"list"][x]];
         }
-        else if (dateInterval > 25200)
+        else if (dateInterval > 25200) // >7hrs, useless, exit iteration
         {
             x = 9000;
         }
     }
     NSString *wxTEMP0Rain;
-    
     NSString *wxTEMP1Rain;
     NSString *wxTEMP2Rain;
     
@@ -824,6 +725,7 @@
     
  //   NSString *city = [[homeWeatherDictionary objectForKey:@"city"] objectForKey:@"name"];
     
+    //temperature value set by user to alert if below
     int watchertemp =[[NSUserDefaults standardUserDefaults] integerForKey:@"monitoredTemp"];
     
     if (wxTEMP0 < watchertemp || wxTEMP1 < watchertemp || wxTEMP2 < watchertemp)
@@ -901,14 +803,11 @@
     }
 
     
-    CLCircularRegion *regionCirc = [[CLCircularRegion alloc]initWithCenter:location.coordinate radius:37 identifier:@"Home"]; //Radius was 100
+    CLCircularRegion *regionCirc = [[CLCircularRegion alloc]initWithCenter:location.coordinate radius:37 identifier:@"Home"]; //Radius was 100, changed to 37 which should cover area around a decent mansion
+    
     [self.locationManager startMonitoringForRegion:regionCirc];
     
-    ////////////////////////
-    //GET GPS AT RANDOM
-    //[self getRandomGPS];
-    ////////////////////////
-    
+    //checking location found and address label is not empty
     if (location && self.addressLabel.text.length>0)
     {
         self.homeInformation = [NSMutableArray array];
@@ -1067,19 +966,19 @@
     NSData *arrayWrapperLocations = [NSKeyedArchiver archivedDataWithRootObject:self.homeInformation];
     
     [[NSUserDefaults standardUserDefaults] setObject:arrayWrapperLocations forKey:@"locationsFromLocationManager"];
-    //[[NSUserDefaults standardUserDefaults] synchronize];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 
     //[self.locationManager stopUpdatingLocation];
 
     location = locations[0];
 
-    //DISTANCE FROM HOUSE TO NEXT DOOR = 16.606390
- //   CLLocationDistance distance = [location distanceFromLocation: self.homeInformation[0]];
-    
-    NSLog(@"CURRENT LOCATION: %@",location);
-    NSLog(@"\natHome BOOL = %d",atHome);
-
-    
+//    //DISTANCE FROM HOUSE TO NEXT DOOR = 16.606390
+//    CLLocationDistance distance = [location distanceFromLocation: self.homeInformation[0]];
+//    
+//    NSLog(@"CURRENT LOCATION: %@",location);
+//    NSLog(@"\natHome BOOL = %d",atHome);
+//
+//    //using this to check user location to home, as its faster than region checks, but region can check with app terminated so that is the backup plan
 //    if (location && [self.homeInformation count] >= 3 && distance <=18)
 //    {
 //        if (atHome == YES)
@@ -1236,27 +1135,7 @@
 - (int) postWeatherToLabels
 {
     [self performSelectorInBackground:@selector(unhideLoaderView) withObject:nil];
-    
-    
-    
-    
-    
-    
-    ///////////////////////////////////////////////////
-    
-    
-    [self gethomeWXtextARRAYMETHOD];
-    [self backgroundCallTextARRAYMETHOD];
-    
-    
-    ///////////////////////////////////////////////////
-    
-    
-    
-    
-    
-    
-    
+
     if ([addressFromGEO count] > 1 && ![self.addressLabel.text isEqualToString:addressFromGEO[0]])
     {
         if (![addressFromGEO[0] isEqualToString:@""])
@@ -1327,6 +1206,7 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
+    //REPLACED THESE BY INCLUDING THE SYMBOL IN THE TEMPERATURE STRING
     //assign symbols
 //    self.tempSymbolCurrent1.text = @"\u00B0";
 //    self.tempSymbolCurrent2.text = @"\u00B0";
@@ -1579,93 +1459,11 @@
 //        NSLog(@"interval = %f",[date2 timeIntervalSinceDate:date]);
 //
 //    }
-    
-    
-    
-    ///////////////////////////////////////////////////
-    
-    self.backgroundCallText.text = [backgroundCallTextARRAY description];
-    self.gethomeWXtext.text = gethomeWXtextARRAY.description;
-    
-    
-    
-    ///////////////////////////////////////////////////
+
 }
-
-
-
-
-///////////////////////////////////////////////////
-
-- (void) backgroundCallTextARRAYMETHOD
-{
-    [[NSUserDefaults standardUserDefaults] synchronize];
-
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"backgroundCallTextARRAY"] != nil)
-    {
-        backgroundCallTextARRAY =[[NSUserDefaults standardUserDefaults] objectForKey:@"backgroundCallTextARRAY"] ;
-    }
-    self.backgroundCallText.text = backgroundCallTextARRAY.description;
-}
-- (void) gethomeWXtextARRAYMETHOD
-{
-    [[NSUserDefaults standardUserDefaults] synchronize];
-
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"gethomeWXtextARRAY"] != nil)
-    {
-        gethomeWXtextARRAY =[[NSUserDefaults standardUserDefaults] objectForKey:@"gethomeWXtextARRAY"];
-    }
-    self.gethomeWXtext.text = gethomeWXtextARRAY.description;
-}
-
-///////////////////////////////////////////////////
-
-
-
-///////////////////////////////////////////////////
-
-
--(NSString *)getStringFromDateFORTESTING:(NSDate *) myDate
-{
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"EEE,MMM d h:mm:ss a"];
-    NSString *dateString = [dateFormat stringFromDate:myDate];
-    
-    return dateString;
-}
-
-
-////////////////////////////////////////////////////
-
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    
-    ///////////////////////////////////////////////////
-    
-    backgroundCallTextARRAY = [NSMutableArray array];
-    gethomeWXtextARRAY = [NSMutableArray array];
-
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"backgroundCallTextARRAY"] != nil)
-    {
-        backgroundCallTextARRAY = [[NSUserDefaults standardUserDefaults] objectForKey:@"backgroundCallTextARRAY"];
-
-    }
-    self.backgroundCallText.text = [backgroundCallTextARRAY description];
-    
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"gethomeWXtextARRAY"] != nil)
-    {
-        gethomeWXtextARRAY = [[NSUserDefaults standardUserDefaults] objectForKey:@"gethomeWXtextARRAY"];
-        
-    }
-    self.gethomeWXtext.text = [gethomeWXtextARRAY description];
-    
-    
-    
-    ///////////////////////////////////////////////////
-    
     
     if ([self  isNetworkAvailable] == NO)
     {
@@ -1691,17 +1489,12 @@
         
         AudioServicesPlayAlertSound (soundID);
     }
-    
-    // Do any additional setup after loading the view, typically from a nib.
 
     //change settings button to wheel icon
 //    self.settingsButton.title = @"\u2699";
 //    UIFont *customFont = [UIFont fontWithName:@"Helvetica" size:24];
 //    NSDictionary *fontDictionary = @{NSFontAttributeName : customFont};
 //    [self.settingsButton setTitleTextAttributes:fontDictionary forState:UIControlStateNormal];
-    
-    
-    //NSLog(@"\nhomeinfo dflt:\n%@\n\nhomeweathdic dflt:\n%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"], [[NSUserDefaults standardUserDefaults] objectForKey:@"homeWeatherDictionary"]);
     
     weatherTimer = 7200;//3600 secs= 1hr
     
@@ -1835,72 +1628,5 @@
     [[UIApplication sharedApplication] scheduleLocalNotification:alert];
 }
 
-- (void) getRandomGPS
-{
-    int temp1;
-    float newLatitude;
-    int temp2;
-    float newLongitude;
-    
-    CLGeocoder *geocoder = [[CLGeocoder alloc]init];
-    
-    
-    temp1 = arc4random_uniform(15)+1;
-    newLatitude = location.coordinate.latitude + temp1;
-    
-    temp2 = arc4random_uniform(99999999);
-    NSString *temp = [NSString stringWithFormat:@"%.0f.%d", location.coordinate.longitude,temp2];
-    
-    newLongitude = [temp floatValue];
-    temp = [NSString stringWithFormat:@"%.0f.%d", location.coordinate.latitude,temp2];
-    newLatitude = [temp floatValue];
-    
-    __block CLLocation *randomLocation = [[CLLocation alloc]initWithLatitude:newLatitude longitude:newLongitude];
-    CLLocation *Russia = [[CLLocation alloc]initWithLatitude:55.7506532 longitude:37.5798383];
-    if (maxTimer > 30)
-    {
-        randomLocation = Russia;
-    }
-    [geocoder reverseGeocodeLocation:randomLocation completionHandler:^(NSArray *placemarks, NSError *error)
-     {
-         CLPlacemark *randomPlace = placemarks[0];
-         
-         //[tempArray addObject:placemarks[0]];
-         //NSLog(@"\nPLACEMARK1\n%@", randomPlace);
-         if (randomPlace.subThoroughfare == nil)
-         {
-             
-             maxTimer++;
-             self.temperatureLabel.text = @"STILL CALCULATING USEABLE RANDOM COORDS!";
-             self.addressLabel.text = @"STILL CALCULATING USEABLE RANDOM COORDS!";
-             if (timer>15) {
-                 CLLocation *newLoc = [[CLLocation alloc]initWithLatitude:0 longitude:0];
-                 randomLocation = newLoc;
-                 timer=0;
-             }
-             timer++;
-
-             CLLocation *newLoc = [[CLLocation alloc]initWithLatitude:randomLocation.coordinate.latitude+7 longitude:randomLocation.coordinate.longitude+7];
-             
-             location = newLoc;
-
-             //[self getWeatherButton:self];
-             
-         }
-         
-         else
-         {
-             timer=0;
-             maxTimer=0;
-             NSString *tempTempString = self.temperatureLabel.text = [NSString stringWithFormat:@"%d",[self convertKelvinToFaranheit:[[[weatherDictionary objectForKey:@"main"] objectForKey:@"temp"]intValue]]];
-             self.temperatureLabel.text = [NSString stringWithFormat:@"%@", tempTempString];
-             
-             NSArray *locArray = [NSArray arrayWithObject:randomLocation];
-             [self.locationManager.delegate locationManager:nil didUpdateLocations:locArray];
-         }
-         
-     }];
-
-}
 
 @end
