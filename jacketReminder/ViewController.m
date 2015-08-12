@@ -115,32 +115,38 @@
         }
         else
         {
-            UILocalNotification *alert = [[UILocalNotification alloc]init];
             
-            alert.fireDate = [NSDate date];
-            
-            alert.alertTitle = @"No Home Location Detected";
-            alert.alertBody = @"Please set your home address.";
-            alert.applicationIconBadgeNumber = 1;
-            
-            [[UIApplication sharedApplication] scheduleLocalNotification:alert];
+            //turned it off to prevent instant alert when installing from store
+            //tested with adhoc
+//            UILocalNotification *alert = [[UILocalNotification alloc]init];
+//            
+//            alert.fireDate = [NSDate date];
+//            
+//            alert.alertTitle = @"No Home Location Detected";
+//            alert.alertBody = @"Please set your home address.";
+//            alert.applicationIconBadgeNumber = 1;
+  //          [[UIApplication sharedApplication] scheduleLocalNotification:alert];
         }
         
-        //load username or prompt user if missing
-        if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == nil || [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == NULL || [[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] isEqualToString:@""])
-        {
-            
-            UILocalNotification *alert = [[UILocalNotification alloc]init];
-            
-            alert.fireDate = [NSDate date];
-            
-            alert.alertTitle = @"Please enter your first name in the settings view";
-            alert.alertBody = @"Your name will be used to provide a personal experience.";
-            alert.applicationIconBadgeNumber = 1;
-            
-            [[UIApplication sharedApplication] scheduleLocalNotification:alert];
-            
-        }
+        
+        //turned it off to prevent instant alert when installing from store
+        //tested with adhoc
+        
+//        //load username or prompt user if missing
+//        if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == nil || [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == NULL || [[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] isEqualToString:@""])
+//        {
+//            
+//            UILocalNotification *alert = [[UILocalNotification alloc]init];
+//            
+//            alert.fireDate = [NSDate date];
+//            
+//            alert.alertTitle = @"Please enter your first name in the settings view";
+//            alert.alertBody = @"Your name will be used to provide a personal experience.";
+//            alert.applicationIconBadgeNumber = 1;
+//            
+//            [[UIApplication sharedApplication] scheduleLocalNotification:alert];
+//            
+//        }
         
         NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastBackgroundWeatherDateCalled"];
         float dateInterval =[[NSDate date] timeIntervalSinceDate:date];
@@ -343,7 +349,21 @@
     }
     
     
+            //load username or prompt user if missing
+            if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == nil || [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == NULL || [[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] isEqualToString:@""])
+            {
     
+                UILocalNotification *alert = [[UILocalNotification alloc]init];
+    
+                alert.fireDate = [NSDate date];
+    
+                alert.alertTitle = @"Please enter your first name in the settings view";
+                alert.alertBody = @"Your name will be used to provide a personal experience.";
+                alert.applicationIconBadgeNumber = 1;
+    
+                [[UIApplication sharedApplication] scheduleLocalNotification:alert];
+                
+            }
     
     
     
