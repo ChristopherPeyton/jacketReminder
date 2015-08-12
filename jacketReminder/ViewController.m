@@ -733,7 +733,7 @@
             NSLog(@"username to call is=%@",self.userName);
             alert.alertBody = [NSString stringWithFormat:@"Don't forget your jacket!\nAnd you may get a little wet..."];
             alert.soundName = UILocalNotificationDefaultSoundName;
-            
+            alert.applicationIconBadgeNumber = 1;
             [[UIApplication sharedApplication] scheduleLocalNotification:alert];
             NSLog(@"it'll rain!");
         }
@@ -766,7 +766,7 @@
         NSLog(@"username to call is=%@",self.userName);
         alert.alertBody = [NSString stringWithFormat:@"You may get a little wet..."];
         alert.soundName = UILocalNotificationDefaultSoundName;
-        
+        alert.applicationIconBadgeNumber = 1;
         [[UIApplication sharedApplication] scheduleLocalNotification:alert];
         NSLog(@"it'll rain!");
     }
