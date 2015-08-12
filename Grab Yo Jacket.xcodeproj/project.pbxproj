@@ -60,7 +60,6 @@
 		838A8FDF1B09AB8C005F69DF /* jacketReminderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = jacketReminderTests.m; sourceTree = "<group>"; };
 		838A8FE91B09AB9D005F69DF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		839ADBDC1B2BF3A5000F8C48 /* ios-linen.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "ios-linen.jpg"; sourceTree = "<group>"; };
-		83A27FF61B10141600F10BEF /* NSLOG__SPACER.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSLOG__SPACER.h; sourceTree = "<group>"; };
 		83B357481B337A710010C119 /* test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test.h; sourceTree = "<group>"; };
 		83B357491B337A710010C119 /* test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test.m; sourceTree = "<group>"; };
 		83B3574B1B33BF2E0010C119 /* image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = image.h; sourceTree = "<group>"; };
@@ -126,7 +125,6 @@
 				83B357501B33D8E90010C119 /* Images */,
 				838A8FD01B09AB8C005F69DF /* Images.xcassets */,
 				838A8FD21B09AB8C005F69DF /* LaunchScreen.xib */,
-				83A27FF61B10141600F10BEF /* NSLOG__SPACER.h */,
 				838A8FC31B09AB8C005F69DF /* Supporting Files */,
 			);
 			path = jacketReminder;

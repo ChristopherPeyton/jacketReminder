@@ -81,7 +81,6 @@
 }
 - (IBAction)requestRefreshButtonPressed:(id)sender
 {
-    NSLOG_SPACER
     NSLog(@"CALLED GETHOMEWEATHER FROM requestRefreshButtonPressed");
     [self getHomeWeather];
 }
@@ -180,11 +179,8 @@
                     [[NSUserDefaults standardUserDefaults] synchronize];
                     
                     NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-                    //        NSLOG_SPACER
                     //        NSLog(@"%@",weatherDictionary);
-                    //        NSLOG_SPACER
                            NSLog(@"json string from getHomeWeatherBACKGROUNDonly \n%@", weatherJSON);
-                    //        NSLOG_SPACER
                 
                 if (homeWeatherDictionary != nil)
                 {
@@ -274,11 +270,8 @@
 //                    [[NSUserDefaults standardUserDefaults] synchronize];
 //                    
 //                    NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-//                    //        NSLOG_SPACER
 //                    //        NSLog(@"%@",weatherDictionary);
-//                    //        NSLOG_SPACER
 //             //       NSLog(@"json string from getHomeWeatherBACKGROUNDonly \n%@", weatherJSON);
-//                    //        NSLOG_SPACER
 //
 //                    
 //                }];
@@ -288,10 +281,7 @@
 //            {
 //                if ([oldWeatherToCompare isEqualToDictionary:homeWeatherDictionary] == YES)
 //                {
-//                    NSLOG_SPACER
-//                    NSLOG_SPACER
 //                    NSLog(@"NEW DATA FETCHED FROM BACKGROUND!");
-//                    NSLOG_SPACER
 //                    result = UIBackgroundFetchResultNewData;
 //                }
 //                else//dictionary is not nil and matches, so no new data downloaded
@@ -400,11 +390,8 @@
                     [[NSUserDefaults standardUserDefaults] synchronize];
                     
                     NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-                    //        NSLOG_SPACER
                     //        NSLog(@"%@",weatherDictionary);
-                    //        NSLOG_SPACER
        //             NSLog(@"json string from getHomeWeather \n%@", weatherJSON);
-                    //        NSLOG_SPACER
                     
                 }];
                 [datatask resume];
@@ -476,11 +463,8 @@
             //[weatherDictionary setObject: forKey:<#(id<NSCopying>)#>]
                 
             NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-    //        NSLOG_SPACER
     //        NSLog(@"%@",weatherDictionary);
-    //        NSLOG_SPACER
           //    NSLog(@"json string from getWeather\n%@", weatherJSON);
-    //        NSLOG_SPACER
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 
@@ -542,11 +526,8 @@
             weatherDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
                         
             NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-            //        NSLOG_SPACER
             //        NSLog(@"%@",weatherDictionary);
-            //        NSLOG_SPACER
        //               NSLog(@"json string from getBothWeather\n%@", weatherJSON);
-            //        NSLOG_SPACER
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 
@@ -586,11 +567,8 @@
             weatherDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
             
             NSString *weatherJSON = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-            //        NSLOG_SPACER
             //        NSLog(@"%@",weatherDictionary);
-            //        NSLOG_SPACER
          //         NSLog(@"json string from getBothWeather\n%@", weatherJSON);
-            //        NSLOG_SPACER
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 
@@ -879,7 +857,6 @@
         {
         
         //call on background to improve button performance and allow action to unhide loading view
-            NSLOG_SPACER
             NSLog(@"CALLED GETHOMEWEATHER FROM SETHOMELOCATION");
         [self performSelectorInBackground:@selector(getHomeWeather) withObject:nil];
         
@@ -1107,14 +1084,12 @@
             float dateInterval =[[NSDate date] timeIntervalSinceDate:date];
             if (dateInterval >= weatherTimer || setHomeLocationTriggered == YES)
             {
-                            NSLOG_SPACER
                             NSLog(@"CALLED GETHOMEWEATHER FROM DIDUPDATELOC DEL");
                             [self getHomeWeather];
             }
             /////////////////////
             
             
-//            NSLOG_SPACER
 //            NSLog(@"CALLED GETHOMEWEATHER FROM DIDUPDATELOC DEL");
 //            [self getHomeWeather];
             
@@ -1187,7 +1162,6 @@
         {
             if (homeWeatherDictionary == nil || weatherDictionary == nil)
             {
-                NSLOG_SPACER
                 NSLog(@"CALLED GETHOMEWEATHER FROM POSTWEATHERTOLABELS : LOCATION IS AVAIL AND self.homeInformation != nil AND homeWeatherDictionary == nil || weatherDictionary == nil");
                 [self getHomeWeather];
                 
@@ -1196,7 +1170,6 @@
         
         else if (weatherDictionary == nil)
         {
-            NSLOG_SPACER
             NSLog(@"CALLED GETHOMEWEATHER FROM POSTWEATHERTOLABELS : LOCATION IS AVAIL AND self.homeInformation == nil AND weatherDictionary == nil");
             
                 [self getHomeWeather];
@@ -1452,7 +1425,6 @@
     else
     {
         
-//        NSLOG_SPACER
 //        NSLog(@"CALLED GETHOMEWEATHER FROM VIEWDIDAPPEAR");
 //
 //        [self getHomeWeather];

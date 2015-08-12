@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 @import CoreLocation;
-#import "NSLOG__SPACER.h"
 #import "TableViewController.h"
 #import <AVFoundation/AVFoundation.h>
 

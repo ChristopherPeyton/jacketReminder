@@ -39,8 +39,7 @@
     //Cleanup
     
     //something went wrong and the homewx_dictionary is nil
-    NSLOG_SPACER
-    NSLOG_SPACER
+
     NSLog(@"CALLED WEATHER FROM ONESIGNALPUSH");
     
     NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastBackgroundWeatherDateCalled"];
@@ -234,8 +233,7 @@
     //Cleanup
     
     //something went wrong and the homewx_dictionary is nil
-    NSLOG_SPACER
-    NSLOG_SPACER
+
     NSLog(@"CALLED WEATHER FROM REMOTE PUSH");
     
     NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastBackgroundWeatherDateCalled"];
@@ -453,7 +451,6 @@
         
         else
         {
-            NSLOG_SPACER
             NSLog(@"CALLED GETHOMEWEATHER FROM APPLICATIONDIDBECOMEACTIVE");
             
             [self.window.rootViewController.childViewControllers[0] getHomeWeather];
