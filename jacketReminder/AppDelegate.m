@@ -53,15 +53,6 @@
         NSLog(@"BACKGROUND FETCH HAS NEW DATA");
         
         
-        // Set up Local Notifications
-        //   [[UIApplication sharedApplication] cancelAllLocalNotifications];
-        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-        NSDate *now = [NSDate date];
-        localNotification.fireDate = now;
-        localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background has NEW data\nSECONDS SINCE LAST CALL: %f",counter,dateInterval];
-        localNotification.soundName = UILocalNotificationDefaultSoundName;
-        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-        
         
     }
     else if ((int) result == 1)
@@ -69,33 +60,10 @@
         NSLog(@"BACKGROUND FETCH HAS NO NEW DATA");
         
         
-        // Set up Local Notifications
-        //   [[UIApplication sharedApplication] cancelAllLocalNotifications];
-        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-        NSDate *now = [NSDate date];
-        localNotification.fireDate = now;
-        localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background has NO NEW data\nSECONDS SINCE LAST CALL: %f",counter,dateInterval];
-        localNotification.soundName = UILocalNotificationDefaultSoundName;
-        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-        
-        
-        
     }
     else
     {
         NSLog(@"BACKGROUND FETCH HAS FAILED");
-        
-        
-        // Set up Local Notifications
-        //   [[UIApplication sharedApplication] cancelAllLocalNotifications];
-        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-        NSDate *now = [NSDate date];
-        localNotification.fireDate = now;
-        localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background has FAILED\nSECONDS SINCE LAST CALL: %f",counter,dateInterval];
-        localNotification.soundName = UILocalNotificationDefaultSoundName;
-        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-        
-        
         
     }
 
@@ -210,21 +178,22 @@
         
         [alertControllerTemp addAction:okAction];
 
-        if ([self.window.rootViewController presentedViewController] != nil)
-        {
-            //use alertview
-            [[[UIAlertView alloc]initWithTitle:notification.alertTitle message:notification.alertBody delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil]show ];
-            [self playAlertSound];
-
-        }
+//        if ([self.window.rootViewController presentedViewController] != nil)
+//        {
+//            //use alertview
+//            [[[UIAlertView alloc]initWithTitle:notification.alertTitle message:notification.alertBody delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil]show ];
+//            
+//            [self playAlertSound];
+//
+//        }
         
-        else
-        {
+        
+        //was a else statement
           [self.window.rootViewController presentViewController:alertControllerTemp animated:YES completion:nil];
             
             [self playAlertSound];
 
-        }
+
         
 
         
@@ -278,52 +247,17 @@
     {
         NSLog(@"REMOTE PUSH BACKGROUND FETCH HAS NEW DATA");
         
-        
-        // Set up Local Notifications
-        //   [[UIApplication sharedApplication] cancelAllLocalNotifications];
-        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-        NSDate *now = [NSDate date];
-        localNotification.fireDate = now;
-        localNotification.alertBody = [NSString stringWithFormat:@"REMOTE PUSH fetch #%d in background has NEW data\nSECONDS SINCE LAST CALL: %f",counter,dateInterval];
-        localNotification.soundName = UILocalNotificationDefaultSoundName;
- //       [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-        
-        
         completionHandler(UIBackgroundFetchResultNewData);
     }
     else if ((int) result == 1)
     {
         NSLog(@"REMOTE PUSH BACKGROUND FETCH HAS NO NEW DATA");
         
-        
-        // Set up Local Notifications
-        //   [[UIApplication sharedApplication] cancelAllLocalNotifications];
-        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-        NSDate *now = [NSDate date];
-        localNotification.fireDate = now;
-        localNotification.alertBody = [NSString stringWithFormat:@"REMOTE PUSH fetch #%d in background has NO NEW data\nSECONDS SINCE LAST CALL: %f",counter,dateInterval];
-        localNotification.soundName = UILocalNotificationDefaultSoundName;
-  //      [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-        
-        
-        
         completionHandler(UIBackgroundFetchResultNoData);
     }
     else
     {
         NSLog(@"REMOTE PUSH BACKGROUND FETCH HAS FAILED");
-        
-        
-        // Set up Local Notifications
-        //   [[UIApplication sharedApplication] cancelAllLocalNotifications];
-        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-        NSDate *now = [NSDate date];
-        localNotification.fireDate = now;
-        localNotification.alertBody = [NSString stringWithFormat:@"REMOTE PUSH fetch #%d in background has FAILED\nSECONDS SINCE LAST CALL: %f",counter,dateInterval];
-        localNotification.soundName = UILocalNotificationDefaultSoundName;
-  //      [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-        
-        
         
         completionHandler(UIBackgroundFetchResultFailed);
     }
@@ -361,12 +295,7 @@
                                                        fullMessage = [fullMessage stringByAppendingString:[NSString stringWithFormat:@"\nPressed ButtonId:%@", additionalData[@"actionSelected"]]];
                                                }
                                                
-//                                               UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:messageTitle
-//                                                                                                   message:fullMessage
-//                                                                                                  delegate:self
-//                                                                                         cancelButtonTitle:@"Close"
-//                                                                                         otherButtonTitles:nil, nil];
-//                                               [alertView show];
+
                                                
                                            }];
     
@@ -423,16 +352,6 @@
         NSLog(@"BACKGROUND FETCH HAS NEW DATA");
         
         
-        // Set up Local Notifications
-        //   [[UIApplication sharedApplication] cancelAllLocalNotifications];
-        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-        NSDate *now = [NSDate date];
-        localNotification.fireDate = now;
-        localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background has NEW data\nSECONDS SINCE LAST CALL: %f",counter,dateInterval];
-        localNotification.soundName = UILocalNotificationDefaultSoundName;
-        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-        
-        
         completionHandler(UIBackgroundFetchResultNewData);
     }
     else if ((int) result == 1)
@@ -444,17 +363,6 @@
         
         NSLog(@"BACKGROUND FETCH HAS NO NEW DATA");
         
-        
-        // Set up Local Notifications
-        //   [[UIApplication sharedApplication] cancelAllLocalNotifications];
-        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-        NSDate *now = [NSDate date];
-        localNotification.fireDate = now;
-        localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background has NO NEW data\nSECONDS SINCE LAST CALL: %f",counter,dateInterval];
-        localNotification.soundName = UILocalNotificationDefaultSoundName;
-        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-        
-        
 
         completionHandler(UIBackgroundFetchResultNoData);
     }
@@ -462,18 +370,6 @@
     {
         NSLog(@"BACKGROUND FETCH HAS FAILED");
         
-        
-        // Set up Local Notifications
-        //   [[UIApplication sharedApplication] cancelAllLocalNotifications];
-        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-        NSDate *now = [NSDate date];
-        localNotification.fireDate = now;
-        localNotification.alertBody = [NSString stringWithFormat:@"fetch #%d in background has FAILED\nSECONDS SINCE LAST CALL: %f",counter,dateInterval];
-        localNotification.soundName = UILocalNotificationDefaultSoundName;
-        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-        
-        
-
         completionHandler(UIBackgroundFetchResultFailed);
     }
 }

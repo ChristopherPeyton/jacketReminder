@@ -774,7 +774,6 @@
 
 -(void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
     NSLog(@"Welcome to %@", region.identifier);
-    [[[UIAlertView alloc]initWithTitle:@"ENTERED REGION" message:@"WELCOME HOME" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil]show];
     
     //egion monitor as backup plan
     if (atHome == NO)
@@ -791,13 +790,12 @@
 
 -(void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
     NSLog(@"Bye bye");
-    [[[UIAlertView alloc]initWithTitle:@"didExitRegion" message:@"Bye bye" delegate:self cancelButtonTitle:@"ok" otherButtonTitles:nil]show];
     
     //checking if didupdatelocations already ran the required weather check, which will happen if in background or running on screen, but terminated it will then use this region monitor as backup plan
-    if (atHome == YES)
-    {
-        atHome = NO;
-        
+//    if (atHome == YES)
+//    {
+//        atHome = NO;
+    
         [self checkForWeatherTriggers];
         
         //SAVE atHome BOOL
@@ -805,7 +803,7 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         NSLog(@"AT HOME NOW = %d",[[NSUserDefaults standardUserDefaults] boolForKey:@"atHome"]);
     }
-}
+//}
 
 -(void)locationManager:(CLLocationManager *)manager didStartMonitoringForRegion:(CLRegion *)region
 {
@@ -897,7 +895,6 @@
             
         }
         
-        //[[[UIAlertView alloc]initWithTitle:@"ADDR ISSUE" message:@"UNABLE TO DETECT LOC" delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil]show];
         [self.locationManager startUpdatingLocation];
     }
     
@@ -953,11 +950,7 @@
         self.loadingActivityView.hidden = NO;
         
     }
-    
-    
-    
-    
-    
+
         //load username or prompt user if missing
         if ([[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == nil || [[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] == NULL || [[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] isEqualToString:@""])
         {
@@ -996,51 +989,59 @@
 
     location = locations[0];
 
-    //DISTANCE FROM HOUSE TO NEXT DOOR = 16.606390
-    CLLocationDistance distance = [location distanceFromLocation: self.homeInformation[0]];
-    
-    NSLog(@"CURRENT LOCATION: %@",location);
-    NSLog(@"\natHome BOOL = %d",atHome);
-
-    //using this to check user location to home, as its faster than region checks, but region can check with app terminated so that is the backup plan
-    if (location && [self.homeInformation count] >= 3 && distance <=18)
-    {
-        if (atHome == YES)
-        {
-            NSLog(@"ALREADY AT HOME");
-        }
-        
-        else//just got home
-        {
-            atHome = YES;
-            
-            NSLog(@"JUST GOT HOME");
-            NSLog(@"\n\nDISTANCE =%f",distance);
-        }
-    }
-    
-    else if (location && [self.homeInformation count] >= 3 && distance >18)
-    {
-        if (atHome == YES)
-        {
-            atHome = NO;
-            NSLog(@"JUST LEFT HOME");
-            
-            [self checkForWeatherTriggers];
-            
-        }
-        
-        else//BEEN OUT AND ABOUT
-        {
-            NSLog(@"STILL OUT AND ABOUT");
-            NSLog(@"\n\nDISTANCE =%f",distance);
-        }
-    }
-    
-    //SAVE atHome BOOL
-    [[NSUserDefaults standardUserDefaults] setBool:atHome forKey:@"atHome"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    NSLog(@"AT HOME NOW = %d",[[NSUserDefaults standardUserDefaults] boolForKey:@"atHome"]);
+//    //DISTANCE FROM HOUSE TO NEXT DOOR = 16.606390
+//    CLLocationDistance distance = [location distanceFromLocation: self.homeInformation[0]];
+//    
+//    NSLog(@"CURRENT LOCATION: %@",location);
+//    NSLog(@"\natHome BOOL = %d",atHome);
+//
+//     
+//    
+//    //using this to check user location to home, as its faster than region checks, but region can check with app terminated so that is the backup plan
+//    if (location && [self.homeInformation count] >= 3 && distance <=18)
+//    {
+//        if (atHome == YES)
+//        {
+//            NSLog(@"ALREADY AT HOME");
+//        }
+//        
+//        else//just got home
+//        {
+//            atHome = YES;
+//            
+//            NSLog(@"JUST GOT HOME");
+//            NSLog(@"\n\nDISTANCE =%f",distance);
+//        }
+//    }
+//    
+//    else if (location && [self.homeInformation count] >= 3 && distance >18)
+//    {
+//        //if in background or terminated, use region monitoring
+//        UIApplicationState state = [[UIApplication sharedApplication] applicationState];
+//        NSLog(@"typedef enum : NSInteger {\nUIApplicationStateActive,\nUIApplicationStateInactive,\n UIApplicationStateBackground\n} UIApplicationState; \nstate = %d",state);
+//        if (state == UIApplicationStateActive)
+//        {
+//            if (atHome == YES)
+//            {
+//                atHome = NO;
+//                NSLog(@"JUST LEFT HOME");
+//                
+//                [self checkForWeatherTriggers];
+//                
+//            }
+//            
+//            else//BEEN OUT AND ABOUT
+//            {
+//                NSLog(@"STILL OUT AND ABOUT");
+//                NSLog(@"\n\nDISTANCE =%f",distance);
+//            }
+//        }
+//    }
+//    
+//    //SAVE atHome BOOL
+//    [[NSUserDefaults standardUserDefaults] setBool:atHome forKey:@"atHome"];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+//    NSLog(@"AT HOME NOW = %d",[[NSUserDefaults standardUserDefaults] boolForKey:@"atHome"]);
     
     
 //    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"homeInformation"])
