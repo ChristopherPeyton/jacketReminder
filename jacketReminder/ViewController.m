@@ -1223,7 +1223,7 @@
     //assign temperature to string
     NSString *tempTempString = [NSString stringWithFormat:@"%d",[self convertKelvinToFaranheit:[[[[weatherDictionary objectForKey:@"list"][0] objectForKey:@"main"] objectForKey:@"temp"]intValue]]];
     
-    self.temperatureLabel.text = [NSString stringWithFormat:@"%@", tempTempString];
+    self.temperatureLabel.text = [NSString stringWithFormat:@"%@\u00B0", tempTempString];
     
     NSArray *aaa = [NSArray arrayWithArray:[[weatherDictionary objectForKey:@"list"][0] objectForKey:@"weather"]];
     if (aaa == nil || [aaa count] == 0)

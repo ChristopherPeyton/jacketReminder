@@ -273,7 +273,7 @@
     NSString * const DeviceMode = @"Device";
     
     //redirect device to file
-    [self redirectNSLogToDocumentFolder];
+ //   [self redirectNSLogToDocumentFolder];
     
 #endif
     
