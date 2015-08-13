@@ -152,9 +152,9 @@
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nRY-EM-QSa">
                                                                         <rect key="frame" x="78" y="0.0" width="186" height="75"/>
                                                                         <subviews>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current" textAlignment="center" lineBreakMode="characterWrap" numberOfLines="7" minimumScaleFactor="0.10000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="6Sm-8P-uQi">
+                                                                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current" textAlignment="center" lineBreakMode="characterWrap" numberOfLines="3" minimumScaleFactor="0.10000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="6Sm-8P-uQi">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="186" height="75"/>
-                                                                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="7.5"/>
+                                                                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="13"/>
                                                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
@@ -175,9 +175,9 @@
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vFk-CK-4LW">
                                                                         <rect key="frame" x="337" y="0.0" width="185" height="75"/>
                                                                         <subviews>
-                                                                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current" textAlignment="center" lineBreakMode="characterWrap" numberOfLines="7" minimumScaleFactor="0.10000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="lGH-sT-bvZ">
+                                                                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current" textAlignment="center" lineBreakMode="characterWrap" numberOfLines="3" minimumScaleFactor="0.10000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="lGH-sT-bvZ">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="185" height="75"/>
-                                                                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="7.5"/>
+                                                                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="13"/>
                                                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
@@ -415,7 +415,7 @@
                                                                         <subviews>
                                                                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current" textAlignment="center" lineBreakMode="characterWrap" numberOfLines="4" minimumScaleFactor="0.10000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="rSc-Iw-Sg5">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="186" height="75"/>
-                                                                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="7.5"/>
+                                                                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="13"/>
                                                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
@@ -438,7 +438,7 @@
                                                                         <subviews>
                                                                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current" textAlignment="center" lineBreakMode="characterWrap" numberOfLines="4" minimumScaleFactor="0.10000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="nVT-b7-Hpa">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="183" height="75"/>
-                                                                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="7.5"/>
+                                                                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="13"/>
                                                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>

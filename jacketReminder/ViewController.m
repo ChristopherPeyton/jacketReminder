@@ -1498,7 +1498,7 @@
     
     
     
-    self.ID_Current_Label.text = [self transformStringToVertical:@"CURRENT"];
+    self.ID_Current_Label.text = [self transformStringToVertical:@"GPS"];
     self.ID_CurrentLocation_Label.text = self.ID_Current_Label.text;
     self.ID_Home_Label.text = [self transformStringToVertical:@"HOME"];
     self.ID_HomeLocation_Label.text = self.ID_Home_Label.text;
