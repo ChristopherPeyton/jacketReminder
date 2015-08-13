@@ -30,11 +30,15 @@
     BOOL mayNeedToRunGetBothWeather;
 
 }
+@property (weak, nonatomic) IBOutlet UILabel *ID_Home_Label;
+@property (weak, nonatomic) IBOutlet UILabel *ID_HomeLocation_Label;
+@property (weak, nonatomic) IBOutlet UILabel *ID_CurrentLocation_Label;
+@property (weak, nonatomic) IBOutlet UILabel *ID_Current_Label;
 @property (weak, nonatomic) IBOutlet UIView *loadingDarkView;
 @property (weak, nonatomic) IBOutlet UIImageView *currentIcon;
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *buttonMainViewEffect;
 @property (weak, nonatomic) IBOutlet UIView *buttonContainer;
-@property (weak, nonatomic) IBOutlet UILabel *tempSymbol;
+//@property (weak, nonatomic) IBOutlet UILabel *tempSymbol;
 @property (weak, nonatomic) IBOutlet UILabel *currentLocationWeatherTime;
 //@property (weak, nonatomic) IBOutlet UILabel *tempSymbolCurrent1;
 //@property (weak, nonatomic) IBOutlet UILabel *tempSymbolCurrent2;
@@ -1463,8 +1467,42 @@
 
 }
 
+- (NSString *)transformStringToVertical:(NSString *)originalString
+{
+    NSMutableString *mutableString = [NSMutableString stringWithString:originalString];
+    NSRange stringRange = [mutableString rangeOfString:mutableString];
+    
+    for (int i = 1; i < stringRange.length*2; i+=2)
+    {
+        [mutableString insertString:@"\n" atIndex:i];
+    }
+    
+    return mutableString;
+}
+
+
++ (UIImage *) imageWithView:(UITextView *)view
+{
+    UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.opaque, 0.0);
+    [view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    
+    UIImage * img = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return img;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    
+    self.ID_Current_Label.text = [self transformStringToVertical:@"CURRENT"];
+    self.ID_CurrentLocation_Label.text = self.ID_Current_Label.text;
+    self.ID_Home_Label.text = [self transformStringToVertical:@"HOME"];
+    self.ID_HomeLocation_Label.text = self.ID_Home_Label.text;
+    
     
     if ([self  isNetworkAvailable] == NO)
     {
@@ -1513,7 +1551,7 @@
     
     NSLog(@"DEFAULT AT HOME =%d",atHome);
     
-    self.tempSymbol.text = @"\u00B0";
+ //   self.tempSymbol.text = @"\u00B0";
     
     addressFromGEO = [NSMutableArray arrayWithObjects:@"",@"", nil];
     
