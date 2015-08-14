@@ -1496,7 +1496,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    self.currentLocationWeatherTime.text = @"";
+    self.weatherDescriptionLabel.text = @"";
+    self.temperatureLabel.text = @"";
+    self.forecast_3_time.text = @"";
+    self.forecast_6_time.text = @"";
+    self.forecast_9_time.text = @"";
+    self.forecast_3_hr.text = @"";
+    self.forecast_6_hr.text = @"";
+    self.forecast_9_hr.text = @"";
+    self.forecast_3_timeHOME.text = @"";
+    self.forecast_6_timeHOME.text = @"";
+    self.forecast_9_timeHOME.text = @"";
+    self.forecast_3_hrHOME.text = @"";
+    self.forecast_6_hrHOME.text = @"";
+    self.forecast_9_hrHOME.text = @"";
     
     self.ID_Current_Label.text = [self transformStringToVertical:@"GPS"];
     self.ID_CurrentLocation_Label.text = self.ID_Current_Label.text;
